@@ -23,7 +23,7 @@ module.exports.loadModels = function (callback) {
 module.exports.connect = function (callback) {
   mongoose.Promise = config.db.promise;
 
-  //var options = _.merge(config.db.options || {}, { useMongoClient: true });
+  // var options = _.merge(config.db.options || {}, { useMongoClient: true });
 
   mongoose
     .connect(config.db.uri, config.db.options)

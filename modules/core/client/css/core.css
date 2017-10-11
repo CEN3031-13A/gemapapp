@@ -1,6 +1,6 @@
-.content {
+/* .content {
   margin-top: 50px;
-}
+} This controls the space between the header and the body!*/
 .undecorated-link:hover {
   text-decoration: none;
 }
