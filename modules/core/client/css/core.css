@@ -41,3 +41,12 @@ a:hover .header-profile-image {
 .has-error .help-inline.error-text {
   display: inline;
 }
+
+ <style>
+    px-app-nav {
+      position: fixed;
+      right: 0;
+      top: 0;
+    }
+  </style>
+  <px-app-nav items="..."></px-app-nav>
