@@ -1,1 +1,54 @@
-<p>Hello world!</p>
+<html>
+<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+
+<div>
+	<px-tree 
+	keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
+	items='[{"label":"Customer 1","id":"Cust1","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 2","id":"Cust2","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 3","id":"Cust3","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 4","id":"Cust4","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
+                    {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
+                    {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
+                    {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
+                  ]'>
+</px-tree>
+</div>
+<px-map lat="29.6516" lng="-82.3248" zoom="12" style="width: 1720px; height: 934px;">
+  <px-map-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></px-map-tile-layer>
+  <px-map-control-zoom position="bottomright"></px-map-control-zoom>
+</px-map>
+
+<!-- <div style="height:930px; width:1703px; display:flex">
+<px-map zoom="8" lat="29.6516" lng="-82.3248" flex-to-size disable-scroll-zoom disable-touch-zoom>
+<px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'>
+</px-map-tile-layer>
+</px-map> -->
+</div>
+
+</html>
