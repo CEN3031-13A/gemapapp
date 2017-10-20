@@ -1,4 +1,4 @@
-/* .content {
+/*/* .content {
   margin-top: 50px;
 } This controls the space between the header and the body!*/
 
@@ -44,7 +44,7 @@ a:hover .header-profile-image {
 }
 
 
-px-branding-bar{
+.branding{
   margin-left: -8px;
   margin-right: -8px;
   margin-top: -8px;
@@ -54,7 +54,7 @@ px-app-nav{
   margin-top:40px;
 }
 
-px-tree{
+.tree{
   background: #2c404c;
   color: white;
   height: 100%;
@@ -63,10 +63,16 @@ px-tree{
   padding-top: 50px;
   position: fixed;
   top: 8px;
-  width: 200px;
+  width: 15%;
   z-index: -1;
 }
 
-px-map{
-  padding-left: 192px;
+/*px-map{
+  margin-left: 192px;
+}*/
+
+.map{
+  float:right;
+  width:85%;
+  overflow-x: hidden;
 }
