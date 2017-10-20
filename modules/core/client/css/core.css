@@ -74,6 +74,5 @@ px-app-nav{
 .map{
   float:right;
   width:85%;
-  height: 90%;
   overflow-x: hidden;
 }

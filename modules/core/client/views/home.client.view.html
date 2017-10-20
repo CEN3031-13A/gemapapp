@@ -1,10 +1,12 @@
 <html>
+
 <!-- implement the Predix branding bar -->
 <div class="branding">
   <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
 
-<!-- implement the side menu using Predix Tree -->
+
+<!-- implement the side menu using Predix tree -->
   <div class="tree">
     <px-tree 
   keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
@@ -44,13 +46,13 @@
 </px-tree>
 </div>
 
-<!-- implement the map -->
+
+<!-- implement map using Predix Map -->
 <div class="map">
-  <px-map lat="29.6516" lng="-82.3248" zoom="12">
+  <px-map lat="29.6516" lng="-82.3248" zoom="12" style="width: 1720px; height: 500px;">
   <px-map-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></px-map-tile-layer>
   <px-map-control-zoom position="bottomright"></px-map-control-zoom>
 </px-map>
 </div>
-
 
 </html>
