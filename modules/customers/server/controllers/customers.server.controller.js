@@ -5,7 +5,7 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
-  Article = mongoose.model('Article'),
+  Customer = mongoose.model('Customer'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 
@@ -15,7 +15,6 @@ var path = require('path'),
  */
 exports.update = function (req, res) {
   var customer = req.customer;
-
 
   customer.save(function (err) {
     if (err) {
