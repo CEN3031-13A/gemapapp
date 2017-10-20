@@ -36,7 +36,7 @@ var customerSchema = new Schema({
 			},
 			ship_date: String,
 			expected_date: String,
-			contents:[String],
+			contents: [String],
 		}],
 	}]
 	
