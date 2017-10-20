@@ -1,6 +1,7 @@
-/* .content {
+/*/* .content {
   margin-top: 50px;
 } This controls the space between the header and the body!*/
+
 .undecorated-link:hover {
   text-decoration: none;
 }
@@ -42,3 +43,35 @@ a:hover .header-profile-image {
   display: inline;
 }
 
+.branding{
+  margin-left: -8px;
+  margin-right: -8px;
+  margin-top: -8px;
+}
+
+px-app-nav{
+  margin-top:40px;
+}
+
+.tree{
+  background: #2c404c;
+  color: white;
+  height: 100%;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 50px;
+  position: fixed;
+  top: 8px;
+  width: 15%;
+  z-index: -1;
+}
+
+/*px-map{
+  margin-left: 192px;
+}*/
+
+.map{
+  float:right;
+  width:85%;
+  overflow-x: hidden;
+}
