@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('customers.services')
-    .factory('CustomersService', CustomersService);
+    .module('core')
+    .factory('ListingsService', ListingsService);
 
-  CustomersService.$inject = ['$resource', '$log'];
+  ListingsService.$inject = ['$resource', '$log'];
 
-  function CustomersService($resource, $log) {
-    var Customer = $resource('/api/customers/:customerId', {
-      customerId: '@_id'
+  function ListingsService($resource, $log) {
+    var Customer = $resource('/:listingId', {
+      listingId: '@_id'
     }, {
       update: {
         method: 'PUT'
