@@ -171,7 +171,7 @@ gulp.task('sass', function () {
   return gulp.src(defaultAssets.client.sass)
     .pipe(plugins.sass())
     .pipe(plugins.autoprefixer())
-    .pipe(gulp.dest('./modules/'));
+    .pipe(gulp.dest('./public/lib/'));
 });
 
 // Less task
