@@ -35,7 +35,7 @@ module.exports = {
       'modules/*/client/less/*.less'
     ],
     sass: [
-      'modules/*/client/scss/*.scss'
+      'public/lib/*.scss'
     ],
     js: [
       'modules/core/client/app/config.js',
