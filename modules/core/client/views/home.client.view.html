@@ -1,10 +1,16 @@
 <html>
-<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 
-<div>
-	<px-tree 
-	keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
-	items='[{"label":"Customer 1","id":"Cust1","icon":"px-fea:asset",
+<!-- implement the Predix branding bar -->
+<div class="branding">
+  <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+</div>
+
+
+<!-- implement the side menu using Predix tree -->
+  <!-- <div class="tree">
+    <px-tree 
+  keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
+  items='[{"label":"Customer 1","id":"Cust1","icon":"px-fea:asset",
                         "children":
                         [
                           {"label":"Shipment 1","id":"s1"},
@@ -38,17 +44,72 @@
                     {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
                   ]'>
 </px-tree>
+</div> -->
+<div style="float:left; width:300px">
+<px-inbox
+list-items='
+	[
+		{
+			"id":"2",
+			"title":"Customer 1",
+			"subtitle":"#",
+			"severity":"",
+			"date":"2016-10-04T01:27",
+			"alertId":"249375",
+			"alertSource":"Ignition",
+			"receivedDateTime":"2016-10-04T03:30",
+			"caseNumber":"857463748",
+			"customer":"Mary Jackson",
+			"serialNumber":"GE783556",
+			"dlnType":"DLN 1.4",
+			"model":"2MA+c",
+			"formattedDate":"a year ago"
+		},
+		{
+			"id":"2",
+			"title":"Customer 2",
+			"subtitle":"#",
+			"severity":"",
+			"date":"2016-10-04T01:27",
+			"alertId":"249375",
+			"alertSource":"Ignition",
+			"receivedDateTime":"2016-10-04T03:30",
+			"caseNumber":"857463748",
+			"customer":"Mary Jackson",
+			"serialNumber":"GE783556",
+			"dlnType":"DLN 1.4",
+			"model":"2MA+c",
+			"formattedDate":"a year ago"
+		}
+	]'>
+</px-inbox>
+ 	px-inbox-list-width = 100%;
+	px-inbox-height = 100%;
+	px-inbox-border-color = 0xfff;
+	px-inbox-secondary-text-color = 0x00ff00;
+	px-inbox-li-background-color = 0xfff;
+	px-inbox-li-background-color--selected = 0x00ff00;
+	px-inbox-li-text-color--selected = 0x00ff00;
+	px-inbox-icon-outline-color = 0x00ff00;
+	px-inbox-alert-color = 0x00ff00;
+	px-inbox-warning-color = 0x00ff00;
+	px-inbox-error-color = 0x00ff00;
+	px-inbox-information-color = 0x00ff00;
+</div> 
+<div style = "float:right;">
+<px-timeline
+enhanced timeline-data='[{"metaData":{"editedBy":"Google Chrome Developers","editedDate":"2016-11-04 14:12:00-07","editorImg":"img/immelt.jpg","editorTitle":"Poly Chiefmaster","percent":"88","customIcon":"px-doc:website"},"content":{"title":"Binding to Arrays","bodyType":"Video","body":[{"video":"https://www.youtube.com/embed/HBUb8frm2Tw?list=PLOU2XLYxmsII5c3Mgw6fNYCzaWrsM3sMN","headline":"To ng-repeat or dom-repeat, that is the question","text":"Check out this awesome YouTube video for more information.","host":"Remote"}]}},{"metaData":{"editedBy":"Soundcloud Podcast","editedDate":"2016-11-01 11:42:00-07","editorTitle":"Machine AI Recomendations","customIcon":"px-doc:chart"},"content":{"title":"Polymer 1.0 Announced","bodyType":"Audio","body":[{"audio":"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/212712436&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true","headline":"Everyone agrees on Polymer","text":"Just listen to podcast. No explanation is necessary.","host":"remote","isComment":true}]}},{"metaData":{"editedBy":"GE Digital","editedDate":"2016-10-27 18:28:10-07","editorTitle":"Chief Technical Division","percent":"100","editorImg":"img/immelt.jpg"},"content":{"title":"Building the industrial internet","bodyType":"text","body":[{"text":"On Tuesday, GE CEO Jeff Immelt and Intel CEO Brian Krzanich spoke at the Intel Developer Forum in San Francisco about the partnership and the future of the Industrial Internet. They noted this is a significant step in the two companies’ plan to eventually offer GE’s Industrial Internet software on Intel-powered devices.","headline":"Predix, the operating system for the Industrial Internet","isComment":true}]}},{"metaData":{"editedBy":"Polymer Team","editedDate":"2016-09-12 06:37:00-07"},"content":{"title":"New Polycast","bodyType":"LIST","body":[{"key":"Topic 1","value":"Data Binding"},{"key":"Topic 2","value":"Data Flow"},{"key":"Topic 3","value":"Shadow Dom"}]}},{"metaData":{"editedBy":"GE Digital","editedDate":"2015-11-03 00:00:00-07"},"content":{"title":"Building the industrial internet","bodyType":"text","body":[{"text":"On Tuesday, GE CEO Jeff Immelt and Intel CEO Brian Krzanich spoke at the Intel Developer Forum in San Francisco about the partnership and the future of the Industrial Internet. They noted this is a significant step in the two companies’ plan to eventually offer GE’s Industrial Internet software on Intel-powered devices.","headline":"This is the content headline","isComment":true}]}}]'
+date-format="MMM D, YYYY HH:MM">
+</px-timeline>
+
 </div>
-<px-map lat="29.6516" lng="-82.3248" zoom="12" style="width: 1720px; height: 934px;">
+<!-- implement map using Predix Map -->
+<!-- <div class="map">
+  <px-map lat="29.6516" lng="-82.3248" zoom="12" style="width:100%; height: 750px; float:right; overflow:hidden">
   <px-map-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></px-map-tile-layer>
   <px-map-control-zoom position="bottomright"></px-map-control-zoom>
 </px-map>
+</div> -->
 
-<!-- <div style="height:930px; width:1703px; display:flex">
-<px-map zoom="8" lat="29.6516" lng="-82.3248" flex-to-size disable-scroll-zoom disable-touch-zoom>
-<px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'>
-</px-map-tile-layer>
-</px-map> -->
-</div>
 
 </html>
