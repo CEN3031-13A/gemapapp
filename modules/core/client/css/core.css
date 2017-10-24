@@ -45,14 +45,12 @@ a:hover .header-profile-image {
 
 
 .branding{
-  margin-left: -8px;
-  margin-right: -8px;
-  margin-top: -8px;
+  position: fixed;
+  top: 0;
+  right:0;
+  left:0;
 }
 
-px-app-nav{
-  margin-top:40px;
-}
 
 .tree{
   background: #2c404c;
@@ -63,18 +61,16 @@ px-app-nav{
   overflow-x: hidden;
   padding-top: 50px;
   position: fixed;
-  top: 8px;
   width: 15%;
   z-index: -1;
 }
 
-/*px-map{
-  margin-left: 192px;
-}*/
 
 .map{
-  height:400px;
-  margin-left: 15%;
-  overflow-x: hidden;
+  bottom: 0;
+  height: 100%;
+  position: fixed;
+  right: 0;
+  top:5%;
   width:85%;
 }
