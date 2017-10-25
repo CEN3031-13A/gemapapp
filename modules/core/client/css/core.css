@@ -45,10 +45,11 @@ a:hover .header-profile-image {
 
 
 .branding{
-  position: fixed;
-  top: 0;
-  right:0;
   left:0;
+  position: fixed;
+  right:0;
+  top: 0;
+  z-index: 1;
 }
 
 
@@ -59,8 +60,8 @@ a:hover .header-profile-image {
   height: 100%;
   left: 0;
   overflow-x: hidden;
-  padding-top: 50px;
   position: fixed;
+  top: 4.2%;
   width: 15%;
   z-index: -1;
 }
@@ -71,6 +72,6 @@ a:hover .header-profile-image {
   height: 100%;
   position: fixed;
   right: 0;
-  top:5%;
+  top:4.2%;
   width:85%;
 }
