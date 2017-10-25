@@ -68,7 +68,6 @@ a:hover .header-profile-image {
 
 .map{
   bottom: 0;
-  height: 100%;
   position: fixed;
   right: 0;
   top:4.2%;
@@ -88,4 +87,8 @@ a:hover .header-profile-image {
   padding:0.33333rem;
   text-align: center;
   width: 100%;
+}
+
+body{
+  background: #000;
 }
