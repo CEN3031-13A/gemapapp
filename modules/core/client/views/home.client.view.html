@@ -8,6 +8,7 @@
 
 <!-- implement the side menu using Predix tree -->
   <div class="tree">
+    <input class="search" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Customer">
     <px-tree
   keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
   items='[{"label":"Customer 1","id":"Cust1","icon":"px-fea:asset",
@@ -51,7 +52,11 @@
 <!-- implement map using Google Map -->
 <div class="map">
   <google-map latitude="29.6516" longitude="-82.3248" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-  <google-map-marker latitude="29.6516" longitude="-82.3248" title="Go Gators!" draggable="true"></google-map-marker>
+  <google-map-marker latitude="29.6516" longitude="-82.3248" draggable="true">
+    <img src="image.png">
+    <h1>test1</h1>
+    <p> a lot of words in order to test whether the size of the window will increase.</p>
+  </google-map-marker>
 </google-map>
 </div>
 
