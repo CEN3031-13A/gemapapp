@@ -1,15 +1,15 @@
-﻿(function () {
+(function () {
   'use strict';
 
-  describe('Admin Articles List Controller Tests', function () {
+  describe('Customers List Controller Tests', function () {
     // Initialize global variables
-    var ArticlesAdminListController,
+    var CustomersListController,
       $scope,
       $httpBackend,
       $state,
       Authentication,
-      ArticlesService,
-      mockArticle;
+      CustomersService,
+      mockCustomer;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -36,7 +36,7 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ArticlesService_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _CustomersService_) {
       // Set a new global scope
       $scope = $rootScope.$new();
 
@@ -44,26 +44,21 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      ArticlesService = _ArticlesService_;
-
-      // Ignore parent template get on state transitions
-      $httpBackend.whenGET('/modules/articles/client/views/list-articles.client.view.html').respond(200, '');
-      $httpBackend.whenGET('/modules/core/client/views/home.client.view.html').respond(200, '');
+      CustomersService = _CustomersService_;
 
       // create mock article
-      mockArticle = new ArticlesService({
+      mockCustomer = new CustomersService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
-        content: 'MEAN rocks!'
+        name: 'Customer Name'
       });
 
       // Mock logged in user
       Authentication.user = {
-        roles: ['user', 'admin']
+        roles: ['user']
       };
 
-      // Initialize the Articles List controller.
-      ArticlesAdminListController = $controller('ArticlesAdminListController as vm', {
+      // Initialize the Customers List controller.
+      CustomersListController = $controller('CustomersListController as vm', {
         $scope: $scope
       });
 
@@ -72,23 +67,23 @@
     }));
 
     describe('Instantiate', function () {
-      var mockArticleList;
+      var mockCustomerList;
 
       beforeEach(function () {
-        mockArticleList = [mockArticle, mockArticle];
+        mockCustomerList = [mockCustomer, mockCustomer];
       });
 
-      it('should send a GET request and return all articles', inject(function (ArticlesService) {
+      it('should send a GET request and return all Customers', inject(function (CustomersService) {
         // Set POST response
-        $httpBackend.expectGET('/api/articles').respond(mockArticleList);
+        $httpBackend.expectGET('api/customers').respond(mockCustomerList);
 
 
         $httpBackend.flush();
 
         // Test form inputs are reset
-        expect($scope.vm.articles.length).toEqual(2);
-        expect($scope.vm.articles[0]).toEqual(mockArticle);
-        expect($scope.vm.articles[1]).toEqual(mockArticle);
+        expect($scope.vm.customers.length).toEqual(2);
+        expect($scope.vm.customers[0]).toEqual(mockCustomer);
+        expect($scope.vm.customers[1]).toEqual(mockCustomer);
 
       }));
     });
