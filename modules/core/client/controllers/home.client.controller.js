@@ -3,9 +3,9 @@
 
   angular
     .module('core')
-    .controller('HomeController', HomeController);
+    .controller('HomeController', HomeController, '$location');
 
-  function HomeController() {
+  function HomeController($location) {
     var vm = this;
   }
 }());
