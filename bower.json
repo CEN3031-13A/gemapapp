@@ -18,7 +18,8 @@
     "px-app-nav": "^2.0.9",
     "px-branding-bar": "^1.0.6",
     "px-map": "^2.1.4",
-    "px-tree": "^2.0.3"
+    "px-tree": "^2.0.3",
+    "angular-google-maps": "^2.4.1"
   },
   "overrides": {
     "bootstrap": {
