@@ -1,1 +1,62 @@
-<p>Hello world!</p>
+
+
+<!-- implement the Predix branding bar -->
+<div class="branding">
+  <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+</div>
+
+
+<!-- implement the side menu using Predix tree -->
+  <div class="tree">
+    <input class="search" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Customer">
+    <px-tree
+  keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
+  items='[{"label":"Customer 1","id":"Cust1","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 2","id":"Cust2","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 3","id":"Cust3","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 4","id":"Cust4","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
+                    {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
+                    {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
+                    {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
+                  ]'
+                  multi-activate>
+</px-tree>
+</div>
+
+
+<!-- implement map using Google Map -->
+<div class="map">
+  <google-map latitude="29.6516" longitude="-82.3248" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+  <google-map-marker latitude="29.6516" longitude="-82.3248" draggable="true">
+    <img src="image.png">
+    <h1>test1</h1>
+    <p> a lot of words in order to test whether the size of the window will increase.</p>
+  </google-map-marker>
+</google-map>
+</div>
+
