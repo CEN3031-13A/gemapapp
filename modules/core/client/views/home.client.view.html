@@ -1,125 +1,251 @@
-<html>
 
-<!-- implement the Predix branding bar -->
-<div class="branding">
-  <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+<link rel="../css" type="text/css" href="core.scss" />
+<script type="text/javascript">
+function toggle(){
+    var off=document.getElementById('makeDisappear');
+    if (off.style.display == "none") {
+        off.style.display = "block";
+    } else {
+        off.style.display = "none";
+    }        
+}
+</script>
+
+<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+
+<div style="float:left; width:15%;">
+	<px-typeahead placeholder="Enter your search query"
+				  local-candidates='[]'
+				  prefetch-url="https://www.predix-ui.com/px-typeahead/px-typeahead/countries.json">
+	</px-typeahead>
+
+	<div class="btn-group">
+  		<button for="id1" class="btn">Label 1</button>
+ 		<button for="id2" class="btn">Label 2</button>
+	</div>
+</div>
+
+<div >
+	<px-tree style="margin-top: 95px;width: 15%"
+	keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
+	items='[{"label":"Customer 1","id":"Cust1","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 2","id":"Cust2","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 3","id":"Cust3","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 4","id":"Cust4","icon":"px-fea:asset",
+                        "children":
+                        [
+                          {"label":"Shipment 1","id":"s1"},
+                          {"label":"Shipment 2","id":"s1"}
+                        ]
+                    },
+                    {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
+                    {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
+                    {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
+                    {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
+                  ]'>
+	</px-tree>
+</div>
+
+<div style="width:78%;">
+	<px-steps
+		items='[
+		{
+			"id":"1",
+			"label":"(FROM)"
+		},
+		{
+			"id":"2",
+			"label":"(CURRENT)"
+		},
+		{
+			"id":"3",
+			"label":"(TO)"
+		}
+		]'
+		completed='["1","2"]'>
+	</px-steps>
+</div>
+
+<div class="rightSidebar" id="makeDisappear">
+	<px-accordion
+		icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+		header-value="Customer Information"
+		status="Last Updated: 3 Days Ago" disabled show-action>
+	</px-accordion>
+	<text>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat.
+	</text>
+	<px-accordion
+		icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+		header-value="Shipping Details"
+		status="Last Updated: 3 Days Ago" disabled show-action>
+	</px-accordion>
+	<text>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat.
+	</text>
+	<px-accordion
+		icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+		header-value="Package Details"
+		status="Last Updated: 3 Days Ago" disabled show-action>
+	</px-accordion>
+	<text>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat.
+	</text>
+	<px-accordion
+		icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+		header-value="Package Comments"
+		status="Last Updated: 3 Days Ago" disabled show-action>
+	</px-accordion>
+	<textarea>Enter Comment Here</textarea>
+</div>
+
+<div>
+	<px-tooltip for="btn1"
+				delay="50"
+				tooltip-message="Package Information"
+				orientation="top">
+	</px-tooltip>
+	<button id='btn1'>Information</button>
 </div>
 
 
-<div style = "float:right; padding-top: 30px; padding-right:30px">
-<px-timeline
+
+<!-- <px-timeline 
 enhanced timeline-data='[
 {
-	"metaData":
-	{
-		"editedBy":"Google Chrome Developers",
-		"editedDate":"2016-11-04 14:12:00-07",
-		"editorImg":"img/immelt.jpg",
-		"editorTitle":"Poly Chiefmaster",
-		"percent":"88",
-		"customIcon":"px-doc:website"
-	},
-	"content":
-	{
-		"title":"Customer Information",
-		"bodyType":"Video",
-		"body":
-		[
-			{
-				"video":"https://www.youtube.com/embed/HBUb8frm2Tw?list=PLOU2XLYxmsII5c3Mgw6fNYCzaWrsM3sMN",
-				"headline":"To ng-repeat or dom-repeat, that is the question",
-				"text":"Check out this awesome YouTube video for more information.",
-				"host":"Remote"
-			}
-		]
-	}
+"metaData":
+{
+
+},
+"content":
+{
+	"title":"Customer Information",
+	"bodyType":"LIST",
+	"body":
+	[
+		{
+			"key":"Topic 1",
+			"value":"Data Binding"
+		},
+		{
+			"key":"Topic 2",
+			"value":"Data Flow"
+		},
+		{
+			"key":"Topic 3",
+			"value":"Shadow Dom"
+		}
+	]
+}
 },
 {
-	"metaData":
-	{
-		"editedBy":"Polymer Team",
-		"editedDate":"2016-09-12 06:37:00-07"
-	},
-	"content":
-	{
-		"title":"Shipping Details",
-		"bodyType":"LIST",
-		"body":
-		[
-			{
-				"key":"Topic 1",
-				"value":"Data Binding"
-			},
-			{
-				"key":"Topic 2",
-				"value":"Data Flow"
-			},
-			{
-				"key":"Topic 3",
-				"value":"Shadow Dom"
-			}
-		]
-	}
+"metaData":
+{
+	"editedBy":"Polymer Team",
+	"editedDate":"2016-09-12 06:37:00-07"
+},
+"content":
+{
+	"title":"Shipping Details",
+	"bodyType":"LIST",
+	"body":
+	[
+		{
+			"key":"Topic 1",
+			"value":"Data Binding"
+		},
+		{
+			"key":"Topic 2",
+			"value":"Data Flow"
+		},
+		{
+			"key":"Topic 3",
+			"value":"Shadow Dom"
+		}
+	]
+}
 },
 {
-	"metaData":
-	{
-		"editedBy":"Package Details",
-		"editedDate":"2016-09-12 06:37:00-07"
-	},
-	"content":
-	{
-		"title":"New Polycast",
-		"bodyType":"LIST",
-		"body":
-		[
-			{
-				"key":"Topic 1",
-				"value":"Data Binding"
-			},
-			{
-				"key":"Topic 2",
-				"value":"Data Flow"
-			},
-			{
-				"key":"Topic 3",
-				"value":"Shadow Dom"
-			}
-		]
-	}
+"metaData":
+{
+	"editedBy":"Package Details",
+	"editedDate":"2016-09-12 06:37:00-07"
+},
+"content":
+{
+	"title":"New Polycast",
+	"bodyType":"LIST",
+	"body":
+	[
+		{
+			"key":"Topic 1",
+			"value":"Data Binding"
+		},
+		{
+			"key":"Topic 2",
+			"value":"Data Flow"
+		},
+		{
+			"key":"Topic 3",
+			"value":"Shadow Dom"
+		}
+	]
+}
 },
 {
-	"metaData":
-	{
-		"editedBy":"Package Comments",
-		"editedDate":"2016-09-12 06:37:00-07"
-	},
-	"content":
-	{
-		"title":"New Polycast",
-		"bodyType":"LIST",
-		"body":
-		[
-			{
-				"key":"Topic 1",
-				"value":"Data Binding"
-			},
-			{
-				"key":"Topic 2",
-				"value":"Data Flow"
-			},
-			{
-				"key":"Topic 3",
-				"value":"Shadow Dom"
-			}
-		]
-	}
+"metaData":
+{
+	"editedBy":"Package Comments",
+	"editedDate":"2016-09-12 06:37:00-07"
+},
+"content":
+{
+	"title":"New Polycast",
+	"bodyType":"LIST",
+	"body":
+	[
+		{
+			"key":"Topic 1",
+			"value":"Data Binding"
+		},
+		{
+			"key":"Topic 2",
+			"value":"Data Flow"
+		},
+		{
+			"key":"Topic 3",
+			"value":"Shadow Dom"
+		}
+	]
+}
 }
 ]'
 date-format="MMM D, YYYY HH:MM">
-</px-timeline>
-
-</div>
-
-
-</html>
+</px-timeline> -->
