@@ -69,14 +69,24 @@ px-tree{
 }
 
 .rightSidebar{
-  border:black solid 2px; 
+  padding-left:10px;
+  border-left: 2px solid black; 
   display:block; 
   float:right; 
   width:25%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  top: 4%;
 }
 
 .btn{
   width:48%;
   height:40px;
+}
+
+.sidebarBlock{
+  border-top-bottom:1px solid black;
+  padding-top-bottom: 1px;
 }
 

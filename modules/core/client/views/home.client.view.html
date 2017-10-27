@@ -26,41 +26,53 @@ function toggle(){
 </div>
 
 <div >
-	<px-tree style="margin-top: 95px;width: 15%"
+	<px-tree style="margin-top: 95px;width: 15%;"
 	keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
-	items='[{"label":"Customer 1","id":"Cust1","icon":"px-fea:asset",
-                        "children":
-                        [
-                          {"label":"Shipment 1","id":"s1"},
-                          {"label":"Shipment 2","id":"s1"}
-                        ]
-                    },
-                    {"label":"Customer 2","id":"Cust2","icon":"px-fea:asset",
-                        "children":
-                        [
-                          {"label":"Shipment 1","id":"s1"},
-                          {"label":"Shipment 2","id":"s1"}
-                        ]
-                    },
-                    {"label":"Customer 3","id":"Cust3","icon":"px-fea:asset",
-                        "children":
-                        [
-                          {"label":"Shipment 1","id":"s1"},
-                          {"label":"Shipment 2","id":"s1"}
-                        ]
-                    },
-                    {"label":"Customer 4","id":"Cust4","icon":"px-fea:asset",
-                        "children":
-                        [
-                          {"label":"Shipment 1","id":"s1"},
-                          {"label":"Shipment 2","id":"s1"}
-                        ]
-                    },
-                    {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
-                    {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
-                    {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
-                    {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
-                  ]'>
+	items='[{
+				"label":"Customer 1",
+				"id":"Cust1",
+				"icon":"px-fea:asset",
+                "children":
+                [
+                    {"label":"Shipment 1","id":"s1"},
+                    {"label":"Shipment 2","id":"s1"}
+                ]
+            },
+            {
+            	"label":"Customer 2",
+            	"id":"Cust2",
+            	"icon":"px-fea:asset",
+                "children":
+                [
+                    {"label":"Shipment 1","id":"s1"},
+                    {"label":"Shipment 2","id":"s1"}
+                ]
+            },
+            {
+            	"label":"Customer 3",
+            	"id":"Cust3",
+            	"icon":"px-fea:asset",
+                "children":
+                [
+                    {"label":"Shipment 1","id":"s1"},
+                    {"label":"Shipment 2","id":"s1"}
+                ]
+            },
+            {
+            	"label":"Customer 4",
+            	"id":"Cust4",
+            	"icon":"px-fea:asset",
+                "children":
+                [
+                    {"label":"Shipment 1","id":"s1"},
+                    {"label":"Shipment 2","id":"s1"}
+                ]
+            },
+                {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
+                {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
+                {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
+                {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
+            ]'>
 	</px-tree>
 </div>
 
@@ -85,44 +97,53 @@ function toggle(){
 </div>
 
 <div class="rightSidebar" id="makeDisappear">
-	<px-accordion
-		icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-		header-value="Customer Information"
-		status="Last Updated: 3 Days Ago" disabled show-action>
-	</px-accordion>
-	<text>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat.
-	</text>
-	<px-accordion
-		icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-		header-value="Shipping Details"
-		status="Last Updated: 3 Days Ago" disabled show-action>
-	</px-accordion>
-	<text>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat.
-	</text>
-	<px-accordion
-		icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-		header-value="Package Details"
-		status="Last Updated: 3 Days Ago" disabled show-action>
-	</px-accordion>
-	<text>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat.
-	</text>
-	<px-accordion
-		icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-		header-value="Package Comments"
-		status="Last Updated: 3 Days Ago" disabled show-action>
-	</px-accordion>
+	
+	<div class="sidebarBlock">
+		<px-accordion
+			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+			header-value="Customer Information"
+			status="Last Updated: 3 Days Ago" disabled show-action>
+		</px-accordion>
+		<text>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat.
+		</text>
+	</div>
+	<div class="sidebarBlock">
+		<px-accordion
+			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+			header-value="Shipping Details"
+			status="Last Updated: 3 Days Ago" disabled show-action>
+		</px-accordion>
+		<text>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat.
+		</text>
+	</div>
+	<div class="sidebarBlock">
+		<px-accordion
+			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+			header-value="Package Details"
+			status="Last Updated: 3 Days Ago" disabled show-action>
+		</px-accordion>
+		<text>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat.
+		</text>
+	</div>
+	<div class="sidebarBlock">
+		<px-accordion
+			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+			header-value="Package Comments"
+			status="Last Updated: 3 Days Ago" disabled show-action>
+		</px-accordion>
+	</div>
 	<textarea>Enter Comment Here</textarea>
 </div>
 
@@ -136,116 +157,3 @@ function toggle(){
 </div>
 
 
-
-<!-- <px-timeline 
-enhanced timeline-data='[
-{
-"metaData":
-{
-
-},
-"content":
-{
-	"title":"Customer Information",
-	"bodyType":"LIST",
-	"body":
-	[
-		{
-			"key":"Topic 1",
-			"value":"Data Binding"
-		},
-		{
-			"key":"Topic 2",
-			"value":"Data Flow"
-		},
-		{
-			"key":"Topic 3",
-			"value":"Shadow Dom"
-		}
-	]
-}
-},
-{
-"metaData":
-{
-	"editedBy":"Polymer Team",
-	"editedDate":"2016-09-12 06:37:00-07"
-},
-"content":
-{
-	"title":"Shipping Details",
-	"bodyType":"LIST",
-	"body":
-	[
-		{
-			"key":"Topic 1",
-			"value":"Data Binding"
-		},
-		{
-			"key":"Topic 2",
-			"value":"Data Flow"
-		},
-		{
-			"key":"Topic 3",
-			"value":"Shadow Dom"
-		}
-	]
-}
-},
-{
-"metaData":
-{
-	"editedBy":"Package Details",
-	"editedDate":"2016-09-12 06:37:00-07"
-},
-"content":
-{
-	"title":"New Polycast",
-	"bodyType":"LIST",
-	"body":
-	[
-		{
-			"key":"Topic 1",
-			"value":"Data Binding"
-		},
-		{
-			"key":"Topic 2",
-			"value":"Data Flow"
-		},
-		{
-			"key":"Topic 3",
-			"value":"Shadow Dom"
-		}
-	]
-}
-},
-{
-"metaData":
-{
-	"editedBy":"Package Comments",
-	"editedDate":"2016-09-12 06:37:00-07"
-},
-"content":
-{
-	"title":"New Polycast",
-	"bodyType":"LIST",
-	"body":
-	[
-		{
-			"key":"Topic 1",
-			"value":"Data Binding"
-		},
-		{
-			"key":"Topic 2",
-			"value":"Data Flow"
-		},
-		{
-			"key":"Topic 3",
-			"value":"Shadow Dom"
-		}
-	]
-}
-}
-]'
-date-format="MMM D, YYYY HH:MM">
-</px-timeline> -->
