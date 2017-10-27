@@ -13,7 +13,7 @@ function toggle(){
 </div>
 
 <div class="leftCustomerBar">
-	<div>
+	<div style="padding:1em">
 		<px-typeahead placeholder="Enter your search query"
 					  local-candidates='[]'
 					  prefetch-url="https://www.predix-ui.com/px-typeahead/px-typeahead/countries.json">
@@ -79,7 +79,7 @@ function toggle(){
 </div>
 
 
-<div style="margin-left:20%;margin-top:38px;width:50%;background: white">
+<div class="steps">
 	<px-steps
 		items='[
 		{
@@ -105,7 +105,8 @@ function toggle(){
 		<px-accordion
 			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
 			header-value="Customer Information"
-			status="Last Updated: 3 Days Ago" disabled show-action>
+			status="" 
+			disabled show-action>
 		</px-accordion>
 		<text>
 			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -118,7 +119,8 @@ function toggle(){
 		<px-accordion
 			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
 			header-value="Shipping Details"
-			status="Last Updated: 3 Days Ago" disabled show-action>
+			status="" 
+			disabled show-action>
 		</px-accordion>
 		<text>
 			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -131,7 +133,8 @@ function toggle(){
 		<px-accordion
 			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
 			header-value="Package Details"
-			status="Last Updated: 3 Days Ago" disabled show-action>
+			status="" 
+			disabled show-action>
 		</px-accordion>
 		<text>
 			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -144,7 +147,8 @@ function toggle(){
 		<px-accordion
 			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
 			header-value="Package Comments"
-			status="Last Updated: 3 Days Ago" disabled show-action>
+			status="" 
+			disabled show-action>
 		</px-accordion>
 	</div>
 	<form class="form-horizontal">

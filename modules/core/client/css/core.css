@@ -73,21 +73,21 @@ a:hover .header-profile-image {
   border-left: 2px solid black; 
   display:block; 
   float:right; 
-  width:25%;
+  width:20%;
   position: fixed;
   bottom: 0;
   right: 0;
-  top: 4%;
+  top: 10%;
 }
 
 .leftCustomerBar{
   float:left; 
   width:15%;
-  border-right: 1px black solid;
   position: fixed;
   z-index: 1;
   background: white;
   top:4.2%;
+  left:0;
 }
 
 .btn{
@@ -100,9 +100,17 @@ a:hover .header-profile-image {
   height: 100%;
   position: fixed;
   right: 0;
-  top:4.2%;
+  top:10%;
   width:85%;
   z-index: -1;
+}
+
+.steps{
+  position:fixed;
+  right:0;
+  top:4.2%;
+  width:85%;
+  background: white;
 }
 
 /*.search{
@@ -135,6 +143,7 @@ textarea {
     border-radius: 4px;
     background-color: #f8f8f8;
     resize: none;
+    font-family: sans-serif;
 }
 
 px-accordion{
