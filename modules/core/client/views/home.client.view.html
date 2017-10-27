@@ -8,21 +8,26 @@ function toggle(){
     }        
 }
 </script>
-
-<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+<div class="branding">
+	<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+</div>
 
 <div class="leftCustomerBar">
-	<px-typeahead placeholder="Enter your search query"
-				  local-candidates='[]'
-				  prefetch-url="https://www.predix-ui.com/px-typeahead/px-typeahead/countries.json">
-	</px-typeahead>
+	<div>
+		<px-typeahead placeholder="Enter your search query"
+					  local-candidates='[]'
+					  prefetch-url="https://www.predix-ui.com/px-typeahead/px-typeahead/countries.json">
+		</px-typeahead>
+	</div>
 
 	<div class="btn-group">
   		<button for="id1" class="btn">Active</button>
  		<button for="id2" class="btn">Inactive</button>
  		<button for="id2" class="btn">All</button>
 	</div>
+</div>
 
+<div class="tree">
 	<px-tree style="margin-top: 95px;width: 15%;"
 	keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
 	items='[{
@@ -73,7 +78,8 @@ function toggle(){
 	</px-tree>
 </div>
 
-<div style="width:78%;">
+
+<div style="margin-left:20%;margin-top:38px;width:50%;background: white">
 	<px-steps
 		items='[
 		{
