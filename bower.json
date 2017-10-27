@@ -22,6 +22,9 @@
     "angular-google-maps": "^2.4.1",
     "google-map": "^2.0.2"
   },
+  "resolutions": {
+    "webcomponentsjs": "^0.7.0"
+  }, 
   "overrides": {
     "bootstrap": {
       "main": [
