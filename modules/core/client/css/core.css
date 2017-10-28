@@ -126,13 +126,10 @@ a:hover .header-profile-image {
   text-align: center;
   width: 100%;
 }
-<<<<<<< HEAD
 
-body{
-  background: #000;
-}
-=======
+
 */
+
 .sidebarBlock{
   border-top:1px solid black;
   border-top:1px solid black;
@@ -160,9 +157,3 @@ body{
   background: #000;
 }
 
-/*px-accordion{
-  --px-headings-heading-subsection-color: 0x000;  
-  --px-headings-heading-subsection-background: 0x000;
-}*/
-
->>>>>>> refs/remotes/origin/kassandra
