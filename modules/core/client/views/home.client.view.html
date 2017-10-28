@@ -3,22 +3,20 @@
 	<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
 
-<div class="leftCustomerBar">
-	<div style="padding:1em">
-		<px-typeahead placeholder="Enter your search query"
-					  local-candidates='[]'
-					  prefetch-url="https://www.predix-ui.com/px-typeahead/px-typeahead/countries.json">
-		</px-typeahead>
-	</div>
+<!-- implement the left hand menu bar using tree-->
+<div class="tree">
+	<!-- implement the search bar -->
+	<input class="search" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Customer">
+	
 
+	<!-- implement the buttons Active, Inactive, All -->
 	<div class="btn-group">
   		<button for="id1" class="btn">Active</button>
  		<button for="id2" class="btn">Inactive</button>
  		<button for="id2" class="btn">All</button>
 	</div>
-</div>
-
-<div class="tree">
+	
+	<!-- customer listings using predix tree -->
 	<px-tree
 	keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
 	items='[{
