@@ -1,78 +1,78 @@
 'use strict';
 
 /**
- * Module dependencies
+ * Module dependencies.
  */
 var path = require('path'),
   mongoose = require('mongoose'),
   Customer = mongoose.model('Customer'),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+  _ = require('lodash');
 
 /**
- * Create an customer
+ * Create a Customer
  */
-exports.create = function (req, res) {
+exports.create = function(req, res) {
   var customer = new Customer(req.body);
   customer.user = req.user;
 
-  customer.save(function (err) {
+  customer.save(function(err) {
     if (err) {
-      return res.status(422).send({
+      return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(customer);
+      res.jsonp(customer);
     }
   });
 };
 
 /**
- * Show the current customer
+ * Show the current Customer
  */
-exports.read = function (req, res) {
+exports.read = function(req, res) {
   // convert mongoose document to JSON
   var customer = req.customer ? req.customer.toJSON() : {};
 
-  // Add a custom field to the Customer, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Customer model.
-  customer.isCurrentUserOwner = !!(req.user && customer.user && customer.user._id.toString() === req.user._id.toString());
+  // Add a custom field to the Article, for determining if the current User is the "owner".
+  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
+  customer.isCurrentUserOwner = req.user && customer.user && customer.user._id.toString() === req.user._id.toString();
 
-  res.json(customer);
+  res.jsonp(customer);
 };
 
 /**
- * Update an customer
+ * Update a Customer
  */
-exports.update = function (req, res) {
+exports.update = function(req, res) {
   var customer = req.customer;
 
-  customer.title = req.body.title;
-  customer.content = req.body.content;
+  customer = _.extend(customer, req.body);
 
-  customer.save(function (err) {
+  customer.save(function(err) {
     if (err) {
-      return res.status(422).send({
+      return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(customer);
+      res.jsonp(customer);
     }
   });
 };
 
 /**
- * Delete an customer
+ * Delete an Customer
  */
-exports.delete = function (req, res) {
+exports.delete = function(req, res) {
   var customer = req.customer;
 
-  customer.remove(function (err) {
+  customer.remove(function(err) {
     if (err) {
-      return res.status(422).send({
+      return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(customer);
+      res.jsonp(customer);
     }
   });
 };
@@ -80,14 +80,14 @@ exports.delete = function (req, res) {
 /**
  * List of Customers
  */
-exports.list = function (req, res) {
-  Customer.find().sort('-created').populate('user', 'displayName').exec(function (err, customers) {
+exports.list = function(req, res) {
+  Customer.find().sort('-created').populate('user', 'displayName').exec(function(err, customers) {
     if (err) {
-      return res.status(422).send({
+      return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(customers);
+      res.jsonp(customers);
     }
   });
 };
@@ -95,7 +95,7 @@ exports.list = function (req, res) {
 /**
  * Customer middleware
  */
-exports.customerByID = function (req, res, next, id) {
+exports.customerByID = function(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
@@ -108,7 +108,7 @@ exports.customerByID = function (req, res, next, id) {
       return next(err);
     } else if (!customer) {
       return res.status(404).send({
-        message: 'No customer with that identifier has been found'
+        message: 'No Customer with that identifier has been found'
       });
     }
     req.customer = customer;
