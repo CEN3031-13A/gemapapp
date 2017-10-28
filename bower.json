@@ -22,8 +22,11 @@
     "px-inbox": "^2.2.3",
     "px-timeline": "^1.0.7",
     "angular-google-maps": "^2.4.1",
-    "google-map": "^2.0.2"
-
+    "google-map": "^2.0.2",
+    "px-tooltip": "^1.0.5",
+    "px-accordion": "^1.0.7",
+    "px-steps": "^1.0.3",
+    "px-typeahead": "^2.0.8"
   },
   "overrides": {
     "bootstrap": {
