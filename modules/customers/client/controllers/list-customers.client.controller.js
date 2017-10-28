@@ -5,12 +5,19 @@
     .module('customers')
     .controller('CustomersListController', CustomersListController);
 
-  CustomersListController.$inject = ['CustomersService', '$scope'];
+  CustomersListController.$inject = ['CustomersService'];
 
-  function CustomersListController(CustomersService, $scope) {
+  function CustomersListController(CustomersService) {
     var vm = this;
+    var tempCustomers = CustomersService.query();
+    
+    //console.log(tempCustomers);
+    vm.customers = tempCustomers;
+    // var check = JSON.parse(tempCustomers)
+    //vm.orders = tempCustomers[0].orders;
+    console.log(tempCustomers);
 
-    vm.customers = CustomersService.query();
-    $scope.customers = vm.customers;
+    // console.log(check);
+    //console.log(vm.orders);
   }
 }());
