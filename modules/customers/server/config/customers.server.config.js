@@ -7,8 +7,8 @@ var path = require('path'),
   config = require(path.resolve('./config/config'));
 
 /**
- * Module init function.
+ * Customers module init function.
  */
-module.exports = function (app) {
+module.exports = function (app, db) {
 
 };

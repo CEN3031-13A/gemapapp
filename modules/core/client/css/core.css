@@ -9,14 +9,15 @@
 .layout{
     padding-left: 1rem;
 }
+
 .layout .layout__item{
-    background: #2c404c;
     float:left;
     padding-left: 0;
     height: 96.9vh;
 }
 
 .tracking{
+    background: white;
     height:3em !important;
     margin-left: auto;
     margin-right: auto;
@@ -24,13 +25,14 @@
 }
 
 .rightSidebar{
+    background: white;
     border-left: 2px solid black;
-    color: white;
     float:right !important;
     z-index: 1;
 }
 
 .leftCustomerBar{
+    background: #2c404c;
     color: white;
     z-index: 1;
 }
