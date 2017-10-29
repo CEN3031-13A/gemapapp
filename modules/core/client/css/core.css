@@ -50,7 +50,7 @@ body{
 /*----------Button Styling----------*/
 .btn{
   height:3em;
-  width:32%;
+  width:31%;
 }
 
 /*branding bar*/
@@ -112,12 +112,24 @@ body{
   z-index: 6;
 }
 
+#info{
+  display: block;
+  font-size:24px;
+  margin:auto;
+  width: 0;
+}
+
+.popup{
+  width: 175px;
+  height: 175px;
+}
+
 /*----------Right side detailed info----------*/
 .rightSidebar{
   background: white;
   border-left: 2px solid black; 
   bottom: 0;
-  display:block; 
+  display:none; 
   float:right; 
   padding-right:10px;
   position: fixed;
