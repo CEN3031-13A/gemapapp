@@ -3,6 +3,7 @@
   <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
 
+<px-spinner ng-init="loading()" finished="false" style="z-index: 900000;"></px-spinner>
 <!-- implement the left hand menu bar using tree-->
 <div class="tree">
   <!-- implement the search bar -->
@@ -103,7 +104,9 @@
         }
       ]
    }]' 
-   multi-activate>
+   multi-activate
+   selectedMeta
+   selectedRoute>
    </px-tree>
 </div>
 
@@ -134,24 +137,21 @@
     <px-accordion
       icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
       header-value="Customer Information"
-      status="" 
-      disabled show-action>
+      status="">
+        <p>
+          <strong>Name: </strong>{{vm.customers[0].name}}<br />
+          <strong>Email: </strong>{{vm.customers[0].email}}<br />
+          <strong>Phone: </strong>{{vm.customers[0].phone}}<br />
+          <strong>Address: </strong>{{vm.customers[0].address}}<br />
+        </p>
     </px-accordion>
-    <p>
-        <strong>Name: </strong>{{vm.customers[0].name}}<br />
-        <strong>Email: </strong>{{vm.customers[0].email}}<br />
-        <strong>Phone: </strong>{{vm.customers[0].phone}}<br />
-        <strong>Address: </strong>{{vm.customers[0].address}}<br />
-    </p>
   </div>
   <div class="sidebarBlock">
     <px-accordion
       icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
       header-value="Shipping Details"
-      status="" 
-      disabled show-action>
-    </px-accordion>
-    <p>
+      status="">
+      <p>
         <script type="text/javascript">
           var singleShipment = vm.customers[0].orders[0].shipments[0];
         </script>
@@ -172,15 +172,15 @@
               {{vm.customers[0].orders[0].shipments[0].expected_date}}<br />
         <strong>Status: </strong><strong>what is this?</strong><br />
     </p>
+    </px-accordion>
+    
   </div>
   <div class="sidebarBlock">
     <px-accordion
       icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
       header-value="Package Details"
-      status="" 
-      disabled show-action>
-    </px-accordion>
-    <p>
+      status="">
+      <p>
         <script type="text/javascript">
           var singleShipment = vm.customers[0].orders[0].shipment[0];
         </script>
@@ -192,6 +192,8 @@
         <strong>Description: </strong><br />
               Idk what we wanna put here<br />
     </p>
+    </px-accordion>
+    
   </div>
   <div class="sidebarBlock">
     <px-accordion
@@ -229,6 +231,7 @@
 <link rel="import" href="../../../../../lib/px-tooltip/px-tooltip.html" />
 <link rel="import" href="../../../../../lib/px-tree/px-tree.html"/>
 <link rel="import" href="../../../../../lib/px-typeahead/px-typeahead.html" />
+<link rel="import" href="../../../../../lib/px-spinner/px-spinner.html" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="../../../../../lib/webcomponentsjs/webcomponents.js"></script>
 <link rel="import" href="../../../../../lib/google-map/google-map.html" />

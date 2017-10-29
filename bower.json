@@ -25,7 +25,8 @@
     "px-steps": "^1.0.3",
     "px-timeline": "^1.0.7",
     "px-tree": "^2.0.3",
-    "px-typeahead": "^2.0.8"
+    "px-typeahead": "^2.0.8",
+    "px-spinner": "^2.1.0"
   },
   "resolutions": {
     "webcomponentsjs": "^0.7.0"
