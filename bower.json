@@ -20,7 +20,8 @@
     "px-map": "^2.1.4",
     "px-tree": "^2.0.3",
     "angular-google-maps": "^2.4.1",
-    "google-map": "^2.0.2"
+    "google-map": "^2.0.2",
+    "px-starter-kit-design": "^1.0.1"
   },
   "overrides": {
     "bootstrap": {
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "px-widths-design": "^1.0.2",
-    "px-layout-design": "^1.0.1"
+    "px-layout-design": "^1.0.1",
+    "px-starter-kit-design": "^1.0.1"
   }
 }
