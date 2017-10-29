@@ -23,6 +23,9 @@
     "google-map": "^2.0.2",
     "px-starter-kit-design": "^1.0.1"
   },
+  "resolutions": {
+    "webcomponentsjs": "^0.7.0"
+  }, 
   "overrides": {
     "bootstrap": {
       "main": [
