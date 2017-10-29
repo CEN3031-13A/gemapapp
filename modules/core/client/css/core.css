@@ -59,7 +59,7 @@ body{
   position: fixed;
   right:0;
   top: 0;
-  z-index: 1;
+  z-index: 9;
 }
 
 /*----------Left side menu----------*/
@@ -72,7 +72,7 @@ body{
   border-top:0;
   color:white;
   font-family: "GE Inspira Sans",sans-serif;
-  height:2.9em;
+  height:4vh;
   padding:0.33333rem;
   text-align: center;
   width: 100%;
@@ -88,28 +88,28 @@ body{
   overflow-x: hidden;
   position: fixed;
   top: 4.2%;
-  width: 15%;
-  z-index: -1;
+  width: 15vw;
+  z-index: 8;
 }
 
 /*----------Elements in the center----------*/
 .steps{
   background: white;
+  border-bottom: 2px solid black;
   position:fixed;
   right:0;
   top:4.2%;
-  width:85%;
-  z-index: -2;
+  width:84.9vw;
+  z-index: 7;
 }
 
 .map{
-  border-top: 2px solid black;
   bottom: 0;
   position: fixed;
   right: 0;
-  top:5.05rem;
+  top:9.5vh;
   width:85%;
-  z-index: -2;
+  z-index: 6;
 }
 
 /*----------Right side detailed info----------*/
@@ -119,12 +119,12 @@ body{
   bottom: 0;
   display:block; 
   float:right; 
-  padding-left:10px;
   padding-right:10px;
   position: fixed;
   right: 0;
-  top: 10%;
+  top: 9.5vh;
   width:20%;
+  z-index: 7;
 }
 
 .sidebarBlock{

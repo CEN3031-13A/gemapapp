@@ -1,4 +1,5 @@
 
+<!-- Implement the Predix Branding Bar -->
 <div class="branding">
 	<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
@@ -11,12 +12,12 @@
 
 	<!-- implement the buttons Active, Inactive, All -->
 	<div class="btn-group">
-  		<button for="id1" class="btn">Active</button>
+  	<button for="id1" class="btn">Active</button>
  		<button for="id2" class="btn">Inactive</button>
  		<button for="id2" class="btn">All</button>
 	</div>
 	
-	<!-- customer listings using predix tree -->
+	<!-- implement customer listings using predix tree -->
 	<px-tree
 	keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
 	items='[{
@@ -88,7 +89,7 @@
 	</px-steps>
 </div>
 
-<div class="rightSidebar" id="makeDisappear">
+<div class="rightSidebar" id="hide">
 	
 	<div class="sidebarBlock">
 		<px-accordion
@@ -145,23 +146,23 @@
 	</form>	
 </div>
 
-<div>
+<!-- <div>
 	<px-tooltip for="btn1"
 				delay="50"
 				tooltip-message="Package Information"
 				orientation="top">
 	</px-tooltip>
 	<button id='btn1'>Information</button>
-</div>
+</div> -->
 
 <!-- implement map using Google Map -->
 <div class="map">
   <google-map latitude="29.6516" longitude="-82.3248" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
   <google-map-marker latitude="29.6516" longitude="-82.3248" draggable="true">
     <img src="image.png">
+    <button onclick="myFunction()">Detailed info</button>
     <h1>test1</h1>
     <p> a lot of words in order to test whether the size of the window will increase.</p>
   </google-map-marker>
 </google-map>
 </div>
-
