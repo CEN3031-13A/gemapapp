@@ -9,7 +9,6 @@
 
   function CustomersListController(CustomersService) {
     var vm = this;
-
     vm.customers = CustomersService.query();
   }
 }());
