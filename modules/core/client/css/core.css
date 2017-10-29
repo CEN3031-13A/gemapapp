@@ -27,6 +27,7 @@
 .rightSidebar{
     background: white;
     border-left: 2px solid black;
+    display:none;
     float:right !important;
     z-index: 1;
 }
@@ -36,6 +37,19 @@
     color: white;
     z-index: 1;
 }
+
+#info{
+  display: block;
+  font-size:24px;
+  margin:auto;
+  width: 0;
+}
+
+.popup{
+  width: 175px;
+  height: 175px;
+}
+
 
 .btn{
     width:32%;
@@ -51,13 +65,13 @@
 }
 
 textarea {
-    width: 100%;
-    height: 150px;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    resize: none;
-    font-family: sans-serif;
+  background-color: #f8f8f8;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  height: 150px;
+  padding: 12px 20px;
+  resize: none;
+  width: 100%;
 }
