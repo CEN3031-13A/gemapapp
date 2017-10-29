@@ -1,75 +1,44 @@
 <!-- Implement the Predix Branding Bar -->
+<!-- <a onload="test()"></a> -->
+
 <div class="branding">
   <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
 
+<!-- <div ng-app="customers" ng-controller="CustomersListController">
+  Fuck: <input ng-model="customers">
+  <h1>{{customers}}</h1>
+</div> -->
 <!-- implement the left hand menu bar using tree-->
 <div class="tree">
   <!-- implement the search bar -->
-  <input class="search" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Customer">
-  
+  <input class="search" type="text" id="myInput"  placeholder="Search Customer">
+  <span ng-bind="vm.test1"></span>
 
   <!-- implement the buttons Active, Inactive, All -->
   <div class="btn-group">
-      <button for="id1" class="btn">Active</button>
+      <button for="id1" onclick="pxTree()" class="btn">Active</button>
     <button for="id2" class="btn">Inactive</button>
-    <button for="id2" class="btn">All</button>
+    <button for="id2" onclick="pxTree()" class="btn">All</button>
   </div>
   
   <!-- implement customer listings using predix tree -->
-  <px-tree
+  <div id="SOURCE" style="display:none;">
+  {{vm.customers}}
+  </div>
+  <div id="TREE">
+    <px-tree
   keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
-  items='[{
-        "label":"Customer 1",
-        "id":"Cust1",
-                "children":
-                [
-                    {"label":"order1","id":"o1"},
-                    {"label":"order2","id":"o2"}
-                ],
-                "children":
-                [
-                    {"label":"shipment1","id":"s1"},
-                    {"label":"shipment2","id":"s2"}
-                ]
-            },
-            {
-              "label":"Customer 2",
-              "id":"Cust2",
-              "icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-            {
-              "label":"Customer 3",
-              "id":"Cust3",
-              "icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-            {
-              "label":"Customer 4",
-              "id":"Cust4",
-              "icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-                {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
-                {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
-                {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
-                {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
-            ]'
+   items='[
+   {
+    "label":"No Customers Selected",
+    "id":"branch-0-3",
+    "isSelectable":false
+   }
+   ]'
             multi-activate>
   </px-tree>
+  </div>
 </div>
 
 
@@ -165,6 +134,7 @@
 
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <link rel="import" href="../../../../../lib/px-accordion/px-accordion.html" />
 <link rel="import" href="../../../../../lib/px-branding-bar/px-branding-bar.html"/>
@@ -176,7 +146,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="../../../../../lib/webcomponentsjs/webcomponents.js"></script>
 <link rel="import" href="../../../../../lib/google-map/google-map.html" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
 
 <!-- <section>
   <div class="page-header">

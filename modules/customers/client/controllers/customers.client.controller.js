@@ -17,6 +17,7 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+    vm.test1 = test1;
 
     // Remove existing Customer
     function remove() {
@@ -47,6 +48,10 @@
 
       function errorCallback(res) {
         vm.error = res.data.message;
+      }
+
+      function test1() {
+        console.log("HELLO");
       }
     }
   }
