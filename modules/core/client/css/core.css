@@ -11,7 +11,7 @@
 }
 .layout .layout__item{
     background: #2c404c;
-    float:left !important;
+    float:left;
     padding-left: 0;
     height: 96.9vh;
 }
@@ -26,7 +26,7 @@
 .rightSidebar{
     border-left: 2px solid black;
     color: white;
-    right:0;
+    float:right !important;
     z-index: 1;
 }
 

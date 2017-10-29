@@ -103,72 +103,72 @@ function check
        ]'
        completed='["1","2"]'>
     </px-steps>
+    <div class="layout__item u-1/4 rightSidebar" id="makeDisappear">
+      <div class="sidebarBlock">
+	<px-accordion
+	   icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+	   header-value="Customer Information"
+	   status="" 
+	   disabled show-action>
+	</px-accordion>
+	<text>
+	  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	  consequat.
+	</text>
+      </div>
+      <div class="sidebarBlock">
+	<px-accordion
+	   icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+	   header-value="Shipping Details"
+	   status="" 
+	   disabled show-action>
+	</px-accordion>
+	<text>
+	  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	  consequat.
+	</text>
+      </div>
+      <div class="sidebarBlock">
+	<px-accordion
+	   icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+	   header-value="Package Details"
+	   status="" 
+	   disabled show-action>
+	</px-accordion>
+	<text>
+	  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	  consequat.
+	</text>
+      </div>
+      <div class="sidebarBlock">
+	<px-accordion
+	   icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+	   header-value="Package Comments"
+	   status="" 
+	   disabled show-action>
+	</px-accordion>
+      </div>
+      <form class="form-horizontal">
+	<textarea class="form-control" rows="3" placeholder="Enter comment here"></textarea>
+      </form>
+
+      <div>
+	<px-tooltip for="btn1"
+		    delay="50"
+		    tooltip-message="Package Information"
+		    orientation="top">
+	</px-tooltip>
+	<button id='btn1'>Information</button>
+      </div>
+    </div>
   </div>
   
-  <div class="layout__item u-1/4 rightSidebar" id="makeDisappear">
-    <div class="sidebarBlock">
-      <px-accordion
-	 icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-	 header-value="Customer Information"
-	 status="" 
-	 disabled show-action>
-      </px-accordion>
-      <text>
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-	consequat.
-      </text>
-    </div>
-    <div class="sidebarBlock">
-      <px-accordion
-	 icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-	 header-value="Shipping Details"
-	 status="" 
-	 disabled show-action>
-      </px-accordion>
-      <text>
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-	consequat.
-      </text>
-    </div>
-    <div class="sidebarBlock">
-      <px-accordion
-	 icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-	 header-value="Package Details"
-	 status="" 
-	 disabled show-action>
-      </px-accordion>
-      <text>
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-	consequat.
-      </text>
-    </div>
-    <div class="sidebarBlock">
-      <px-accordion
-	 icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-	 header-value="Package Comments"
-	 status="" 
-	 disabled show-action>
-      </px-accordion>
-    </div>
-    <form class="form-horizontal">
-      <textarea class="form-control" rows="3" placeholder="Enter comment here"></textarea>
-    </form>
-
-    <div>
-      <px-tooltip for="btn1"
-		  delay="50"
-		  tooltip-message="Package Information"
-		  orientation="top">
-      </px-tooltip>
-      <button id='btn1'>Information</button>
-    </div>
-  </div>
   <div class="map">
     <google-map latitude="29.6516" longitude="-82.3248" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
       <google-map-marker latitude="29.6516" longitude="-82.3248" draggable="true">
