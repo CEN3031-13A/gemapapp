@@ -1,0 +1,28 @@
+// Settings
+@import "../../../../public/lib/px-colors-design/_settings.colors.scss";
+
+// Tools
+
+// Generic
+@import "../../../../public/lib/px-normalize-design/_generic.normalize.scss";
+@import "../../../../public/lib/px-box-sizing-design/_generic.box-sizing.scss";
+@import "../../../../public/lib/px-helpers-design/_generic.helpers.scss";
+
+// Base
+@import "../../../../public/lib/px-flexbox-design/_base.flexbox.scss";
+@import "../../../../public/lib/px-viewport-design/_base.viewport.scss";
+
+// Meta
+
+// Objects
+@import '../../../../public/lib/px-layout-design/_objects.layout.scss';
+
+// Component
+// Your css goes in here
+.layout layout_item{
+    float: left;
+}
+
+// Trumps
+@import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
+@import "../../../../public/lib/px-widths-responsive-design/_trumps.widths-responsive.scss";
