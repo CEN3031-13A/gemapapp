@@ -40,6 +40,7 @@
   "devDependencies": {
     "px-widths-design": "^1.0.2",
     "px-layout-design": "^1.0.1",
-    "px-starter-kit-design": "^1.0.1"
+    "px-starter-kit-design": "^1.0.1",
+    "px-box-sizing-design": "^1.0.2"
   }
 }
