@@ -6,7 +6,7 @@
 var customersPolicy = require('../policies/customers.server.policy'),
   customers = require('../controllers/customers.server.controller');
 
-module.exports = function(app) {
+module.exports = function (app) {
   // Customers Routes
   app.route('/api/customers').all(customersPolicy.isAllowed)
     .get(customers.list)
