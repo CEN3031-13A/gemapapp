@@ -17,59 +17,94 @@
   </div>
   
   <!-- implement customer listings using predix tree -->
-  <px-tree
-  keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
-  items='[{
-        "label":"Customer 1",
-        "id":"Cust1",
-                "children":
-                [
-                    {"label":"order1","id":"o1"},
-                    {"label":"order2","id":"o2"}
-                ],
-                "children":
-                [
-                    {"label":"shipment1","id":"s1"},
-                    {"label":"shipment2","id":"s2"}
-                ]
-            },
-            {
-              "label":"Customer 2",
-              "id":"Cust2",
-              "icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-            {
-              "label":"Customer 3",
-              "id":"Cust3",
-              "icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-            {
-              "label":"Customer 4",
-              "id":"Cust4",
-              "icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-                {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
-                {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
-                {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
-                {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
-            ]'
-            multi-activate>
-  </px-tree>
+  <px-tree keys='{"id":"id","label":"label","children":"children","icon":"icon"}' 
+   items='[
+   {
+    "label":"Customer 1",
+    "id":"branch-0-3",
+    "isSelectable":false,
+    "children":
+      [
+        {
+          "label":"Order 1",
+          "id":"branch-1-1",
+          "isSelectable":false,
+          "children":
+            [
+              {
+                "label":"Shipment 1",
+                "id":"leaf-2-0"
+              },
+              {
+                "label":"Shipment 2",
+                "id":"leaf-2-1"
+              },
+              {
+                "label":"Shipment 3",
+                "id":"leaf-2-2"
+              }
+            ]
+        },
+        {
+          "label":"Order 2",
+          "id":"branch-1-1",
+          "isSelectable":false,
+          "children":
+            [
+              {
+                "label":"Shipment 1",
+                "id":"leaf-2-0"
+              },
+              {
+                "label":"Shipment 2",
+                "id":"leaf-2-1"
+              },
+              {
+                "label":"Shipment 3",
+                "id":"leaf-2-2"
+              },
+              {
+                "label":"Shipment 4",
+                "id":"leaf-2-3"
+              }
+            ]
+        }
+      ]
+   },
+   {
+    "label":"Customer 2",
+    "id":"branch-0-3",
+    "isSelectable":false,
+    "children":
+      [
+        {
+          "label":"Order 1",
+          "id":"branch-1-1",
+          "isSelectable":false,
+          "children":
+            [
+              {
+                "label":"Shipment 1",
+                "id":"leaf-2-0"
+              },
+              {
+                "label":"Shipment 2",
+                "id":"leaf-2-1"
+              },
+              {
+                "label":"Shipment 3",
+                "id":"leaf-2-2"
+              },
+              {
+                "label":"Shipment 4",
+                "id":"leaf-2-3"
+              }
+            ]
+        }
+      ]
+   }]' 
+   multi-activate>
+   </px-tree>
 </div>
 
 
