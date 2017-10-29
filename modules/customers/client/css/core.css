@@ -129,7 +129,7 @@ body{
   background: white;
   border-left: 2px solid black; 
   bottom: 0;
-  display:none; 
+  display:block; 
   float:right; 
   padding-right:10px;
   position: fixed;
