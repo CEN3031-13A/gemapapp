@@ -3,7 +3,9 @@
   <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
 
-<px-spinner ng-init="loading()" finished="false" style="z-index: 900000;"></px-spinner>
+<div>
+  <px-spinner finished="false" style="z-index: 900000;"></px-spinner>
+</div>
 <!-- implement the left hand menu bar using tree-->
 <div class="tree">
   <!-- implement the search bar -->
@@ -11,8 +13,8 @@
   
 
   <!-- implement the buttons Active, Inactive, All -->
-  <div class="btn-group">
-      <button for="id1" class="btn">Active</button>
+  <div class="btn-group" >
+      <button for="id1" class="btn" onclick="loading()">Active</button>
     <button for="id2" class="btn">Inactive</button>
     <button for="id2" class="btn">All</button>
   </div>
