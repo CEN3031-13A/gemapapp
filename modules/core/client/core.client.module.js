@@ -6,3 +6,4 @@
   app.registerModule('core.admin', ['core']);
   app.registerModule('core.admin.routes', ['ui.router']);
 }(ApplicationConfiguration));
+
