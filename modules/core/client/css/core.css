@@ -97,7 +97,6 @@ a:hover .header-profile-image {
 
 .map{
   bottom: 0;
-  height: 100%;
   position: fixed;
   right: 0;
   top:10%;
@@ -127,6 +126,7 @@ a:hover .header-profile-image {
   text-align: center;
   width: 100%;
 }
+<<<<<<< HEAD
 */
 .sidebarBlock{
   border-top:1px solid black;
@@ -160,3 +160,9 @@ body{
   --px-headings-heading-subsection-background: 0x000;
 }*/
 
+=======
+
+body{
+  background: #000;
+}
+>>>>>>> refs/remotes/origin/develop

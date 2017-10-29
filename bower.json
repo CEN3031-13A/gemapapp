@@ -28,6 +28,9 @@
     "px-steps": "^1.0.3",
     "px-typeahead": "^2.0.8"
   },
+  "resolutions": {
+    "webcomponentsjs": "^0.7.0"
+  }, 
   "overrides": {
     "bootstrap": {
       "main": [
