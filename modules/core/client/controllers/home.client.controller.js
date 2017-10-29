@@ -7,5 +7,6 @@
 
   function HomeController($location) {
     var vm = this;
+    $location.path('/map');
   }
 }());
