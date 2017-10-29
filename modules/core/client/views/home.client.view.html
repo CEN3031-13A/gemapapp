@@ -1,175 +1,181 @@
 <script type="text/javascript">
 function toggle(){
-    var off=document.getElementById('makeDisappear');
-    if (off.style.display == "none") {
-        off.style.display = "block";
-    } else {
-        off.style.display = "none";
-    }        
+  var off=document.getElementById('makeDisappear');
+  if (off.style.display == "none") {
+    off.style.display = "block";
+  } else {
+    off.style.display = "none";
+  }
 }
+function check
 </script>
 <div class="branding">
 	<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
 
-<div class="leftCustomerBar">
-	<div style="padding:1em">
-		<px-typeahead placeholder="Enter your search query"
-					  local-candidates='[]'
-					  prefetch-url="https://www.predix-ui.com/px-typeahead/px-typeahead/countries.json">
-		</px-typeahead>
-	</div>
+<div class="layout">
+  <div class="layout__item u-1/6 leftCustomerBar">
+    <div style="padding:1em" class="search">
+      <px-typeahead placeholder="Enter your search query"
+		    local-candidates='[]'
+		    prefetch-url="https://www.predix-ui.com/px-typeahead/px-typeahead/countries.json">
+      </px-typeahead>
+    </div>
 
-	<div class="btn-group">
-  		<button for="id1" class="btn">Active</button>
- 		<button for="id2" class="btn">Inactive</button>
- 		<button for="id2" class="btn">All</button>
-	</div>
+    <div class="btn-group">
+      <input id="id1" name="btn-group" type="radio" checked>
+      <label for="id1" class="btn btn--small">All</label>
+      <input id="id2" name="btn-group" type="radio">
+      <label for="id2" class="btn btn--small">Active</label>
+      <input id="id3" name="btn-group"  type="radio">
+      <label for="id3" class="btn btn--small">Inactive</label>
+    </div>
+
+    <hr>
+    
+    <div>
+      <px-tree
+	 keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
+	 items='[{
+	 "label":"Customer 1",
+	 "id":"Cust1",
+	 "icon":"px-fea:asset",
+	 "children":
+	 [
+	 {"label":"Shipment 1","id":"s1"},
+	 {"label":"Shipment 2","id":"s1"}
+	 ]
+	 },
+	 {
+	 "label":"Customer 2",
+	 "id":"Cust2",
+	 "icon":"px-fea:asset",
+	 "children":
+	 [
+	 {"label":"Shipment 1","id":"s1"},
+	 {"label":"Shipment 2","id":"s1"}
+	 ]
+	 },
+	 {
+	 "label":"Customer 3",
+	 "id":"Cust3",
+	 "icon":"px-fea:asset",
+	 "children":
+	 [
+	 {"label":"Shipment 1","id":"s1"},
+	 {"label":"Shipment 2","id":"s1"}
+	 ]
+	 },
+	 {
+	 "label":"Customer 4",
+	 "id":"Cust4",
+	 "icon":"px-fea:asset",
+	 "children":
+	 [
+	 {"label":"Shipment 1","id":"s1"},
+	 {"label":"Shipment 2","id":"s1"}
+	 ]
+	 },
+	 {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
+	 {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
+	 {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
+	 {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
+	 ]'>
+      </px-tree>
+    </div>
+  </div>
+
+  <div class="layout__item tracking">
+    <px-steps
+       items='[
+       {
+       "id":"1",
+       "label":"(FROM)"
+       },
+       {
+       "id":"2",
+       "label":"(CURRENT)"
+       },
+       {
+       "id":"3",
+       "label":"(TO)"
+       }
+       ]'
+       completed='["1","2"]'>
+    </px-steps>
+  </div>
+  
+  <div class="layout__item u-1/4 rightSidebar" id="makeDisappear">
+    <div class="sidebarBlock">
+      <px-accordion
+	 icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+	 header-value="Customer Information"
+	 status="" 
+	 disabled show-action>
+      </px-accordion>
+      <text>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat.
+      </text>
+    </div>
+    <div class="sidebarBlock">
+      <px-accordion
+	 icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+	 header-value="Shipping Details"
+	 status="" 
+	 disabled show-action>
+      </px-accordion>
+      <text>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat.
+      </text>
+    </div>
+    <div class="sidebarBlock">
+      <px-accordion
+	 icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+	 header-value="Package Details"
+	 status="" 
+	 disabled show-action>
+      </px-accordion>
+      <text>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat.
+      </text>
+    </div>
+    <div class="sidebarBlock">
+      <px-accordion
+	 icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+	 header-value="Package Comments"
+	 status="" 
+	 disabled show-action>
+      </px-accordion>
+    </div>
+    <form class="form-horizontal">
+      <textarea class="form-control" rows="3" placeholder="Enter comment here"></textarea>
+    </form>
+
+    <div>
+      <px-tooltip for="btn1"
+		  delay="50"
+		  tooltip-message="Package Information"
+		  orientation="top">
+      </px-tooltip>
+      <button id='btn1'>Information</button>
+    </div>
+  </div>
+  <div class="map">
+    <google-map latitude="29.6516" longitude="-82.3248" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+      <google-map-marker latitude="29.6516" longitude="-82.3248" draggable="true">
+	<img src="image.png">
+	<h1>test1</h1>
+	<p> a lot of words in order to test whether the size of the window will increase.</p>
+      </google-map-marker>
+    </google-map>
+  </div>
 </div>
-
-<div class="u-desk-m u-desk-p">
-	<px-tree 
-	keys='{"id":"id","label":"label","Orders":"orders","Shipments":"shipments"}'
-	items='[{
-				"label":"Customer 1",
-				"id":"Cust1",
-				"icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-            {
-            	"label":"Customer 2",
-            	"id":"Cust2",
-            	"icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-            {
-            	"label":"Customer 3",
-            	"id":"Cust3",
-            	"icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-            {
-            	"label":"Customer 4",
-            	"id":"Cust4",
-            	"icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-                {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
-                {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
-                {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
-                {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
-            ]'>
-	</px-tree>
-</div>
-
-<div class="steps">
-	<px-steps
-		items='[
-		{
-			"id":"1",
-			"label":"(FROM)"
-		},
-		{
-			"id":"2",
-			"label":"(CURRENT)"
-		},
-		{
-			"id":"3",
-			"label":"(TO)"
-		}
-		]'
-		completed='["1","2"]'>
-	</px-steps>
-</div>
-
-<div class="rightSidebar" id="makeDisappear">
-	
-	<div class="sidebarBlock">
-		<px-accordion
-			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-			header-value="Customer Information"
-			status="" 
-			disabled show-action>
-		</px-accordion>
-		<text>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat.
-		</text>
-	</div>
-	<div class="sidebarBlock">
-		<px-accordion
-			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-			header-value="Shipping Details"
-			status="" 
-			disabled show-action>
-		</px-accordion>
-		<text>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat.
-		</text>
-	</div>
-	<div class="sidebarBlock">
-		<px-accordion
-			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-			header-value="Package Details"
-			status="" 
-			disabled show-action>
-		</px-accordion>
-		<text>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat.
-		</text>
-	</div>
-	<div class="sidebarBlock">
-		<px-accordion
-			icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-			header-value="Package Comments"
-			status="" 
-			disabled show-action>
-		</px-accordion>
-	</div>
-	<form class="form-horizontal">
-		<textarea class="form-control" rows="3" placeholder="Enter comment here"></textarea>
-	</form>	
-</div>
-
-<div>
-	<px-tooltip for="btn1"
-				delay="50"
-				tooltip-message="Package Information"
-				orientation="top">
-	</px-tooltip>
-	<button id='btn1'>Information</button>
-</div>
-
-<!-- implement map using Google Map -->
-<div class="map">
-  <google-map latitude="29.6516" longitude="-82.3248" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-  <google-map-marker latitude="29.6516" longitude="-82.3248" draggable="true">
-    <img src="image.png">
-    <h1>test1</h1>
-    <p> a lot of words in order to test whether the size of the window will increase.</p>
-  </google-map-marker>
-</google-map>
