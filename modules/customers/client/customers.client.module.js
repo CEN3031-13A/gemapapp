@@ -21,13 +21,75 @@ function myFunction() {
   }
 }
 
-function searchCustomers(str){
-  for(i=0;i<customerList.length;i++){
-    regularExpression = '/' + str + '/';
-    if(customerList[i].name.search(regularExpression) == -1)
-      
+function searchCustomers(){
+  str =  document.getElementById("myInput").value;
+  if(str == ""){
+    pxTreeSearch(customerList);
+    return;
   }
+
+  var customerListSearch =[];
+  for(i=0;i<customerList.length;i++){
+    regularExpression = new RegExp(str);
+    if(customerList[i].name.search(regularExpression) != -1)
+      customerListSearch.push(customerList[i]);
+  }
+  pxTreeSearch(customerListSearch)
 }
+
+function pxTreeSearch(customerListSearch) {
+  
+  customerListSearch.sort(function(a, b) {
+    if (a.name.toUpperCase() < b.name.toUpperCase())
+      return -1;
+    if (a.name.toUpperCase() > b.name.toUpperCase())
+      return 1;
+    return 0;
+  });
+  var string = "<px-tree keys=\'{\"id\":\"id\",\"label\":\"label\",\"children\":\"children\"}\'";
+  string+="items=\'["
+  for(i=0;i<customerListSearch.length;i++){
+    string+="{\"label\":\"";
+    string+=customerListSearch[i].name;
+    string+="\",";
+    string+="\"id\":\"";
+    string+=customerListSearch[i]._id;
+    string+="\",\"isSelectable\": false,\"children\":[";
+    strcheck0 = string;
+    for(j=0;j<customerListSearch[i].orders.length;j++){
+      string+="{\"label\":\"Order #";
+      string+=customerListSearch[i].orders[j].index+1;
+      string+="\",";
+      string+="\"id\":\"";
+      string+=customerListSearch[i].orders[j].id;
+      string+="\",\"isSelectable\": false,\"children\":[";
+      strcheck1 = string;
+      for(k=0;k<customerListSearch[i].orders[j].shipments.length;k++){
+        string+="{\"label\":\"";
+        //string+=customers[i].orders[j].shipments[k].ship_date;
+        string+="Shipment #"+ (k+1);
+        string+="\",\"id\":\"";
+        string+=customerListSearch[i].orders[j].shipments[k].id;
+        string+="\"},"
+      }
+      if(strcheck1 != string)
+        string = string.substring(0, string.length-1);
+      string+="]},";
+    }
+    if(strcheck1 != string)
+      string = string.substring(0, string.length-1);
+    string+="]},";
+  }
+  string = string.substring(0, string.length-1);
+  string+="]\' onclick=\'getItemData()\'>";
+  string+="</px-tree>";
+
+  document.getElementById("TREE").innerHTML = string;
+
+}
+
+
+
 
 function getItemData(){
 	var customers = JSON.parse(document.getElementById("SOURCE").innerHTML);
