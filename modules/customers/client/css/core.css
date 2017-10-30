@@ -1015,19 +1015,23 @@ a {
   background: #2c404c;
   color: white;
   font-family: "GE Inspira Sans",sans-serif;
+  border-right: 1px solid black;
   height: 100%;
   position: fixed;
-  width: 15vw; }
+  width: 15vw;
+  border-top: 1px solid black; }
 
 .tree {
   background: #2c404c;
   color: white;
+  font-family: "GE Inspira Sans",sans-serif;
   height: 100%;
   position: fixed;
   padding-top: 12.5vh;
   width: 15vw; }
 
 .map {
+  border-top: 1px solid black;
   bottom: 0;
   position: fixed;
   right: 0;
@@ -1046,15 +1050,14 @@ a {
 
 .steps {
   background: white;
-  right: 0;
   width: 60vw; }
 
 /*----------Right side detailed info----------*/
 .rightSidebar {
   background: white;
-  border-left: 2px solid black;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
   bottom: 0;
-  padding-right: 10px;
   position: fixed;
   right: 0;
   top: 12.0vh;
@@ -1062,7 +1065,6 @@ a {
   z-index: 7; }
 
 .sidebarBlock {
-  border-top: 1px solid black;
   padding: 1em; }
 
 px-accordion {
