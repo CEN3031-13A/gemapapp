@@ -1253,6 +1253,472 @@ a {
         .layout > .layout__item {
           flex-basis: 0; } }
 
+/**
+ * A series of helper classes to use arbitrarily. Only use a helper class if an
+ * element/component doesn’t already have a class to which you could apply this
+ * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
+ * that ruleset as opposed to adding the `.float--left` class to the markup.
+ *
+ * A lot of these classes carry `!important` as you will always want them to win
+ * out over other selectors.
+ */
+/*------------------------------------*\
+    #PX-COLORS-DESIGN
+\*------------------------------------*/
+/**
+ * Neutral Palette (gray20 is darkest, gray1 is lightest)
+ */
+/**
+* Define grey = gray to avoid dev typos
+*/
+/**
+ * Actionable Palette
+ */
+/**
+ * Selection Palette
+ */
+/**
+ * Dark Actionable Palette
+ */
+/**
+ * Alerts and Status
+ */
+/**
+ * Data Visualization
+ */
+/**
+ * Orange
+ */
+/**
+ * Yellow
+ */
+/**
+ * Yellow Green
+ */
+/**
+ * Green
+ */
+/**
+ * Teal
+ */
+/**
+ * Aqua
+ */
+/**
+ * Cyan
+ */
+/**
+ * Blue
+ */
+/**
+ * Violet
+ */
+/**
+ * Purple
+ */
+/**
+ * Pink
+ */
+/**
+ * Red
+ */
+/**
+ * Brown
+ */
+/**
+ * Gray
+ */
+/**
+ * Define grey = gray to avoid dev typos
+ */
+/**
+ * Salmon
+ */
+/* Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+a {
+  background-color: transparent;
+  /**
+   * Default link colors
+   */
+  /**
+   * Improve readability when focused and also mouse hovered in all browsers.
+   */ }
+  a:link, a:visited {
+    color: #007acc; }
+  a:hover {
+    color: #005c99; }
+  a:active {
+    color: #003d66; }
+  a:active, a:hover {
+    outline: 0; }
+
+/**
+ * Add/remove floats
+ */
+.float--right {
+  float: right !important; }
+
+.float--left {
+  float: left !important; }
+
+.float--none {
+  float: none !important; }
+
+/**
+ * Text alignment
+ */
+.text--left {
+  text-align: left !important; }
+
+.text--center {
+  text-align: center !important; }
+
+.text--right {
+  text-align: right !important; }
+
+/**
+ * Full height element
+ */
+.full-height {
+  height: 100% !important; }
+
+/**
+ * Add a help cursor to any element that gives the user extra information on
+ * `:hover`.
+ */
+.informative {
+  cursor: help !important; }
+
+/**
+ * Add a pointer cursor to any element, useful for on-click events
+ */
+.pointer {
+  cursor: pointer !important; }
+
+/**
+ * Mute an object by reducing its opacity.
+ */
+.muted {
+  opacity: 0.5 !important; }
+
+/**
+ * Align items to the right where they imply progression/movement forward, e.g.:
+ *
+ * <p class=proceed><a href=#>Read more...</a></p>
+ *
+ */
+.proceed {
+  text-align: right !important; }
+
+/**
+ * Apply capital case to an element (usually a `strong`).
+ */
+.caps {
+  text-transform: uppercase !important; }
+
+/**
+ * Hide visually and from screen readers:
+ * http://juicystudio.com/article/screen-readers-display-none.php
+ */
+.hidden {
+  display: none !important;
+  visibility: hidden; }
+
+/**
+ * Hide content off-screen without resorting to `display:none;`
+ */
+.a11y,
+.visuallyhidden {
+  position: absolute !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  clip: rect(0 0 0 0) !important; }
+
+.a11y.focusable:active, .a11y.focusable:focus,
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  position: static;
+  overflow: visible;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip: auto; }
+
+@media screen and (min-width: 48rem) and (max-width: 63.9rem) {
+  .a11y-lap,
+  .visuallyhidden-lap {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; } }
+@media screen and (max-width: 63.9rem) {
+  .a11y-portable,
+  .visuallyhidden-portable {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; } }
+@media screen and (min-width: 63.9rem) {
+  .a11y-desk,
+  .visuallyhidden-desk {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; } }
+@media screen and (min-width: 100%) {
+  .a11y-desk-wide,
+  .visuallyhidden-desk-wide {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; } }
+@media screen and (max-width: 47.9em) {
+  .a11y-palm,
+  .visuallyhidden-palm {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; } }
+@media screen and (min-width: 48em) {
+  .a11y-lap-and-up,
+  .visuallyhidden-lap-and-up {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; } }
+@media screen and (min-width: 64em) {
+  .a11y-desk-and-up,
+  .visuallyhidden-desk-and-up {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; } }
+@media screen and (min-width: 120em) {
+  .a11y-large-and-up,
+  .visuallyhidden-large-and-up {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; } }
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .a11y-retina,
+  .visuallyhidden-retina {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; } }
+/**
+ * Hide visually and from screen readers, but maintain layout
+ */
+.invisible {
+  visibility: hidden !important; }
+
+/**
+ * Truncate text with an ellipsis
+ */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+/*------------------------------------*\
+    #PX-COLORS-DESIGN
+\*------------------------------------*/
+/**
+ * Neutral Palette (gray20 is darkest, gray1 is lightest)
+ */
+/**
+* Define grey = gray to avoid dev typos
+*/
+/**
+ * Actionable Palette
+ */
+/**
+ * Selection Palette
+ */
+/**
+ * Dark Actionable Palette
+ */
+/**
+ * Alerts and Status
+ */
+/**
+ * Data Visualization
+ */
+/**
+ * Orange
+ */
+/**
+ * Yellow
+ */
+/**
+ * Yellow Green
+ */
+/**
+ * Green
+ */
+/**
+ * Teal
+ */
+/**
+ * Aqua
+ */
+/**
+ * Cyan
+ */
+/**
+ * Blue
+ */
+/**
+ * Violet
+ */
+/**
+ * Purple
+ */
+/**
+ * Pink
+ */
+/**
+ * Red
+ */
+/**
+ * Brown
+ */
+/**
+ * Gray
+ */
+/**
+ * Define grey = gray to avoid dev typos
+ */
+/**
+ * Salmon
+ */
+.btn {
+  display: inline-block;
+  overflow: visible;
+  height: var(--px-btn-height, 2em);
+  min-width: var(--px-btn-min-width, 4.6666666667em);
+  margin: 0;
+  border: 1px solid var(--px-btn-border-color, transparent);
+  border-radius: 0 !important;
+  padding: 0 calc(var(--px-btn-height, 2em) / 2);
+  box-shadow: var(--px-btn-shadow--light, none);
+  font: inherit;
+  line-height: calc(var(--px-btn-height, 2em) - 2px);
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+  background-color: var(--px-btn-background, #d8e0e5);
+  transition: background .4s, border-color .4s, color .4s; }
+  .btn, .btn:link, .btn:visited, .btn:hover, .btn:active {
+    color: var(--px-btn-color, #2c404c); }
+  .btn:hover, .btn:focus {
+    border-color: var(--px-btn-border-color--hover, transparent);
+    box-shadow: var(--px-btn-shadow, none);
+    background-color: var(--px-btn-background--hover, #a3b5bf); }
+  .btn:active {
+    border-color: var(--px-btn-border-color--pressed, transparent);
+    box-shadow: none;
+    background-color: var(--px-btn-background--pressed, #889aa5); }
+  .btn:active {
+    outline: none; }
+
+@-moz-document url-prefix() {
+  .btn:not(button) {
+    line-height: 1.8em; } }
+button.btn {
+  -webkit-appearance: button; }
+
+.btn + .btn {
+  margin-left: 0.6666666667rem; }
+
+.btn--disabled, .btn--disabled:link, .btn--disabled:visited, .btn--disabled:hover, .btn--disabled:active, .btn--disabled:focus,
+.btn[disabled],
+.btn[disabled]:link,
+.btn[disabled]:visited,
+.btn[disabled]:hover,
+.btn[disabled]:active,
+.btn[disabled]:focus {
+  color: var(--px-btn-disabled-color, rgba(0, 0, 0, 0.2));
+  border: 1px solid;
+  border-color: var(--px-btn-disabled-border-color, rgba(0, 0, 0, 0.2));
+  box-shadow: none;
+  background-color: var(--px-btn-disabled-background, transparent);
+  pointer-events: none; }
+
+.btn-group {
+  display: flex; }
+  .btn-group input {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    clip: rect(0 0 0 0) !important; }
+  .btn-group .btn {
+    border-radius: 0;
+    -webkit-appearance: inherit;
+    border-radius: 0; }
+    .btn-group .btn ~ .btn {
+      margin-left: 1px; }
+  .btn-group :checked + .btn {
+    border-color: var(--px-btn-group-border-color, transparent);
+    box-shadow: var(--px-btn-shadow--light, none);
+    color: var(--px-btn-group-text-color, white);
+    background: var(--px-btn-group-background-color, #09819c); }
+  .btn-group :checked + .btn--disabled {
+    border-color: var(--px-btn-disabled-border-color, rgba(0, 0, 0, 0.2));
+    border: 1px solid; }
+
 #TREE {
   background: #2c404c;
   color: white;
@@ -1261,7 +1727,7 @@ a {
   height: 100%;
   overflow-y: auto;
   position: fixed;
-  width: 15vw;
+  width: 17.5vw;
   border-top: 1px solid black; }
 
 .tree {
@@ -1270,7 +1736,7 @@ a {
   font-family: "GE Inspira Sans",sans-serif;
   height: 100%;
   padding-top: 12.5vh;
-  width: 15vw; }
+  width: 17.5vw; }
 
 .map {
   border-top: 1px solid black;
@@ -1278,7 +1744,7 @@ a {
   position: fixed;
   right: 0;
   top: 12.0vh;
-  width: 85%; }
+  width: 78%; }
 
 #info {
   display: block;
@@ -1308,6 +1774,7 @@ a {
   z-index: 7; }
 
 .sidebarBlock {
+  padding-top: 0.25em;
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 1em; }
