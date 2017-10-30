@@ -11,6 +11,7 @@
 // Base
 @import "../../../../public/lib/px-flexbox-design/_base.flexbox.scss";
 @import "../../../../public/lib/px-viewport-design/_base.viewport.scss";
+@import "../../../../public/lib/px-forms-design/_base.forms.scss";
 
 // Meta
 
@@ -81,7 +82,9 @@
 }
 
 .sidebarBlock{
-  padding: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
 }
 
 px-accordion{

@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "px-widths-design": "^1.0.2",
-    "px-layout-design": "^1.0.1"
+    "px-layout-design": "^1.0.1",
+    "px-forms-design": "^2.0.6"
   }
 }
