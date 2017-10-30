@@ -1,175 +1,155 @@
-<!-- Implement the Predix Branding Bar -->
-<div class="branding">
-  <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+
+<div class="layout">
+    <div class="layout__item">
+      <div class="tree">
+        <!-- implement the search bar -->
+        <input class="search" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Customer">
+        <!-- implement the buttons Active, Inactive, All -->
+        <div class="btn-group" >
+          <button for="id1" class="btn" onclick="getItemData()">Active</button>
+          <button for="id2" class="btn" onclick="pxTree()">Inactive</button>
+          <button for="id2" class="btn" onclick="pxTree()">All</button>
+        </div>
+      </div>
+        <!-- implement customer listings using predix tree -->
+        <div id="SOURCE" style="display:none;">
+          {{vm.customers}}
+        </div>
+    </div>
+    <div class="layout__item">
+      <div class="steps" id="STEPS">
+        <px-steps
+          items='[
+          {
+            "id":"1",
+            "label":"(FROM)"
+          },
+          {
+            "id":"2",
+            "label":"(CURRENT)"
+          },
+          {
+            "id":"3",
+            "label":"(TO)"
+          }
+          ]'
+          completed='["1","2"]'>
+        </px-steps>
+      </div>
+    </div>
+    <div class="layout__item">
+                      <div class="rightSidebar" id="hide">  
+                  <div class="sidebarBlock">
+                    <px-accordion
+                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+                      header-value="Customer Information"
+                      status="">
+                        <div id="CUSTOMER_INFO">
+                          <strong>Name: </strong>{{vm.customers[0].name}}<br />
+                          <strong>Email: </strong>{{vm.customers[0].email}}<br />
+                          <strong>Phone: </strong>{{vm.customers[0].phone}}<br />
+                          <strong>Address: </strong>{{vm.customers[0].address}}<br />
+                        </div>
+                    </px-accordion>
+                  </div>
+                  <div class="sidebarBlock">
+                    <px-accordion
+                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+                      header-value="Shipping Details"
+                      status="">
+                      <div id="SHIPPING_DETAILS">
+                        <strong>Tracking Number: </strong>
+                              <text>{{vm.customers[0].orders[0].shipments[0].id}}</text><br />
+                        <strong>Carrier: </strong>
+                              {{vm.customers[0].orders[0].shipments[0].carrier}}<br />
+                        <strong>Destination: </strong><br />
+                              <text>Latitude: {{vm.customers[0].orders[0].shipments[0].destination.latitude}}</text><br />
+                              <text>Longitude: {{vm.customers[0].orders[0].shipments[0].destination.latitude}}</text><br />
+                        <strong>Current Location: </strong><br />
+                              <text>Latitude: {{vm.customers[0].orders[0].shipments[0].current_location.latitude}}</text><br />
+                              <text>Longitude: {{vm.customers[0].orders[0].shipments[0].current_location.longitude}}</text><br />
+                        <strong>Shipped: </strong>
+                              {{vm.customers[0].orders[0].shipments[0].ship_date}}<br />
+                        <strong>Expected Arrival: </strong>
+                              {{vm.customers[0].orders[0].shipments[0].expected_date}}<br />
+                        <strong>Status: </strong><strong>what is this?</strong><br />
+                    </div>
+                    </px-accordion>
+
+                  </div>
+                  <div class="sidebarBlock">
+                    <px-accordion
+                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+                      header-value="Package Details"
+                      status="">
+                      <div id="PACKAGE_COMMENTS">
+                        <strong>Order Placed (Id): </strong>
+                              {{vm.customers[0].orders[0].shipments[0].ship_date}}<br />
+                        <strong>Shipment Contents: </strong><br />
+                              <text ng-repeat="content in vm.customers[0].orders[0].shipments[0].contents">
+                                {{content}}<br /></text><br />
+                        <strong>Description: </strong><br />
+                              {{vm.customers[0].about}}<br />
+                      </div>
+                    </px-accordion>
+
+                  </div>
+                  <div class="sidebarBlock">
+                    <px-accordion
+                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+                      header-value="Package Comments"
+                      status="" 
+                      disabled show-action>
+                    </px-accordion>
+                  </div>
+                  <form class="form-horizontal">
+                    <textarea class="form-control" rows="3" placeholder="Enter comment here"></textarea>
+                  </form> 
+                </div>
+  </div>
 </div>
 
-<!-- implement the left hand menu bar using tree-->
-<div class="tree">
-  <!-- implement the search bar -->
-  <input class="search" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Customer">
-  
-
-  <!-- implement the buttons Active, Inactive, All -->
-  <div class="btn-group">
-      <button for="id1" class="btn">Active</button>
-    <button for="id2" class="btn">Inactive</button>
-    <button for="id2" class="btn">All</button>
-  </div>
-  
-  <!-- implement customer listings using predix tree -->
-  <px-tree
-  keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
-  items='[{
-        "label":"Customer 1",
-        "id":"Cust1",
-                "children":
-                [
-                    {"label":"order1","id":"o1"},
-                    {"label":"order2","id":"o2"}
-                ],
-                "children":
-                [
-                    {"label":"shipment1","id":"s1"},
-                    {"label":"shipment2","id":"s2"}
-                ]
-            },
-            {
-              "label":"Customer 2",
-              "id":"Cust2",
-              "icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-            {
-              "label":"Customer 3",
-              "id":"Cust3",
-              "icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-            {
-              "label":"Customer 4",
-              "id":"Cust4",
-              "icon":"px-fea:asset",
-                "children":
-                [
-                    {"label":"Shipment 1","id":"s1"},
-                    {"label":"Shipment 2","id":"s1"}
-                ]
-            },
-                {"label":"Customer 5","id":"Cust5","icon":"px-fea:asset"},
-                {"label":"Customer 6","id":"Cust6","icon":"px-fea:asset"},
-                {"label":"Customer 7","id":"Cust7","icon":"px-fea:asset"},
-                {"label":"Customer 8","id":"Cust8","icon":"px-fea:asset"}
-            ]'
-            multi-activate>
-  </px-tree>
-</div>
-
-
-<div class="steps">
-  <px-steps
-    items='[
-    {
-      "id":"1",
-      "label":"(FROM)"
-    },
-    {
-      "id":"2",
-      "label":"(CURRENT)"
-    },
-    {
-      "id":"3",
-      "label":"(TO)"
-    }
-    ]'
-    completed='["1","2"]'>
-  </px-steps>
-</div>
-
-<div class="rightSidebar" id="hide">
-  
-  <div class="sidebarBlock">
-    <px-accordion
-      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-      header-value="Customer Information"
-      status="" 
-      disabled show-action>
-    </px-accordion>
-    <text>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.
-    </text>
-  </div>
-  <div class="sidebarBlock">
-    <px-accordion
-      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-      header-value="Shipping Details"
-      status="" 
-      disabled show-action>
-    </px-accordion>
-    <text>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.
-    </text>
-  </div>
-  <div class="sidebarBlock">
-    <px-accordion
-      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-      header-value="Package Details"
-      status="" 
-      disabled show-action>
-    </px-accordion>
-    <text>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.
-    </text>
-  </div>
-  <div class="sidebarBlock">
-    <px-accordion
-      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-      header-value="Package Comments"
-      status="" 
-      disabled show-action>
-    </px-accordion>
-  </div>
-  <form class="form-horizontal">
-    <textarea class="form-control" rows="3" placeholder="Enter comment here"></textarea>
-  </form> 
-</div>
-
-<div class="map">
-  <google-map latitude="29.6516" longitude="-82.3248" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-  <google-map-marker latitude="29.6516" longitude="-82.3248" draggable="true">
-    <div class="popup">
-      <img src="image.png">
-      <h1>test1</h1>
-      <p> a lot of words in order to test whether the size of the window will increase.</p>
-      <i class="fa fa-info-circle" id="info" onclick="myFunction()"></i>
-  </div>  
-  </google-map-marker>
-</google-map>
+<div class="layout">
+    <div class="layout__item">
+                <div id="TREE">
+            <px-tree
+          keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
+           items='[
+           {
+            "label":"No Customers Selected",
+            "id":"branch-0-3",
+            "isSelectable": false
+           }
+           ]'
+          multi-activate>
+          </px-tree>
+        </div>
+    </div>
+    <div class="layout__item">
+            <div class="map" id="MAP_MARKERS">
+        <google-map zoom="2" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+        <google-map-marker latitude="29.6516" longitude="-82.3248" draggable="true">
+          <div class="popup">
+            <img src="image.png">
+            <h1>test1</h1>
+            <p> a lot of words in order to test whether the size of the window will increase.</p>
+            <i class="fa fa-info-circle" id="info" onclick="myFunction()"></i> 
+          </div>
+        </google-map-marker>
+      </google-map>
+      </div>
+    </div>
 </div>
 
 <!--Predix Import Links-->
-<link rel="import" href="../../../../../lib/px-accordion/px-accordion.html" />
 <link rel="import" href="../../../../../lib/px-branding-bar/px-branding-bar.html"/>
 <link rel="import" href="../../../../../lib/px-steps/px-steps.html" />
+<link rel="import" href="../../../../../lib/px-accordion/px-accordion.html" />
 <link rel="import" href="../../../../../lib/px-tree/px-tree.html"/>
-<link rel="import" href="../../../../../lib/px-typeahead/px-typeahead.html" />
 
 <!--Google Maps Scripts and Links-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="../../../../../lib/webcomponentsjs/webcomponents.js"></script>
 <link rel="import" href="../../../../../lib/google-map/google-map.html" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
