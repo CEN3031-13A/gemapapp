@@ -1,0 +1,92 @@
+// Settings
+@import "../../../../public/lib/px-colors-design/_settings.colors.scss";
+
+// Tools
+
+// Generic
+@import "../../../../public/lib/px-normalize-design/_generic.normalize.scss";
+@import "../../../../public/lib/px-box-sizing-design/_generic.box-sizing.scss";
+@import "../../../../public/lib/px-helpers-design/_generic.helpers.scss";
+
+// Base
+@import "../../../../public/lib/px-flexbox-design/_base.flexbox.scss";
+@import "../../../../public/lib/px-viewport-design/_base.viewport.scss";
+
+// Meta
+
+// Objects
+@import "../../../../public/lib/px-layout-design/_objects.layout.scss";
+
+// Component
+// Your css goes in here
+.map{
+  bottom: 0;
+  position: fixed;
+  right: 0;
+  top:9.5vh;
+  width:85%;
+  z-index: 6;
+}
+
+#info{
+  display: block;
+  font-size:24px;
+  margin:auto;
+  width: 0;
+}
+
+.popup{
+  height: 175px;
+  width: 175px;
+}
+
+.steps{
+  background: white;
+  border-bottom: 2px solid black;
+  position:fixed;
+  right:0;
+  top:4.2%;
+  width:84.9vw;
+  z-index: 7;
+}
+
+/*----------Right side detailed info----------*/
+.rightSidebar{
+  background: white;
+  border-left: 2px solid black; 
+  bottom: 0;
+  display:block; 
+  float:right; 
+  padding-right:10px;
+  position: fixed;
+  right: 0;
+  top: 9.5vh;
+  width:20%;
+  z-index: 7;
+}
+
+.sidebarBlock{
+  border-top:1px solid black;
+  padding: 1em;
+}
+
+px-accordion{
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+textarea {
+  background-color: #f8f8f8;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  height: 150px;
+  padding: 12px 20px;
+  resize: none;
+  width: 100%;
+}
+
+// Trumps
+@import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
+@import "../../../../public/lib/px-widths-responsive-design/_trumps.widths-responsive.scss";
