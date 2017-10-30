@@ -25,6 +25,7 @@
   font-family: "GE Inspira Sans",sans-serif;
   border-right: 1px solid black; 
   height: 100%;
+  overflow-y: auto;
   position: fixed;
   width: 15vw;
   border-top: 1px solid black; 
@@ -35,7 +36,6 @@
   color: white;
   font-family: "GE Inspira Sans",sans-serif;
   height: 100%;
-  position: fixed;
   padding-top:12.5vh;
   width: 15vw;
 }
@@ -63,7 +63,7 @@
 
 .steps{
   background: white;
-  width:60vw;
+  width:50vw;
 }
 
 /*----------Right side detailed info----------*/
@@ -72,7 +72,7 @@
   border-top: 1px solid black; 
   border-left: 1px solid black; 
   bottom: 0;
-  //padding-right:10px;
+  overflow-y: auto;
   position: fixed;
   right: 0;
   top:12.0vh;
