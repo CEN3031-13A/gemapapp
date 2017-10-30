@@ -11,6 +11,9 @@ var customerIndex;
 var orderIndex;
 var shipmentIndex;
 var customerList =[];
+var activeCustomerList = [];
+var inactiveCustomerList = [];
+var activeInactiveState = "";
 
 function myFunction() {
   var x = document.getElementById('hide');
@@ -21,23 +24,76 @@ function myFunction() {
   }
 }
 
-function searchCustomers(){
-  str =  document.getElementById("myInput").value;
-  if(str == ""){
-    pxTreeSearch(customerList);
-    return;
-  }
-
-  var customerListSearch =[];
+function displayActive(){
+  document.getElementById("myInput").value="";
+  activeInactiveState = "Active";
+  activeCustomerList =[];
   for(i=0;i<customerList.length;i++){
-    regularExpression = new RegExp(str);
-    if(customerList[i].name.search(regularExpression) != -1)
-      customerListSearch.push(customerList[i]);
+    if(customerList[i].isActive == true)
+      activeCustomerList.push(customerList[i]);
   }
-  pxTreeSearch(customerListSearch)
+  pxTreeDisplay(activeCustomerList)
 }
 
-function pxTreeSearch(customerListSearch) {
+function displayInactive(){
+  document.getElementById("myInput").value="";
+  activeInactiveState = "Inactive";
+  inactiveCustomerList =[];
+  for(i=0;i<customerList.length;i++){
+    if(customerList[i].isActive == false)
+      inactiveCustomerList.push(customerList[i]);
+  }
+  pxTreeDisplay(inactiveCustomerList)
+}
+
+function displayAll(){
+  document.getElementById("myInput").value="";
+  activeInactiveState = "All";
+  pxTreeDisplay(customerList);
+}
+
+
+
+function searchCustomers(){
+  str =  document.getElementById("myInput").value;
+  customerListSearch =[];
+  if(activeInactiveState == 'Active'){
+    if(str == ""){
+      pxTreeDisplay(activeCustomerList);
+      return;
+    }
+    for(i=0;i<activeCustomerList.length;i++){
+      regularExpression = new RegExp(str, 'i');
+      if(activeCustomerList[i].name.search(regularExpression) != -1)
+        customerListSearch.push(activeCustomerList[i]);
+    }
+    pxTreeDisplay(customerListSearch)
+  }else if(activeInactiveState == 'Inactive'){
+    if(str == ""){
+      pxTreeDisplay(inactiveCustomerList);
+      return;
+    }
+    for(i=0;i<inactiveCustomerList.length;i++){
+      regularExpression = new RegExp(str, 'i');
+      if(inactiveCustomerList[i].name.search(regularExpression) != -1)
+        customerListSearch.push(inactiveCustomerList[i]);
+    }
+    pxTreeDisplay(customerListSearch)
+  }else{
+    if(str == ""){
+      pxTreeDisplay(customerList);
+      return;
+    }
+    for(i=0;i<customerList.length;i++){
+      regularExpression = new RegExp(str, 'i');
+      if(customerList[i].name.search(regularExpression) != -1)
+        customerListSearch.push(customerList[i]);
+    }
+    pxTreeDisplay(customerListSearch)  
+  }
+}
+
+function pxTreeDisplay(customerListSearch) {
   
   customerListSearch.sort(function(a, b) {
     if (a.name.toUpperCase() < b.name.toUpperCase())
@@ -120,9 +176,9 @@ function getItemData(){
 						if(shipmentID == customers[i].orders[j].shipments[k].id){
 							found = true;
 							shipment = customers[i].orders[j].shipments[k];
-							console.log(shipment.carrier);
-							console.log(shipment.current_location.latitude);
-							console.log(shipment.current_location.longitude);
+							// console.log(shipment.carrier);
+							// console.log(shipment.current_location.latitude);
+							// console.log(shipment.current_location.longitude);
 							customerIndex = i;
 							orderIndex = j;
 							shipmentIndex = k;
@@ -306,4 +362,5 @@ var myVar = setTimeout(myTimer, 1000);
 
 function myTimer() {
     pxTree();
+    console.log(customerList);
 }

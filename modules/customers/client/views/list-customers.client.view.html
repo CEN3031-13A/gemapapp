@@ -2,14 +2,14 @@
 
 <div class="layout">
     <div class="layout__item">
-      <div class="tree">
+      <div id="tree">
         <!-- implement the search bar -->
-        <input class="search" type="text" id="myInput" onkeyup="searchCustomers()" placeholder="Search Customer">
+        <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
         <!-- implement the buttons Active, Inactive, All -->
         <div class="btn-group" >
-          <button for="id1" class="btn" onclick="getItemData()">Active</button>
-          <button for="id2" class="btn" onclick="pxTree()">Inactive</button>
-          <button for="id2" class="btn" onclick="pxTree()">All</button>
+          <button for="id1" class="btn" onclick="displayActive()">Active</button>
+          <button for="id2" class="btn" onclick="displayInactive()">Inactive</button>
+          <button for="id2" class="btn" onclick="displayAll()">All</button>
         </div>
       </div>
         <!-- implement customer listings using predix tree -->
@@ -34,7 +34,7 @@
             "label":"(TO)"
           }
           ]'
-          completed='["1","2"]'>
+          completed='[]'>
         </px-steps>
       </div>
     </div>
@@ -102,10 +102,15 @@
                       status="" 
                       disabled show-action>
                     </px-accordion>
+                    <form>
+                      <div class="sidebarBlock">
+                          <input placeholder="Type something..." class="text-input input--regular" type="text">
+                      </div>
+                      <div class="sidebarBlock">
+                          <input class="btn btn--primary" type="reset" value="Submit">
+                      </div>
+                    </form>
                   </div>
-                  <form class="form-horizontal">
-                    <textarea class="form-control" rows="3" placeholder="Enter comment here"></textarea>
-                  </form> 
                 </div>
   </div>
 </div>
