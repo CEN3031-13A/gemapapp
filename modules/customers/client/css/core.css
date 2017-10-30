@@ -1069,7 +1069,12 @@ textarea {
   height: 150px;
   padding: 12px 20px;
   resize: none;
-  width: 100%; }
+  width: 100%;
+}
+
+text{
+  padding-left:2em;
+}
 
 /**
  * Margin and padding helper classes with breakpoint prefixes. Use these to tweak layout on a micro
