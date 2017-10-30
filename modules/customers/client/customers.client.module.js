@@ -69,7 +69,9 @@ function getItemData(){
 
 	pxSteps();
 	pxMapMarkers();
-	rightSidebar(customer, order, shipment);
+	customerInfo();
+	shippingDetails();
+	packageDetails();
 }
 
 function loading(){
@@ -168,25 +170,19 @@ function pxMapMarkers(){
     document.getElementById("MAP_MARKERS").innerHTML = string;
 }
 
-function rightSidebar(customer, order, shipment){
-	customerInfo();
-	shippingDetails();
-	packageDetails();
-}
-
 function customerInfo(){
-    var string = "<strong>Name: </strong>{{vm.customers[";
-    string += customerIndex;
-    string += "].name}}<br />";
-    string += "<strong>Email: </strong>{{vm.customers[";
-    string += customerIndex;
-    string += "].email}}<br />";
-    string += "<strong>Phone: </strong>{{vm.customers[";
-    string += customerIndex;
-    string += "].phone}}<br />";
-    string += "<strong>Address: </strong>{{vm.customers["
-    string += customerIndex;
-    string += "].address}}<br />";
+    var string = "<strong>Name: </strong>";
+    string += customer.name;
+    string += "<br />";
+    string += "<strong>Email: </strong>";
+    string += customer.email;
+    string += "<br />";
+    string += "<strong>Phone: </strong>";
+    string += customer.phone;
+    string += "<br />";
+    string += "<strong>Address: </strong>"
+    string += customer.address;
+    string += "<br />";
 	document.getElementById("CUSTOMER_INFO").innerHTML = string;
 }
 
