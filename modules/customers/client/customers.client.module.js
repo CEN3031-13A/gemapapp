@@ -79,7 +79,7 @@ function searchCustomers(){
         customerListSearch.push(inactiveCustomerList[i]);
     }
     pxTreeDisplay(customerListSearch)
-  }else if(activeInactiveState == 'All'){
+  }else{
     if(str == ""){
       pxTreeDisplay(customerList);
       return;
