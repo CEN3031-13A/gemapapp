@@ -288,22 +288,34 @@ function pxMapMarkers(){
 	string += shipment.current_location.latitude
 	string += "\" longitude=\"";
 	string += shipment.current_location.longitude;
-	string += "\" draggable=\"true\">";
-    string += "<div class=\"popup\"><img src=\"image.png\">";
-    string += "<h1>test1</h1>";
-    string += "<p> a lot of words in order to test whether the size of the window will increase.</p>";
-    string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
-    string += "<google-map-marker latitude=\"";
-	string += shipment.destination.latitude
-	string += "\" longitude=\"";
-	string += shipment.destination.longitude;
-	string += "\" draggable=\"true\">";
-    string += "<div class=\"popup\"><img src=\"image.png\">";
-    string += "<h1>test1</h1>";
-    string += "<p> a lot of words in order to test whether the size of the window will increase.</p>";
-    string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
-    string += "</google-map>";
-    document.getElementById("MAP_MARKERS").innerHTML = string;
+  string += "\"> <div class=\"popup\"><img src=\"image.png\">";
+	string += "<p><strong>Current Location: </strong><br />";
+	string += "<text>Latitude: ";
+	string += shipment.current_location.latitude + "</text><br />";
+  string += "<text>Longitude: ";
+  string += shipment.current_location.longitude + "</text><br /></p>";
+  string += "<p><strong>Shipped: </strong>";
+  string += shipment.ship_date + "<br />";
+  // string += "<strong>Expected Arrival: </strong>";
+  // string += shipment.expected_date +"<br /></p>";
+  string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
+  string += "<google-map-marker latitude=\"";
+  string += shipment.destination.latitude
+  string += "\" longitude=\"";
+  string += shipment.destination.longitude;
+  string += "\"> <div class=\"popup\"><img src=\"image.png\">";
+  string += "<p><strong>Destination: </strong><br />";
+  string += "<text>Latitude: ";
+  string += shipment.destination.latitude+"</text><br />";
+  string += "<text>Longitude: ";
+  string += shipment.destination.longitude+"</text><br /></p>";
+  // string += "<p><strong>Shipped: </strong>";
+  // string += shipment.ship_date + "<br />";
+  string += "<strong>Expected Arrival: </strong>";
+  string += shipment.expected_date +"<br /></p>";
+  string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
+  string += "</google-map>";
+  document.getElementById("MAP_MARKERS").innerHTML = string;
 }
 
 function customerInfo(){
