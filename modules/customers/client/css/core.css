@@ -1011,13 +1011,28 @@ a {
         .layout > .layout__item {
           flex-basis: 0; } }
 
+#TREE {
+  background: #2c404c;
+  color: white;
+  font-family: "GE Inspira Sans",sans-serif;
+  height: 100%;
+  position: fixed;
+  width: 15vw; }
+
+.tree {
+  background: #2c404c;
+  color: white;
+  height: 100%;
+  position: fixed;
+  padding-top: 12.5vh;
+  width: 15vw; }
+
 .map {
   bottom: 0;
   position: fixed;
   right: 0;
-  top: 9.5vh;
-  width: 85%;
-  z-index: 6; }
+  top: 12.0vh;
+  width: 85%; }
 
 #info {
   display: block;
@@ -1031,24 +1046,18 @@ a {
 
 .steps {
   background: white;
-  border-bottom: 2px solid black;
-  position: fixed;
   right: 0;
-  top: 4.2%;
-  width: 84.9vw;
-  z-index: 7; }
+  width: 60vw; }
 
 /*----------Right side detailed info----------*/
 .rightSidebar {
   background: white;
   border-left: 2px solid black;
   bottom: 0;
-  display: block;
-  float: right;
   padding-right: 10px;
   position: fixed;
   right: 0;
-  top: 9.5vh;
+  top: 12.0vh;
   width: 20%;
   z-index: 7; }
 
@@ -1069,12 +1078,7 @@ textarea {
   height: 150px;
   padding: 12px 20px;
   resize: none;
-  width: 100%;
-}
-
-text{
-  padding-left:2em;
-}
+  width: 100%; }
 
 /**
  * Margin and padding helper classes with breakpoint prefixes. Use these to tweak layout on a micro
