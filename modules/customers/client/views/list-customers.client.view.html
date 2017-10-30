@@ -14,106 +14,30 @@
 
   <!-- implement the buttons Active, Inactive, All -->
   <div class="btn-group" >
-      <button for="id1" class="btn" onclick="loading()">Active</button>
-    <button for="id2" class="btn">Inactive</button>
-    <button for="id2" class="btn">All</button>
+    <button for="id1" class="btn" onclick="getItemData()">Active</button>
+    <button for="id2" class="btn" onclick="pxTree()">Inactive</button>
+    <button for="id2" class="btn" onclick="pxTree()">All</button>
   </div>
   
   <!-- implement customer listings using predix tree -->
-  <px-tree keys='{"id":"id","label":"label","children":"children","icon":"icon"}' 
+  <div id="SOURCE" style="display:none;">
+  {{vm.customers}}
+  </div>
+  <div id="TREE">
+    <px-tree
+  keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
    items='[
    {
-    "label":"Customer 1",
+    "label":"No Customers Selected",
     "id":"branch-0-3",
-    "isSelectable":false,
-    "children":
-      [
-        {
-          "label":"Order 1",
-          "id":"branch-1-1",
-          "isSelectable":false,
-          "children":
-            [
-              {
-                "label":"Shipment 1",
-                "id":"leaf-2-0"
-              },
-              {
-                "label":"Shipment 2",
-                "id":"leaf-2-1"
-              },
-              {
-                "label":"Shipment 3",
-                "id":"leaf-2-2"
-              }
-            ]
-        },
-        {
-          "label":"Order 2",
-          "id":"branch-1-1",
-          "isSelectable":false,
-          "children":
-            [
-              {
-                "label":"Shipment 1",
-                "id":"leaf-2-0"
-              },
-              {
-                "label":"Shipment 2",
-                "id":"leaf-2-1"
-              },
-              {
-                "label":"Shipment 3",
-                "id":"leaf-2-2"
-              },
-              {
-                "label":"Shipment 4",
-                "id":"leaf-2-3"
-              }
-            ]
-        }
-      ]
-   },
-   {
-    "label":"Customer 2",
-    "id":"branch-0-3",
-    "isSelectable":false,
-    "children":
-      [
-        {
-          "label":"Order 1",
-          "id":"branch-1-1",
-          "isSelectable":false,
-          "children":
-            [
-              {
-                "label":"Shipment 1",
-                "id":"leaf-2-0"
-              },
-              {
-                "label":"Shipment 2",
-                "id":"leaf-2-1"
-              },
-              {
-                "label":"Shipment 3",
-                "id":"leaf-2-2"
-              },
-              {
-                "label":"Shipment 4",
-                "id":"leaf-2-3"
-              }
-            ]
-        }
-      ]
-   }]' 
-   multi-activate
-   selectedMeta
-   selectedRoute>
-   </px-tree>
+    "isSelectable":false
+   }
+   ]'
+  multi-activate>
+  </px-tree>
 </div>
 
-
-<div class="steps">
+<div class="steps" id="STEPS">
   <px-steps
     items='[
     {
@@ -133,19 +57,18 @@
   </px-steps>
 </div>
 
-<div class="rightSidebar" id="hide">
-  
+<div class="rightSidebar" id="hide">  
   <div class="sidebarBlock">
     <px-accordion
       icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
       header-value="Customer Information"
       status="">
-        <p>
+        <div id="CUSTOMER_INFO">
           <strong>Name: </strong>{{vm.customers[0].name}}<br />
           <strong>Email: </strong>{{vm.customers[0].email}}<br />
           <strong>Phone: </strong>{{vm.customers[0].phone}}<br />
           <strong>Address: </strong>{{vm.customers[0].address}}<br />
-        </p>
+        </div>
     </px-accordion>
   </div>
   <div class="sidebarBlock">
@@ -153,11 +76,7 @@
       icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
       header-value="Shipping Details"
       status="">
-      <p>
-        <script type="text/javascript">
-          var singleShipment = vm.customers[0].orders[0].shipments[0];
-        </script>
-
+      <div id="SHIPPING_DETAILS">
         <strong>Tracking Number: </strong>
               {{vm.customers[0].orders[0].shipments[0].id}}<br />
         <strong>Carrier: </strong>
@@ -173,7 +92,7 @@
         <strong>Expected Arrival: </strong>
               {{vm.customers[0].orders[0].shipments[0].expected_date}}<br />
         <strong>Status: </strong><strong>what is this?</strong><br />
-    </p>
+    </div>
     </px-accordion>
     
   </div>
@@ -182,18 +101,14 @@
       icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
       header-value="Package Details"
       status="">
-      <p>
-        <script type="text/javascript">
-          var singleShipment = vm.customers[0].orders[0].shipment[0];
-        </script>
-
+      <div id="PACKAGE_COMMENTS">
         <strong>Order Placed (Id): </strong>
               {{vm.customers[0].orders[0].shipments[0].id}}<br />
         <strong>Shipment Contents: </strong>
               {{vm.customers[0].orders[0].shipments[0].carrier}}<br />
         <strong>Description: </strong><br />
               Idk what we wanna put here<br />
-    </p>
+      </div>
     </px-accordion>
     
   </div>
@@ -210,15 +125,15 @@
   </form> 
 </div>
 
-<div class="map">
-  <google-map latitude="29.6516" longitude="-82.3248" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+<div class="map" id="MAP_MARKERS">
+  <google-map zoom="2" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
   <google-map-marker latitude="29.6516" longitude="-82.3248" draggable="true">
     <div class="popup">
       <img src="image.png">
       <h1>test1</h1>
       <p> a lot of words in order to test whether the size of the window will increase.</p>
-      <i class="fa fa-info-circle" id="info" onclick="myFunction()"></i>
-  </div>  
+      <i class="fa fa-info-circle" id="info" onclick="myFunction()"></i> 
+    </div>
   </google-map-marker>
 </google-map>
 </div>
