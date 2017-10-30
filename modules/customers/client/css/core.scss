@@ -21,6 +21,7 @@
 
 // Component
 // Your css goes in here
+
 #TREE{
   background: #2c404c;
   color: white;
@@ -38,6 +39,7 @@
   color: white;
   font-family: "GE Inspira Sans",sans-serif;
   height: 100%;
+  position:fixed;
   padding-top:12.5vh;
   width: 17.5vw;
 }
@@ -48,7 +50,7 @@
   position: fixed;
   right: 0;
   top:12.0vh;
-  width:78%;
+  width:82.5%;
 }
 
 #info{
@@ -84,9 +86,9 @@
 
 .sidebarBlock{
   padding-top: 0.25em;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-bottom: 1em;
+  padding-bottom: 0.25em;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
 }
 
 px-accordion{
