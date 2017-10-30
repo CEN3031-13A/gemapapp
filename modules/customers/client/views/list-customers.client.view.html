@@ -30,7 +30,7 @@
    {
     "label":"No Customers Selected",
     "id":"branch-0-3",
-    "isSelectable":false
+    "isSelectable": false
    }
    ]'
   multi-activate>
@@ -78,15 +78,15 @@
       status="">
       <div id="SHIPPING_DETAILS">
         <strong>Tracking Number: </strong>
-              {{vm.customers[0].orders[0].shipments[0].id}}<br />
+              <text>{{vm.customers[0].orders[0].shipments[0].id}}</text><br />
         <strong>Carrier: </strong>
               {{vm.customers[0].orders[0].shipments[0].carrier}}<br />
         <strong>Destination: </strong><br />
-              Latitude: {{vm.customers[0].orders[0].shipments[0].destination.latitude}}<br />
-              Longitude: {{vm.customers[0].orders[0].shipments[0].destination.latitude}}<br />
+              <text>Latitude: {{vm.customers[0].orders[0].shipments[0].destination.latitude}}</text><br />
+              <text>Longitude: {{vm.customers[0].orders[0].shipments[0].destination.latitude}}</text><br />
         <strong>Current Location: </strong><br />
-              Latitude: {{vm.customers[0].orders[0].shipments[0].current_location.latitude}}<br />
-              Longitude: {{vm.customers[0].orders[0].shipments[0].current_location.longitude}}<br />
+              <text>Latitude: {{vm.customers[0].orders[0].shipments[0].current_location.latitude}}</text><br />
+              <text>Longitude: {{vm.customers[0].orders[0].shipments[0].current_location.longitude}}</text><br />
         <strong>Shipped: </strong>
               {{vm.customers[0].orders[0].shipments[0].ship_date}}<br />
         <strong>Expected Arrival: </strong>
@@ -103,11 +103,12 @@
       status="">
       <div id="PACKAGE_COMMENTS">
         <strong>Order Placed (Id): </strong>
-              {{vm.customers[0].orders[0].shipments[0].id}}<br />
-        <strong>Shipment Contents: </strong>
-              {{vm.customers[0].orders[0].shipments[0].carrier}}<br />
+              {{vm.customers[0].orders[0].shipments[0].ship_date}}<br />
+        <strong>Shipment Contents: </strong><br />
+              <text ng-repeat="content in vm.customers[0].orders[0].shipments[0].contents">
+                {{content}}<br /></text><br />
         <strong>Description: </strong><br />
-              Idk what we wanna put here<br />
+              {{vm.customers[0].about}}<br />
       </div>
     </px-accordion>
     
@@ -137,7 +138,7 @@
   </google-map-marker>
 </google-map>
 </div>
-
+</body>
 
 
 

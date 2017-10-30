@@ -90,7 +90,7 @@ function pxTree() {
     string+="\",";
     string+="\"id\":\"";
     string+=customers[i]._id;
-    string+="\",\"children\":[";
+    string+="\",\"isSelectable\": false,\"children\":[";
     strcheck0 = string;
     for(j=0;j<customers[i].orders.length;j++){
       string+="{\"label\":\"Order #";
@@ -98,7 +98,7 @@ function pxTree() {
       string+="\",";
       string+="\"id\":\"";
       string+=customers[i].orders[j].id;
-      string+="\",\"children\":[";
+      string+="\",\"isSelectable\": false,\"children\":[";
       strcheck1 = string;
       for(k=0;k<customers[i].orders[j].shipments.length;k++){
         string+="{\"label\":\"";
@@ -187,54 +187,36 @@ function customerInfo(){
 }
 
 function shippingDetails(){
-	var string = "<strong>Tracking Number: </strong>";
-    string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].id}}<br />";
+	var string = "<strong>Tracking Number: </strong><text>";
+    string += shipment.id + "</text><br />";
     string += "<strong>Carrier: </strong>";
-    string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].carrier}}<br />";
+    string += shipment.carrier +"<br />";
     string += "<strong>Current Location: </strong><br />";
-	string += "Latitude: ";
-	string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].current_location.latitude}}<br />";
-    string += "Longitude: ";
-    string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].current_location.longitude}}<br />";
+	string += "<text>Latitude: ";
+	string += shipment.current_location.latitude + "</text><br />";
+    string += "<text>Longitude: ";
+    string += shipment.current_location.longitude + "</text><br />";
     string += "<strong>Destination: </strong><br />";
-	string += "Latitude: ";
-	string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].current_location.latitude}}<br />";
-    string += "Longitude: ";
-    string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].current_location.longitude}}<br />";
+	string += "<text>Latitude: ";
+	string += shipment.destination.latitude+"</text><br />";
+    string += "<text>Longitude: ";
+    string += shipment.destination.longitude+"</text><br />";
     string += "<strong>Shipped: </strong>";
-    string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].ship_date}}<br />";
+    string += shipment.ship_date + "<br />";
     string += "<strong>Expected Arrival: </strong>";
-    string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].expected_date}}<br />";
+    string += shipment.expected_date +"<br />";
     string += "<strong>Status: </strong><strong>what is this?</strong><br />";
 	document.getElementById("SHIPPING_DETAILS").innerHTML = string;
 }
 
 function packageDetails(){
 	var string = "<strong>Order Placed (Id): </strong>";
-	string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].id}}<br />";
+	string += shipment.ship_date;
+    string += "<br />";
     string += "<strong>Shipment Contents: </strong>";
-	string += "{{vm.customers[" + customerIndex +"]";
-    string += ".orders[" + orderIndex +"]";
-    string += ".shipments[" + shipmentID + "].carrier}}<br />";
+	string += shipment.contents;
+    string += "<br />";
     string += "<strong>Description: </strong><br />";
-    string += "Idk what we wanna put here<br />";
+    string += customer.about + "<br />";
 	document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
 }

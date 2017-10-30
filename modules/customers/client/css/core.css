@@ -160,3 +160,7 @@ textarea {
   resize: none;
   width: 100%;
 }
+
+text{
+  padding-left:2em;
+}
