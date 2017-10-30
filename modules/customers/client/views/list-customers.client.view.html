@@ -2,7 +2,7 @@
 
 <div class="layout">
     <div class="layout__item">
-      <div class="tree">
+      <div id="tree">
         <!-- implement the search bar -->
         <input class="search" type="text" id="myInput" onkeyup="searchCustomers()" placeholder="Search Customer">
         <!-- implement the buttons Active, Inactive, All -->
@@ -34,7 +34,7 @@
             "label":"(TO)"
           }
           ]'
-          completed='["1","2"]'>
+          completed='[]'>
         </px-steps>
       </div>
     </div>
@@ -102,10 +102,11 @@
                       status="" 
                       disabled show-action>
                     </px-accordion>
+                    <form>
+                      <input placeholder="Type something..." class="text-input input--regular" type="text">
+                      <input class="btn btn--primary" type="reset" value="Submit">
+                    </form>
                   </div>
-                  <form class="form-horizontal">
-                    <textarea class="form-control" rows="3" placeholder="Enter comment here"></textarea>
-                  </form> 
                 </div>
   </div>
 </div>
