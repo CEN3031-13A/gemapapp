@@ -10,6 +10,7 @@ var shipment;
 var customerIndex;
 var orderIndex;
 var shipmentIndex;
+var customerList =[];
 
 function myFunction() {
   var x = document.getElementById('hide');
@@ -17,6 +18,14 @@ function myFunction() {
     x.style.display = 'block';
   } else {
     x.style.display = 'none';
+  }
+}
+
+function searchCustomers(str){
+  for(i=0;i<customerList.length;i++){
+    regularExpression = '/' + str + '/';
+    if(customerList[i].name.search(regularExpression) == -1)
+      
   }
 }
 
@@ -82,9 +91,17 @@ function loading(){
 
 function pxTree() {
   var customers = JSON.parse(document.getElementById("SOURCE").innerHTML);
+  customers.sort(function(a, b) {
+    if (a.name.toUpperCase() < b.name.toUpperCase())
+      return -1;
+    if (a.name.toUpperCase() > b.name.toUpperCase())
+      return 1;
+    return 0;
+  });
   var string = "<px-tree keys=\'{\"id\":\"id\",\"label\":\"label\",\"children\":\"children\"}\'";
   string+="items=\'["
   for(i=0;i<customers.length;i++){
+    customerList.push(customers[i]);
     string+="{\"label\":\"";
     string+=customers[i].name;
     string+="\",";
@@ -117,10 +134,11 @@ function pxTree() {
     string+="]},";
   }
   string = string.substring(0, string.length-1);
-  string+="]\'>";
+  string+="]\' onclick=\'getItemData()\'>";
   string+="</px-tree>";
 
   document.getElementById("TREE").innerHTML = string;
+
 }
 
 function pxSteps() {
@@ -219,4 +237,11 @@ function packageDetails(){
     string += "<strong>Description: </strong><br />";
     string += customer.about + "<br />";
 	document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
+}
+
+
+var myVar = setTimeout(myTimer, 1000);
+
+function myTimer() {
+    pxTree();
 }
