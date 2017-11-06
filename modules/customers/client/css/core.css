@@ -1254,6 +1254,20 @@ a {
           flex-basis: 0; } }
 
 /**
+  * Layouts with no gutters.
+  */
+.layout--flush {
+  margin-left: 0; }
+  .layout--flush > .layout__item {
+    padding-left: 0; }
+
+/**
+  * Align layout items to all be the same height.
+  */
+.layout--full > .layout__item {
+  display: flex; }
+
+/**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
  * element/component doesn’t already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
@@ -1719,33 +1733,179 @@ button.btn {
     border-color: var(--px-btn-disabled-border-color, rgba(0, 0, 0, 0.2));
     border: 1px solid; }
 
+/*------------------------------------*\
+    #PX-COLORS-DESIGN
+\*------------------------------------*/
+/**
+ * Neutral Palette (gray20 is darkest, gray1 is lightest)
+ */
+/**
+* Define grey = gray to avoid dev typos
+*/
+/**
+ * Actionable Palette
+ */
+/**
+ * Selection Palette
+ */
+/**
+ * Dark Actionable Palette
+ */
+/**
+ * Alerts and Status
+ */
+/**
+ * Data Visualization
+ */
+/**
+ * Orange
+ */
+/**
+ * Yellow
+ */
+/**
+ * Yellow Green
+ */
+/**
+ * Green
+ */
+/**
+ * Teal
+ */
+/**
+ * Aqua
+ */
+/**
+ * Cyan
+ */
+/**
+ * Blue
+ */
+/**
+ * Violet
+ */
+/**
+ * Purple
+ */
+/**
+ * Pink
+ */
+/**
+ * Red
+ */
+/**
+ * Brown
+ */
+/**
+ * Gray
+ */
+/**
+ * Define grey = gray to avoid dev typos
+ */
+/**
+ * Salmon
+ */
+.btn {
+  display: inline-block;
+  overflow: visible;
+  height: var(--px-btn-height, 2em);
+  min-width: var(--px-btn-min-width, 4.6666666667em);
+  margin: 0;
+  border: 1px solid var(--px-btn-border-color, transparent);
+  border-radius: 0 !important;
+  padding: 0 calc(var(--px-btn-height, 2em) / 2);
+  box-shadow: var(--px-btn-shadow--light, none);
+  font: inherit;
+  line-height: calc(var(--px-btn-height, 2em) - 2px);
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+  background-color: var(--px-btn-background, #d8e0e5);
+  transition: background .4s, border-color .4s, color .4s; }
+  .btn, .btn:link, .btn:visited, .btn:hover, .btn:active {
+    color: var(--px-btn-color, #2c404c); }
+  .btn:hover, .btn:focus {
+    border-color: var(--px-btn-border-color--hover, transparent);
+    box-shadow: var(--px-btn-shadow, none);
+    background-color: var(--px-btn-background--hover, #a3b5bf); }
+  .btn:active {
+    border-color: var(--px-btn-border-color--pressed, transparent);
+    box-shadow: none;
+    background-color: var(--px-btn-background--pressed, #889aa5); }
+  .btn:active {
+    outline: none; }
+
+@-moz-document url-prefix() {
+  .btn:not(button) {
+    line-height: 1.8em; } }
+button.btn {
+  -webkit-appearance: button; }
+
+.btn + .btn {
+  margin-left: 0.6666666667rem; }
+
+.btn--disabled, .btn--disabled:link, .btn--disabled:visited, .btn--disabled:hover, .btn--disabled:active, .btn--disabled:focus,
+.btn[disabled],
+.btn[disabled]:link,
+.btn[disabled]:visited,
+.btn[disabled]:hover,
+.btn[disabled]:active,
+.btn[disabled]:focus {
+  color: var(--px-btn-disabled-color, rgba(0, 0, 0, 0.2));
+  border: 1px solid;
+  border-color: var(--px-btn-disabled-border-color, rgba(0, 0, 0, 0.2));
+  box-shadow: none;
+  background-color: var(--px-btn-disabled-background, transparent);
+  pointer-events: none; }
+
+.btn--full {
+  width: 100%; }
+
+/*
+px-accordion{
+  width: 500;
+}
+*/
 #TREE {
   background: #2c404c;
   color: white;
   font-family: "GE Inspira Sans",sans-serif;
   border-right: 1px solid black;
   height: 100%;
+  top: 90px;
   overflow-y: auto;
   position: fixed;
-  width: 17.5vw;
+  width: 16.65vw;
   border-top: 1px solid black; }
 
-.tree {
+#searchAndButtonsAndTree {
+  border-right: 1px solid black; }
+
+/*
+#tree{
+  background: #2c404c;
+  height: 100%
+}
+
+.tree{
   background: #2c404c;
   color: white;
   font-family: "GE Inspira Sans",sans-serif;
   height: 100%;
-  position: fixed;
-  padding-top: 12.5vh;
-  width: 17.5vw; }
-
-.map {
+  position:fixed;
+  padding-top:12.5vh;
+  width: 17.5vw;
+}
+*/
+#MAP_MARKERS {
   border-top: 1px solid black;
   bottom: 0;
   position: fixed;
-  right: 0;
-  top: 12.0vh;
-  width: 82.5%; }
+  top: 14.2vh;
+  width: 63.5%; }
 
 #info {
   display: block;
@@ -1759,30 +1919,32 @@ button.btn {
 
 .steps {
   background: white;
-  width: 50vw; }
+  width: 63vw; }
 
 /*----------Right side detailed info----------*/
 .rightSidebar {
   background: white;
-  border-top: 1px solid black;
   border-left: 1px solid black;
   bottom: 0;
   overflow-y: auto;
   position: fixed;
   right: 0;
-  top: 12.0vh;
+  top: 4.7vh;
   width: 20%;
   z-index: 7; }
 
-.sidebarBlock {
+/*
+.sidebarBlock{
   padding-top: 0.25em;
   padding-bottom: 0.25em;
   padding-right: 0.5em;
-  padding-left: 0.5em; }
+  padding-left: 0.5em;
+}
 
-px-accordion {
+px-accordion{
   border-bottom: 1px solid black;
-  border-top: 1px solid black; }
+  border-top: 1px solid black;
+}
 
 textarea {
   background-color: #f8f8f8;
@@ -1793,8 +1955,9 @@ textarea {
   height: 150px;
   padding: 12px 20px;
   resize: none;
-  width: 100%; }
-
+  width: 100%;
+}
+*/
 /**
  * Margin and padding helper classes with breakpoint prefixes. Use these to tweak layout on a micro
  * level based on viewport widths.

@@ -16,11 +16,22 @@
 // Meta
 
 // Objects
+$inuit-enable-layout--flush : true;
+$inuit-enable-layout--full : true;
 @import "../../../../public/lib/px-layout-design/_objects.layout.scss";
 @import "../../../../public/lib/px-button-group-design/_objects.button-group.scss";
+$inuit-enable-btn--full : true;
+@import "../../../../public/lib/px-buttons-design/_objects.buttons.scss";
 
 // Component
 // Your css goes in here
+
+/*
+px-accordion{
+  width: 500;
+}
+*/
+
 
 #TREE{
   background: #2c404c;
@@ -28,10 +39,21 @@
   font-family: "GE Inspira Sans",sans-serif;
   border-right: 1px solid black; 
   height: 100%;
+  top: 90px;
   overflow-y: auto;
   position: fixed;
-  width: 17.5vw;
-  border-top: 1px solid black; 
+  width: 16.65vw;
+  border-top: 1px solid black;
+}
+
+#searchAndButtonsAndTree{
+  border-right: 1px solid black;
+}
+
+/*
+#tree{
+  background: #2c404c;
+  height: 100%
 }
 
 .tree{
@@ -43,14 +65,15 @@
   padding-top:12.5vh;
   width: 17.5vw;
 }
+*/
 
-.map{
-  border-top: 1px solid black; 
+
+#MAP_MARKERS{
+  border-top: 1px solid black;
   bottom: 0;
   position: fixed;
-  right: 0;
-  top:12.0vh;
-  width:82.5%;
+  top:14.2vh;
+  width:63.5%;
 }
 
 #info{
@@ -67,23 +90,24 @@
 
 .steps{
   background: white;
-  width:50vw;
+  width:63vw;
+  // border-right: 1px solid black; 
 }
 
 /*----------Right side detailed info----------*/
 .rightSidebar{
   background: white;
-  border-top: 1px solid black; 
   border-left: 1px solid black; 
   bottom: 0;
   overflow-y: auto;
   position: fixed;
   right: 0;
-  top:12.0vh;
+  top:4.7vh;
   width:20%;
   z-index: 7;
 }
 
+/*
 .sidebarBlock{
   padding-top: 0.25em;
   padding-bottom: 0.25em;
@@ -107,7 +131,9 @@ textarea {
   resize: none;
   width: 100%;
 }
+*/
 
 // Trumps
 @import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
 @import "../../../../public/lib/px-widths-responsive-design/_trumps.widths-responsive.scss";
+//@import "../../../../public/lib/px-widths-design/_trumps.widths.scss";

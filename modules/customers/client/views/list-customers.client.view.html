@@ -1,135 +1,129 @@
 <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 
-<div class="layout">
-    <div class="layout__item">
-      <div id="tree">
-        <!-- implement the search bar -->
-        <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
-        <!-- implement the buttons Active, Inactive, All -->
-        <div class="btn-group" >
-          <button for="id1" class="btn" onclick="displayActive()">Active</button>
-          <button for="id2" class="btn" onclick="displayInactive()">Inactive</button>
-          <button for="id2" class="btn" onclick="displayAll()">All</button>
-        </div>
-      </div>
-        <!-- implement customer listings using predix tree -->
-        <div id="SOURCE" style="display:none;">
-          {{vm.customers}}
-        </div>
-    </div>
-    <div class="layout__item">
-      <div class="steps" id="STEPS">
-        <px-steps
-          items='[
-          {
-            "id":"1",
-            "label":"(FROM)"
-          },
-          {
-            "id":"2",
-            "label":"(CURRENT)"
-          },
-          {
-            "id":"3",
-            "label":"(TO)"
-          }
-          ]'
-          completed='[]'>
-        </px-steps>
-      </div>
-    </div>
-    <div class="layout__item">
-                      <div class="rightSidebar" id="hide">  
-                  <div class="sidebarBlock">
-                    <px-accordion
-                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                      header-value="Customer Information"
-                      status="">
-                        <div id="CUSTOMER_INFO">
-                          <strong>Name: </strong><br />
-                          <strong>Email: </strong><br />
-                          <strong>Phone: </strong><br />
-                          <strong>Address: </strong><br />
-                        </div>
-                    </px-accordion>
-                  </div>
-                  <div class="sidebarBlock">
-                    <px-accordion
-                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                      header-value="Shipping Details"
-                      status="">
-                      <div id="SHIPPING_DETAILS">
-                        <strong>Tracking Number: </strong><br />
-                        <strong>Carrier: </strong><br />
-                        <strong>Destination: </strong><br />
-                              <c>Latitude: </text><br />
-                              <text>Longitude:</text><br />
-                        <strong>Current Location: </strong><br />
-                              <text>Latitude: </text><br />
-                              <text>Longitude: </text><br />
-                        <strong>Shipped: </strong><br />
-                        <strong>Expected Arrival: </strong><br />
-                        <strong>Status: </strong><br />
-                    </div>
-                    </px-accordion>
+<div class="layout layout--flush">
+        <div class="u-1/6-desk" class="layout_item">
+          <div id="searchAndButtonsAndTree" class="flex flex--col">
+              <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
+              <div class="btn-group">
+                  <button for="id1" class="btn btn--full" onclick="displayActive()">Active</button>
+                  <button for="id2" class="btn btn--full" onclick="displayInactive()">Inactive</button>
+                  <button for="id2" class="btn btn--full" onclick="displayAll()">All</button>
+              </div>
 
-                  </div>
-                  <div class="sidebarBlock">
-                    <px-accordion
-                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                      header-value="Package Details"
-                      status="">
-                      <div id="PACKAGE_COMMENTS">
-                        <strong>Order Placed (Id): </strong><br />
-                        <strong>Shipment Contents: </strong><br />
-                        <strong>Description: </strong><br />
-                      </div>
-                    </px-accordion>
-
-                  </div>
-                  <div class="sidebarBlock">
-                    <px-accordion
-                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                      header-value="Package Comments"
-                      status="" 
-                      disabled show-action>
-                    </px-accordion>
-                    <form>
-                      <div class="sidebarBlock">
-                          <input placeholder="Type something..." class="text-input input--regular" type="text">
-                      </div>
-                      <div class="sidebarBlock">
-                          <input class="btn btn--primary" type="reset" value="Submit">
-                      </div>
-                    </form>
-                  </div>
+              <div id="SOURCE" style="display:none;">
+                  {{vm.customers}}
+              </div>
+              
+              <div id="TREE">
+                  <px-tree
+                keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
+                 items='[
+                 {
+                  "label":"No Customers Selected",
+                  "id":"branch-0-3",
+                  "isSelectable": false
+                 }
+                 ]'
+                multi-activate>
+                </px-tree>
+              </div>
+          </div>
+        </div>
+    
+        <div class="layout_item">
+          <div id="demo3" class="flex flex--col">
+              <div id="demo3" class="flex flex--row flex--spaced">
+                <div class="steps" id="STEPS">
+                    <px-steps
+                    items='[
+                    {
+                      "id":"1",
+                      "label":"(FROM)"
+                    },
+                    {
+                      "id":"2",
+                      "label":"(CURRENT)"
+                    },
+                    {
+                      "id":"3",
+                      "label":"(TO)"
+                    }
+                    ]'
+                    completed='[]'>
+                    </px-steps>
                 </div>
-  </div>
+      
+                <div class="rightSidebar" id="hide">  
+                    <div id="demo3" class="flex flex--col">
+                        <px-accordion
+                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+                        header-value="Customer Information"
+                        status="">
+                          <div id="CUSTOMER_INFO">
+                            <strong>Name: </strong><br />
+                            <strong>Email: </strong><br />
+                            <strong>Phone: </strong><br />
+                            <strong>Address: </strong><br />
+                          </div>
+                      </px-accordion>
+            
+                      <px-accordion
+                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+                        header-value="Shipping Details"
+                        status="">
+                        <div id="SHIPPING_DETAILS">
+                          <strong>Tracking Number: </strong><br />
+                          <strong>Carrier: </strong><br />
+                          <strong>Destination: </strong><br />
+                                <c>Latitude: </text><br />
+                                <text>Longitude:</text><br />
+                          <strong>Current Location: </strong><br />
+                                <text>Latitude: </text><br />
+                                <text>Longitude: </text><br />
+                          <strong>Shipped: </strong><br />
+                          <strong>Expected Arrival: </strong><br />
+                          <strong>Status: </strong><br />
+                      </div>
+                      </px-accordion>
+            
+                      <px-accordion
+                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+                        header-value="Package Details"
+                        status="">
+                        <div id="PACKAGE_COMMENTS">
+                          <strong>Order Placed (Id): </strong><br />
+                          <strong>Shipment Contents: </strong><br />
+                          <strong>Description: </strong><br />
+                        </div>
+                      </px-accordion>
+            
+                      <px-accordion
+                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+                        header-value="Package Comments"
+                        status="" 
+                        disabled show-action>
+                      </px-accordion>
+            
+                      <form>
+                        <div class="sidebarBlock">
+                            <input placeholder="Type something..." class="text-input input--regular" type="text">
+                        </div>
+                        <div class="sidebarBlock">
+                            <input class="btn btn--primary" type="reset" value="Submit">
+                        </div>
+                      </form> 
+                    </div>
+                </div>
+              </div>
+      
+              <div id="MAP_MARKERS">
+                  <google-map zoom="2" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+                  </google-map>
+              </div>
+          </div>
+        </div>
 </div>
 
-<div class="layout">
-    <div class="layout__item">
-                <div id="TREE">
-            <px-tree
-          keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
-           items='[
-           {
-            "label":"No Customers Selected",
-            "id":"branch-0-3",
-            "isSelectable": false
-           }
-           ]'
-          multi-activate>
-          </px-tree>
-        </div>
-    </div>
-    <div class="layout__item">
-      <div class="map" id="MAP_MARKERS">
-        <google-map zoom="2" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-        </google-map>
-      </div>
-    </div>
-</div>
 
 <!--Predix Import Links-->
 <link rel="import" href="../../../../../lib/px-branding-bar/px-branding-bar.html"/>
