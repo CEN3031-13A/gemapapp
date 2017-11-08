@@ -294,7 +294,7 @@ function pxMapMarkers(){
   string += "\" longitude=\"";
   string += shipment.origin.longitude;
   string += "\"> <div class=\"popup\"><img src=\"image.png\">";
-  string += "<p><strong>Current Location: </strong><br />";
+  string += "<p><strong>Origin: </strong><br />";
   string += "<text>Latitude: ";
   string += shipment.origin.latitude + "</text><br />";
   string += "<text>Longitude: ";
