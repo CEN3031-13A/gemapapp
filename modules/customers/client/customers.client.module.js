@@ -289,6 +289,21 @@ function pxSteps() {
 function pxMapMarkers(){
 	var string = "<google-map zoom=\"2\"";
 	string += " fit-to-markers api-key=\"AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0\">";
+  string += "<google-map-marker latitude=\"";
+  string += shipment.origin.latitude
+  string += "\" longitude=\"";
+  string += shipment.origin.longitude;
+  string += "\"> <div class=\"popup\"><img src=\"image.png\">";
+  string += "<p><strong>Current Location: </strong><br />";
+  string += "<text>Latitude: ";
+  string += shipment.origin.latitude + "</text><br />";
+  string += "<text>Longitude: ";
+  string += shipment.origin.longitude + "</text><br /></p>";
+  string += "<p><strong>Shipped: </strong>";
+  string += shipment.ship_date + "<br />";
+  // string += "<strong>Expected Arrival: </strong>";
+  // string += shipment.expected_date +"<br /></p>";
+  string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
 	string += "<google-map-marker latitude=\"";
 	string += shipment.current_location.latitude
 	string += "\" longitude=\"";
