@@ -1905,7 +1905,7 @@ px-accordion{
   bottom: 0;
   position: fixed;
   top: 14.2vh;
-  width: 63.5%; }
+  width: 83.5%; }
 
 #info {
   display: block;
@@ -1919,7 +1919,7 @@ px-accordion{
 
 .steps {
   background: white;
-  width: 63vw; }
+  width: 83vw; }
 
 /*----------Right side detailed info----------*/
 .rightSidebar {
@@ -1930,6 +1930,7 @@ px-accordion{
   position: fixed;
   right: 0;
   top: 4.7vh;
+  display: none;
   width: 20%;
   z-index: 7; }
 
