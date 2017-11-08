@@ -18,15 +18,18 @@ var activeInactiveState = "";
 function myFunction() {
   var x = document.getElementById('hide');
   var y = document.getElementById('MAP_MARKERS');
-  var z = document.getElementById('STEPS');
+  var z = document.getElementById("STEPS");
   if (x.style.display === 'none') {
     x.style.display = 'block';
-    y.style.width = '63.5%';
-    z.style.width = '63vw';
+    y.style.width = "780px";
+    z.style.width = "780px";
+
   } else {
     x.style.display = 'none';
-    y.style.width = '83.5%';
-    z.style.width = '83vw';
+    y.style.width = '1030px';
+    y.style.right = '0px';
+    z.style.width = '1030px';
+    z.style.right = '0px';
   }
 }
 
