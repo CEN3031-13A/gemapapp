@@ -147,7 +147,6 @@ function pxTreeDisplay(customerListSearch) {
   string+="</px-tree>";
 
   document.getElementById("TREE").innerHTML = string;
-
 }
 
 
@@ -382,3 +381,4 @@ function myTimer() {
     pxTree();
     console.log(customerList);
 }
+

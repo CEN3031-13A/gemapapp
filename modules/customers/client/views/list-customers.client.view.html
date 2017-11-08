@@ -117,8 +117,14 @@
               </div>
       
               <div id="MAP_MARKERS">
-                  <google-map zoom="2" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-                  </google-map>
+                <google-map fit-to-markers="true" api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+                  <google-map-marker latitude="36.77493" longitude="-121.41942"></google-map-marker>
+                  <google-map-marker latitude="38.77493" longitude="-122.41942"></google-map-marker>
+                  <google-map-poly closed fill-color="red" fill-opacity=".5">
+                    <google-map-point latitude="36.77493" longitude="-121.41942"></google-map-point>
+                    <google-map-point latitude="38.77493" longitude="-122.41942"></google-map-point>
+                  </google-map-poly>
+                </google-map>
               </div>
           </div>
         </div>
@@ -135,4 +141,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="../../../../../lib/webcomponentsjs/webcomponents.js"></script>
 <link rel="import" href="../../../../../lib/google-map/google-map.html" />
+<link rel="import" href="../../../../../lib/google-map/google-map-poly.html" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
