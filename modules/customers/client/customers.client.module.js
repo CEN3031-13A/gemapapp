@@ -26,10 +26,8 @@ function myFunction() {
 
   } else {
     x.style.display = 'none';
-    y.style.width = '100%';
-    y.style.right = '0px';
-    z.style.width = '1030px';
-    z.style.right = '0px';
+    y.style.width = '85%';
+    z.style.width = '85%';
   }
 }
 
