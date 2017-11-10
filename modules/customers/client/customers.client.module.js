@@ -379,9 +379,18 @@ function packageDetails(){
 }
 
 
-var myVar = setTimeout(myTimer, 1000);
+setInterval(consistantTimer, 5000);
+
+function consistantTimer() {
+	if(customerList.length === 0){
+		pxTree();
+		console.log("TEST");
+	}
+	console.log(customerList.length);
+}
+
+setTimeout(myTimer, 1000);
 
 function myTimer() {
     pxTree();
-    console.log(customerList);
 }
