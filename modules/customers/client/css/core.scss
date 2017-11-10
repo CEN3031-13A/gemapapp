@@ -74,7 +74,7 @@ $inuit-enable-btn--full : true;
   top: 90px;
   left: 250px;
   right: 250px;
-  width: 1030px;
+  width: 100%;
   bottom: 0;
   background-color: white;
   border-top: 1px solid black;
@@ -85,4 +85,3 @@ $inuit-enable-btn--full : true;
 // Trumps
 @import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
 @import "../../../../public/lib/px-widths-responsive-design/_trumps.widths-responsive.scss";
-//@import "../../../../public/lib/px-widths-design/_trumps.widths.scss";
