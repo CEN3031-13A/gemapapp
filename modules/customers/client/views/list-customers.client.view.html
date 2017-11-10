@@ -118,11 +118,78 @@
       
               <div id="MAP_MARKERS">
                 <google-map fit-to-markers="true" api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-                  <google-map-marker latitude="36.77493" longitude="-121.41942"></google-map-marker>
-                  <google-map-marker latitude="38.77493" longitude="-122.41942"></google-map-marker>
+                  <google-map-marker latitude="36.77493" longitude="-121.41942">
+                    <div class="popup">
+                      <img src="image.png">
+                      <p>
+                        <strong>Origin: </strong>
+                          <br />
+                          <text>Latitude: shipment.origin.latitude</text>
+                          <br />
+                          <text>Longitude: shipment.origin.longitude</text>
+                          <br />
+                      </p>
+                      <p>
+                        <strong>Shipped: </strong>
+                          <br />
+                        <strong>Expected Arrival: </strong>
+                          <br />
+                      </p>
+                      <i class="fa fa-info-circle" id="info" onclick="myFunction()">
+                      </i>
+                    </div>
+                  </google-map-marker>
+                  <google-map-marker latitude="38.77493" longitude="-122.41942">
+                    <div class="popup">
+                      <img src="image.png">
+                      <p>
+                        <strong>Origin: </strong>
+                          <br />
+                          <text>Latitude: shipment.origin.latitude</text>
+                          <br />
+                          <text>Longitude: shipment.origin.longitude</text>
+                          <br />
+                      </p>
+                      <p>
+                        <strong>Shipped: </strong>
+                          <br />
+                        <strong>Expected Arrival: </strong>
+                          <br />
+                      </p>
+                      <i class="fa fa-info-circle" id="info" onclick="myFunction()">
+                      </i>
+                    </div>
+                  </google-map-marker>
+                  <google-map-marker latitude="39.77493" longitude="-122.41942">
+                    <div class="popup">
+                      <img src="image.png">
+                      <p>
+                        <strong>Origin: </strong>
+                          <br />
+                          <text>Latitude: shipment.origin.latitude</text>
+                          <br />
+                          <text>Longitude: shipment.origin.longitude</text>
+                          <br />
+                      </p>
+                      <p>
+                        <strong>Shipped: </strong>
+                          <br />
+                        <strong>Expected Arrival: </strong>
+                          <br />
+                      </p>
+                      <i class="fa fa-info-circle" id="info" onclick="myFunction()">
+                      </i>
+                    </div>
+                  </google-map-marker>
                   <google-map-poly closed fill-color="red" fill-opacity=".5">
-                    <google-map-point latitude="36.77493" longitude="-121.41942"></google-map-point>
+                    <google-map-point latitude="36.77493" longitude="-121.41942">
+                    </google-map-point>
+                    <google-map-point latitude="38.77493" longitude="-122.41942">
+                    </google-map-point>
+                  </google-map-poly>
+                  <google-map-poly closed fill-color="red" fill-opacity=".5">
                     <google-map-point latitude="38.77493" longitude="-122.41942"></google-map-point>
+                    <google-map-point latitude="39.77493" longitude="-122.41942"></google-map-point>
                   </google-map-poly>
                 </google-map>
               </div>

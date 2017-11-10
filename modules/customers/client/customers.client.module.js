@@ -290,7 +290,7 @@ function pxMapMarkers(){
 	var string = "<google-map zoom=\"2\"";
 	string += " fit-to-markers api-key=\"AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0\">";
   string += "<google-map-marker latitude=\"";
-  string += shipment.origin.latitude
+  string += shipment.origin.latitude;
   string += "\" longitude=\"";
   string += shipment.origin.longitude;
   string += "\"> <div class=\"popup\"><img src=\"image.png\">";
@@ -334,7 +334,38 @@ function pxMapMarkers(){
   string += "<strong>Expected Arrival: </strong>";
   string += shipment.expected_date +"<br /></p>";
   string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
+  
+  string += "<google-map-poly closed fill-color=\""
+  string += black + "\" "; 
+  string += "fill-opacity=\"" + 0.5 + "\">"
+  string += "<google-map-point latitude=\"";
+  string += shipment.origin.latitude;
+  string += "\" longitude=\"" ;
+  string += shipment.origin.longitude;
+  string += "\"></google-map-point>";
+  string += "<google-map-point latitude=\"";
+  string += shipment.current_location.latitude;
+  string += "\" longitude=\"" ;
+  string += shipment.current_location.longitude;
+  string += "\"></google-map-point>";
+  string += "</google-map-poly>";
+  string += "<google-map-poly closed fill-color=\""
+  string += black + "\" "; 
+  string += "fill-opacity=\"" + 0.5 + "\">"
+  string += "<google-map-point latitude=\"";
+  string += shipment.current_location.latitude;
+  string += "\" longitude=\"" ;
+  string += shipment.current_location.longitude;
+  string += "\"></google-map-point>";
+  string += "<google-map-point latitude=\"";
+  string += shipment.destination.latitude;
+  string += "\" longitude=\"" ;
+  string += shipment.destination.longitude;
+  string += "\"></google-map-point>";
+  string += "</google-map-poly>";
+  
   string += "</google-map>";
+  
   document.getElementById("MAP_MARKERS").innerHTML = string;
 }
 
@@ -395,5 +426,38 @@ var myVar = setTimeout(myTimer, 1000);
 function myTimer() {
     pxTree();
     console.log(customerList);
+}
+
+function mapPaths(){
+    var string = "<google-map-poly closed fill-color=\""
+    string += black + "\" "; 
+    string += "fill-opacity=\"" + 0.5 + "\">"
+    string += "<google-map-point latitude=\"";
+    string += shipment.origin.latitude;
+    string += "\" longitude=\"" ;
+    string += shipment.origin.longitude;
+    string += "\"></google-map-point>";
+    string += "<google-map-point latitude=\"";
+    string += shipment.current_location.latitude;
+    string += "\" longitude=\"" ;
+    string += shipment.current_location.longitude;
+    string += "\"></google-map-point>";
+    string += "</google-map-poly>";
+    string += "<google-map-poly closed fill-color=\""
+    string += black + "\" "; 
+    string += "fill-opacity=\"" + 0.5 + "\">"
+    string += "<google-map-point latitude=\"";
+    string += shipment.current_location.latitude;
+    string += "\" longitude=\"" ;
+    string += shipment.current_location.longitude;
+    string += "\"></google-map-point>";
+    string += "<google-map-point latitude=\"";
+    string += shipment.destination.latitude;
+    string += "\" longitude=\"" ;
+    string += shipment.destination.longitude;
+    string += "\"></google-map-point>";
+    string += "</google-map-poly>";
+
+    return string;
 }
 
