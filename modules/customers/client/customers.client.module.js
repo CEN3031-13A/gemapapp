@@ -155,13 +155,16 @@ function pxTreeDisplay(customerListSearch) {
 
 
 function getItemData(){
+  // console.log(customers.current_location.latitude);
+  // console.log(customers.current_location.longitude);
+	//document.getElementById("SOURCE").innerHTML = "<px-spinner size=\"100\"></px-spinner>";
 	var customers = JSON.parse(document.getElementById("SOURCE").innerHTML);
 	var px_tree = document.querySelector('px-tree');
-	// var selectedData =px_tree.selectedMeta;
+	var selectedData =px_tree.selectedMeta;
 	var selectedShipment = px_tree.selected;
 	var selectedPath = px_tree.selectedRoute;
 	//(item:Object) -- reference to the selected item
-	// var selectedShipment = selectedData.item;
+	var selectedShipment = selectedData.item;
 	var shipmentID = selectedShipment.id;
 	console.log("Shipment ID: " + shipmentID);
 	var customerID = selectedPath[0];
@@ -184,8 +187,8 @@ function getItemData(){
 							found = true;
 							shipment = customers[i].orders[j].shipments[k];
 							// console.log(shipment.carrier);
-							// console.log(shipment.current_location.latitude);
-							// console.log(shipment.current_location.longitude);
+							console.log(shipment.current_location.latitude);
+							console.log(shipment.current_location.longitude);
 							customerIndex = i;
 							orderIndex = j;
 							shipmentIndex = k;
@@ -200,7 +203,7 @@ function getItemData(){
 	if(found == false){
 		console.log("Shipment was not found!");
 	}
-
+  console.log("TEST1234")
 	pxSteps();
 	pxMapMarkers();
 	customerInfo();
@@ -292,7 +295,9 @@ function pxMapMarkers(){
 	var string = "<google-map zoom=\"2\"";
 	string += " fit-to-markers api-key=\"AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0\">";
 	string += "<google-map-marker latitude=\"";
-	string += shipment.current_location.latitude
+	string += shipment.current_location.latitude;
+  console.log("shipment.current_location.latitude: "+shipment.current_location.latitude);
+  console.log("shipment.current_location.longitude: "+shipment.current_location.longitude);
 	string += "\" longitude=\"";
 	string += shipment.current_location.longitude;
   string += "\"> <div class=\"popup\"><img src=\"image.png\">";
@@ -384,7 +389,8 @@ function consistantTimer() {
 		pxTree();
 		console.log("TEST");
 	}
-	console.log(customerList.length);
+	console.log(customerList);
+
 }
 
 setTimeout(myTimer, 1000);
