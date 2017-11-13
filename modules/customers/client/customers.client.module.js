@@ -14,7 +14,7 @@ var customerList =[];
 var activeCustomerList = [];
 var inactiveCustomerList = [];
 var activeInactiveState = "";
-var displayaddress;
+var displayaddress = 0;
 
 function myFunction() {
   var x = document.getElementById('hide');
@@ -159,14 +159,21 @@ function getItemData(){
 	// var selectedData =px_tree.selectedMeta;
 	var selectedShipment = px_tree.selected;
 	var selectedPath = px_tree.selectedRoute;
+  console.log(selectedPath.length);
 	//(item:Object) -- reference to the selected item
 	// var selectedShipment = selectedData.item;
 	var shipmentID = selectedShipment.id;
-	console.log("Shipment ID: " + shipmentID);
-	var customerID = selectedPath[0];
-	console.log("Customer ID: " + customerID);
-	var orderID = selectedPath[1];
-	console.log("Order ID: " + orderID);
+  console.log(selectedPath.length);
+  var customerID = selectedPath[0];
+  console.log("Customer ID: " + customerID);
+  var orderID = selectedPath[1];
+  console.log("Order ID: " + orderID);
+  if(selectedPath.length == 3){
+  	console.log("Shipment ID: " + shipmentID);
+  }
+  else if(selectedPath.length == 2){
+    shipmentID = -1;
+  }
 
 	var found = false;
 	var i,j,k;
@@ -540,6 +547,7 @@ var myVar = setTimeout(myTimer, 1000);
 
 function myTimer() {
     pxTree();
+    getItemData();
     console.log(customerList);
 }
 
@@ -594,8 +602,8 @@ function displayLocation(latitude,longitude){
             var data = JSON.parse(request.responseText);
             var address = data.results[0];
             console.log(address.formatted_address);
-            console.log(address.address_components[3].short_name);
-            console.log(address.address_components[4].short_name);
+            console.log(address.address_components[3].long_name);
+            console.log(address.address_components[4].long_name);
             displayaddress = address.formatted_address;
             //displayaddress = address.formatted_address;
             //console.log(address.address_components[5].short_name);
