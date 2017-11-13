@@ -205,6 +205,7 @@ function getItemData(){
 	customerInfo();
 	shippingDetails();
 	packageDetails();
+	packageComments();
 }
 
 function loading(){
@@ -328,6 +329,9 @@ function customerInfo(){
     var string = "<strong>Name: </strong>";
     string += customer.name;
     string += "<br />";
+	string += "<strong>Age: </strong>";
+	string += customer.age;
+    string += "<br />";
     string += "<strong>Email: </strong>";
     string += customer.email;
     string += "<br />";
@@ -337,6 +341,10 @@ function customerInfo(){
     string += "<strong>Address: </strong>"
     string += customer.address;
     string += "<br />";
+	string += "<strong>Registered: </strong><br />";
+    string += customer.registered + "<br />";
+	string += "<strong>Description: </strong><br />";
+    string += customer.about + "<br />";
 	document.getElementById("CUSTOMER_INFO").innerHTML = string;
 }
 
@@ -345,6 +353,11 @@ function shippingDetails(){
     string += shipment.id + "</text><br />";
     string += "<strong>Carrier: </strong>";
     string += shipment.carrier +"<br />";
+	string += "<strong>Origin: </strong><br />";
+	string += "<text>Latitude: ";
+	string += shipment.origin.latitude + "</text><br />";
+    string += "<text>Longitude: ";
+    string += shipment.origin.longitude + "</text><br />";
     string += "<strong>Current Location: </strong><br />";
 	string += "<text>Latitude: ";
 	string += shipment.current_location.latitude + "</text><br />";
@@ -359,7 +372,10 @@ function shippingDetails(){
     string += shipment.ship_date + "<br />";
     string += "<strong>Expected Arrival: </strong>";
     string += shipment.expected_date +"<br />";
-    string += "<strong>Status: </strong><strong>what is this?</strong><br />";
+    string += "<strong>Status: </strong>";
+	string += shipment.delivery_state + "<br />";
+	string += "<strong>Penalty if Late: </strong>";
+	string += shipment.late_penalties + "<br />";
 	document.getElementById("SHIPPING_DETAILS").innerHTML = string;
 }
 
@@ -368,17 +384,39 @@ function packageDetails(){
 	string += shipment.ship_date;
     string += "<br />";
     string += "<strong>Shipment Contents: </strong>";
-	string += shipment.contents;
+	for(i=0;i < shipment.contents.length; i++){
+		string += shipment.contents[i];
+		string += ", ";
+	}
+	string = string.substring(0, string.length-2);
     string += "<br />";
-    string += "<strong>Description: </strong><br />";
-    string += customer.about + "<br />";
+	document.getElementById("PACKAGE_DETAILS").innerHTML = string;
+}
+
+function packageComments(){
+	var string =  "<strong>Comments: </strong><br />";
+	for(i=0;i < shipment.comments.length; i++){
+		string += "<strong>" + shipment.comments[i].comment_date + "</strong>" + ": ";
+		string += shipment.comments[i].comment + "<br />";
+	}
 	document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
 }
 
 
-var myVar = setTimeout(myTimer, 1000);
+setInterval(consistantTimer, 50);
+
+function consistantTimer() {
+ if(customerList.length === 0){
+   pxTree();
+   // console.log("TEST");
+ }
+ //console.log(customerList);
+
+}
+
+/*setTimeout(myTimer, 1000);
 
 function myTimer() {
-    pxTree();
-    console.log(customerList);
+   pxTree();
 }
+*/
