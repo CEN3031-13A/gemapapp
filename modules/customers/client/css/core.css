@@ -77,7 +77,7 @@
  * 1. Set the default `font-size` and `line-height` for the entire project,
  *    sourced from our default variables. The `font-size` is calculated to exist
  *    in ems, the `line-height` is calculated to exist unitlessly.
- * 2. Force scrollbars to always be visible to prevent awkward ‘jumps’ when
+ * 2. Force scrollbars to always be visible to prevent awkward ΓÇÿjumpsΓÇÖ when
  *    navigating between pages that do/do not have enough content to produce
  *    scrollbars naturally.
  * 3. Ensure the page always fills at least the entire height of the viewport.
@@ -252,7 +252,7 @@ html {
 
 /**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
@@ -906,7 +906,7 @@ select::-ms-expand {
  */
 /**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
@@ -1269,7 +1269,7 @@ a {
 
 /**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
@@ -1966,7 +1966,7 @@ textarea {
  */
 /**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
@@ -2284,7 +2284,7 @@ a {
  */
 /**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
