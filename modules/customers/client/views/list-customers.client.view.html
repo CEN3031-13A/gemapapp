@@ -74,8 +74,11 @@
                         <div id="SHIPPING_DETAILS">
                           <strong>Tracking Number: </strong><br />
                           <strong>Carrier: </strong><br />
+						  <strong>Origin: </strong><br />
+                                <text>Latitude: </text><br />
+                                <text>Longitude:</text><br />
                           <strong>Destination: </strong><br />
-                                <c>Latitude: </text><br />
+                                <text>Latitude: </text><br />
                                 <text>Longitude:</text><br />
                           <strong>Current Location: </strong><br />
                                 <text>Latitude: </text><br />
@@ -90,7 +93,7 @@
                         icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
                         header-value="Package Details"
                         status="">
-                        <div id="PACKAGE_COMMENTS">
+                        <div id="PACKAGE_DETAILS">
                           <strong>Order Placed (Id): </strong><br />
                           <strong>Shipment Contents: </strong><br />
                           <strong>Description: </strong><br />
@@ -100,18 +103,21 @@
                       <px-accordion
                         icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
                         header-value="Package Comments"
-                        status="" 
-                        disabled show-action>
+                        status="">
+						<div id="PACKAGE_COMMENTS">
+						  <strong>Comments: </strong><br />
+						</div>
+						  <form>
+							<div class="sidebarBlock">
+								<input placeholder="Input comment..." class="text-input input--regular" type="text">
+							</div>
+							<div class="sidebarBlock">
+								<input class="btn btn--primary" type="reset" value="Submit">
+							</div>
+						  </form> 
+						  
                       </px-accordion>
             
-                      <form>
-                        <div class="sidebarBlock">
-                            <input placeholder="Type something..." class="text-input input--regular" type="text">
-                        </div>
-                        <div class="sidebarBlock">
-                            <input class="btn btn--primary" type="reset" value="Submit">
-                        </div>
-                      </form> 
                     </div>
                 </div>
               </div>
