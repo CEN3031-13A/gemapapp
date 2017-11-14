@@ -21,8 +21,8 @@ function myFunction() {
   var z = document.getElementById("STEPS");
   if (x.style.display === 'none') {
     x.style.display = 'block';
-    y.style.width = "780px";
-    z.style.width = "780px";
+    y.style.width = '70%';
+    z.style.width = '70%';
 
   } else {
     x.style.display = 'none';
@@ -325,7 +325,8 @@ function pxMapMarkers(){
   // string += shipment.ship_date + "<br />";
   string += "<strong>Expected Arrival: </strong>";
   string += shipment.expected_date +"<br /></p>";
-  string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
+  //string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
+  string += "<button type=\"button\" id=\"test\" onclick=\"myFunction()\"><i class=\"material-icons\">info</i></button></div></google-map-marker>";
   string += "</google-map>";
   document.getElementById("MAP_MARKERS").innerHTML = string;
 }
