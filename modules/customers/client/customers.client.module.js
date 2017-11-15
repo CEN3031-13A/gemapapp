@@ -19,15 +19,15 @@ function myFunction() {
   var x = document.getElementById('hide');
   var y = document.getElementById('MAP_MARKERS');
   var z = document.getElementById("STEPS");
-  if (x.style.display === 'none') {
-    x.style.display = 'block';
-    y.style.width = '70%';
-    z.style.width = '70%';
-
-  } else {
+  if (x.style.display == 'block') {
     x.style.display = 'none';
     y.style.width = '85%';
     z.style.width = '85%';
+
+  } else {
+    x.style.display = 'block';
+    y.style.width = '70%';
+    z.style.width = '70%';
   }
 }
 
@@ -310,7 +310,8 @@ function pxMapMarkers(){
   string += shipment.ship_date + "<br />";
   // string += "<strong>Expected Arrival: </strong>";
   // string += shipment.expected_date +"<br /></p>";
-  string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
+  // string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
+  string += "<button id=\"info\" onclick=\"myFunction()\"><i class=\"material-icons\">info</i></button></div></google-map-marker>";
   string += "<google-map-marker latitude=\"";
   string += shipment.destination.latitude
   string += "\" longitude=\"";
@@ -326,7 +327,7 @@ function pxMapMarkers(){
   string += "<strong>Expected Arrival: </strong>";
   string += shipment.expected_date +"<br /></p>";
   //string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
-  string += "<button type=\"button\" id=\"test\" onclick=\"myFunction()\"><i class=\"material-icons\">info</i></button></div></google-map-marker>";
+  string += "<button id=\"info\" onclick=\"myFunction()\"><i class=\"material-icons\">info</i></button></div></google-map-marker>";
   string += "</google-map>";
   document.getElementById("MAP_MARKERS").innerHTML = string;
 }
