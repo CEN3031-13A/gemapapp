@@ -162,11 +162,13 @@ function getItemData(){
 	// var selectedData =px_tree.selectedMeta;
 	var selectedShipment = px_tree.selected;
 	var selectedPath = px_tree.selectedRoute;
-  console.log(selectedPath.length);
+  if(selectedPath <= 1)
+    return;
+  //console.log(selectedPath.length);
 	//(item:Object) -- reference to the selected item
 	// var selectedShipment = selectedData.item;
 	var shipmentID = selectedShipment.id;
-  console.log(selectedPath.length);
+  //console.log(selectedPath.length);
   var customerID = selectedPath[0];
   //console.log("Customer ID: " + customerID);
   var orderID = selectedPath[1];
@@ -208,13 +210,22 @@ function getItemData(){
     pxMapMarkersOrder();
 	}
   else{
-    pxMapMarkers();
+   pxMapMarkers();
   }
 
 	pxSteps();
 	customerInfo();
 	shippingDetails();
 	packageDetails();
+
+  // document.getElementById("ORIGIN_POINT").attributes.latitude.value = shipment.origin.latitude;
+  // document.getElementById("ORIGIN_POINT").attributes.longitude.value = shipment.origin.longitude;
+  // document.getElementById("CURRENT_POINT").attributes.latitude.value = shipment.current_location.latitude;
+  // document.getElementById("CURRENT_POINT").attributes.longitude.value = shipment.current_location.longitude;
+  // document.getElementById("CURRENT_POINT2").attributes.latitude.value = shipment.current_location.latitude;
+  // document.getElementById("CURRENT_POINT2").attributes.longitude.value = shipment.current_location.longitude;
+  // document.getElementById("DEST_POINT").attributes.latitude.value = shipment.destination.latitude;
+  // document.getElementById("DEST_POINT").attributes.longitude.value = shipment.destination.longitude;
 }
 
 function loading(){
@@ -282,21 +293,21 @@ function pxSteps() {
   	// string += shipment.origin.latitude;
   	// string += ", ";
   	// string += shipment.origin.latitude;
-    displayLocation(shipment.origin.latitude,shipment.origin.longitude, "origin");
+    //displayLocation(shipment.origin.latitude,shipment.origin.longitude, "origin");
     string += orig;
   	string += "\"},";
   	string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
   	// string += shipment.current_location.latitude;
   	// string += ", ";
   	// string += shipment.current_location.latitude;
-    displayLocation(shipment.current_location.latitude,shipment.current_location.longitude, "current");
+    //displayLocation(shipment.current_location.latitude,shipment.current_location.longitude, "current");
     string += current;
   	string += "\"},";
   	string += "{\"id\":\"3\", \"label\":\"(TO) ";
   	// string += shipment.destination.latitude;
   	// string += ", ";
   	// string += shipment.destination.latitude;
-    displayLocation(shipment.destination.latitude,shipment.destination.longitude, "dest");
+    //displayLocation(shipment.destination.latitude,shipment.destination.longitude, "dest");
     string += dest
   	string += "\"}]\' completed=\'[\"1\",\"2\"]\' </px-steps>";
 
@@ -316,7 +327,7 @@ function pxMapMarkers(){
   string += shipment.origin.latitude + "</text><br />";
   string += "<text>Longitude: ";
   string += shipment.origin.longitude + "</text><br /></p>";
-  displayLocation(shipment.origin.latitude,shipment.origin.longitude, "origin");
+  //displayLocation(shipment.origin.latitude,shipment.origin.longitude, "origin");
   string += "<p><strong>Address: </strong>";
   string += orig;
   string += "<br/></p>";
@@ -335,7 +346,7 @@ function pxMapMarkers(){
 	string += shipment.current_location.latitude + "</text><br />";
   string += "<text>Longitude: ";
   string += shipment.current_location.longitude + "</text><br /></p>";
-  displayLocation(shipment.current_location.latitude,shipment.current_location.longitude, "current");
+  //displayLocation(shipment.current_location.latitude,shipment.current_location.longitude, "current");
   string += "<p><strong>Address: </strong>";
   string += current;
   string += "<br/></p>";
@@ -354,7 +365,7 @@ function pxMapMarkers(){
   string += shipment.destination.latitude+"</text><br />";
   string += "<text>Longitude: ";
   string += shipment.destination.longitude+"</text><br /></p>";
-  displayLocation(shipment.destination.latitude,shipment.destination.longitude, "dest");
+  //displayLocation(shipment.destination.latitude,shipment.destination.longitude, "dest");
   string += "<p><strong>Address: </strong>";
   string += dest;
   string += "<br/></p>";
@@ -364,34 +375,41 @@ function pxMapMarkers(){
   string += shipment.expected_date +"<br /></p>";
   string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
 
-  string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
-  string += "<google-map-point latitude=\"";
-  string += shipment.origin.latitude;
-  string += "\" longitude=\"";
-  string += shipment.origin.longitude;
-  string += "\"></google-map-point>";
-  string += "<google-map-point latitude=\"";
-  string += shipment.current_location.latitude;
-  string += "\" longitude=\"";
-  string += shipment.current_location.longitude;
-  string += "\"></google-map-point>";
-  string += "</google-map-poly>";
-  string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
-  string += "<google-map-point latitude=\"";
-  string += shipment.current_location.latitude;
-  string += "\" longitude=\"";
-  string += shipment.current_location.longitude;
-  string += "\"></google-map-point>";
-  string += "<google-map-point latitude=\"";
-  string += shipment.destination.latitude;
-  string += "\" longitude=\"";
-  string += shipment.destination.longitude;
-  string += "\"></google-map-point>";
-  string += "</google-map-poly>";
+  // string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
+  // string += "<google-map-point id=\"ORIGIN_POINT\" latitude=\"";
+  // string += shipment.origin.latitude;
+  // string += "\" longitude=\"";
+  // string += shipment.origin.longitude;
+  // string += "\"></google-map-point>";
+  // string += "<google-map-point id=\"CURRENT_POINT\" latitude=\"";
+  // string += shipment.current_location.latitude;
+  // string += "\" longitude=\"";
+  // string += shipment.current_location.longitude;
+  // string += "\"></google-map-point>";
+  // string += "</google-map-poly>";
+  // string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
+  // string += "<google-map-point id=\"CURRENT_POINT\" latitude=\"";
+  // string += shipment.current_location.latitude;
+  // string += "\" longitude=\"";
+  // string += shipment.current_location.longitude;
+  // string += "\"></google-map-point>";
+  // string += "<google-map-point id=\"DEST_POINT\" latitude=\"";
+  // string += shipment.destination.latitude;
+  // string += "\" longitude=\"";
+  // string += shipment.destination.longitude;
+  // string += "\"></google-map-point>";
+  // string += "</google-map-poly>";
 
   string += "</google-map>";
 
   document.getElementById("MAP_MARKERS").innerHTML = string;
+
+  // document.getElementById("ORIGIN_POINT").attributes.latitude.value = shipment.origin.latitude;
+  // document.getElementById("ORIGIN_POINT").attributes.longitude.value = shipment.origin.longitude;
+  // document.getElementById("CURRENT_POINT").attributes.latitude.value = shipment.current_location.latitude;
+  // document.getElementById("CURRENT_POINT").attributes.longitude.value = shipment.current_location.longitude;
+  // document.getElementById("DEST_POINT").attributes.latitude.value = shipment.destination.latitude;
+  // document.getElementById("DEST_POINT").attributes.longitude.value = shipment.destination.longitude;
 }
 
 function pxMapMarkersOrder(){
@@ -408,7 +426,7 @@ function pxMapMarkersOrder(){
     string += order.shipments[i].origin.latitude + "</text><br />";
     string += "<text>Longitude: ";
     string += order.shipments[i].origin.longitude + "</text><br /></p>";
-    displayLocation(shipment.origin.latitude,shipment.origin.longitude,"origin");
+    //displayLocation(shipment.origin.latitude,shipment.origin.longitude,"origin");
     string += "<p><strong>Address: </strong>";
     string += orig;
     string += "<br/></p>";
@@ -427,7 +445,7 @@ function pxMapMarkersOrder(){
     string += order.shipments[i].current_location.latitude + "</text><br />";
     string += "<text>Longitude: ";
     string += order.shipments[i].current_location.longitude + "</text><br /></p>";
-    displayLocation(shipment.current_location.latitude,shipment.current_location.longitude, "current");
+    //displayLocation(shipment.current_location.latitude,shipment.current_location.longitude, "current");
     string += "<p><strong>Address: </strong>";
     string += current;
     string += "<br/></p>";
@@ -446,7 +464,7 @@ function pxMapMarkersOrder(){
     string += order.shipments[i].destination.latitude+"</text><br />";
     string += "<text>Longitude: ";
     string += order.shipments[i].destination.longitude+"</text><br /></p>";
-    displayLocation(shipment.destination.latitude,shipment.destination.longitude, "dest");
+    //displayLocation(shipment.destination.latitude,shipment.destination.longitude, "dest");
     string += "<p><strong>Address: </strong>";
     string += dest;
     string += "<br/></p>";
@@ -586,15 +604,24 @@ function displayLocation(latitude,longitude,location){
           if(request.readyState == 4 && request.status == 200){
             var data = JSON.parse(request.responseText);
             var address = data.results[0];
+            if(address == undefined)
+              return;
+            if(address.formatted_address == undefined)
+              return;
+            if(address.address_components == undefined)
+              return;
             console.log(address.formatted_address);
-            console.log(address.address_components[3].long_name);
-            console.log(address.address_components[4].long_name);
-            if(location == "origin")
-              orig = address.formatted_address;
-            else if(location == "current")
-              current = address.formatted_address;
-            else if(location == "dest")
-              dest = address.formatted_address;
+            if(address.address_components[3].long_name == undefined || address.address_components[4].long_name == undefined )
+              return;
+              //console.log(address.address_components[3].long_name);
+              //console.log(address.address_components[4].long_name);
+          
+              if(location == "origin")
+                orig = address.formatted_address;
+              else if(location == "current")
+                current = address.formatted_address;
+              else if(location == "dest")
+                dest = address.formatted_address;
           }
         };
     request.send();
@@ -608,8 +635,8 @@ function consistantTimer() {
    pxTree();
    // console.log("TEST");
  }
- document.getElementById("YEET").attributes.latitude.value = 50;
- document.getElementById("YEET").attributes.longitude.value = 50;
+ //document.getElementById("YEET").attributes.latitude.value = 50;
+ //document.getElementById("YEET").attributes.longitude.value = 50;
  
 }
 
