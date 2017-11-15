@@ -1,87 +1,227 @@
 <!DOCTYPE html>
-<html lang="en" ng-strict-di>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width,initial-scale=1>
-  <title>GE Shipment Tracker</title>
-  <meta name="description" content="{{description}}">
-  <meta name="fragment" content="!">
-
-  <!-- Apple META -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <!-- Facebook META -->
-  <meta property="fb:app_id" content="{{facebookAppId}}">
-  <meta property="og:site_name" content="{{title}}">
-  <meta property="og:title" content="{{title}}">
-  <meta property="og:description" content="{{description}}">
-  <meta property="og:url" content="{{url}}">
-  <meta property="og:image" content="{{logo}}">
-  <meta property="og:type" content="website">
-
-  <!-- Twitter META -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="{{twitterUsername}}">
-  <meta name="twitter:title" content="{{title}}">
-  <meta name="twitter:description" content="{{description}}">
-  <meta name="twitter:image" content="{{logo}}">
-
-  <!-- Fav Icon -->
-  <link href="/{{favicon}}" rel="shortcut icon" type="image/x-icon">
-
-  <!-- Manifest -->
-  <link href="/manifest.json" rel="manifest">
-
-  <!-- Application CSS Files -->
-  {{#each cssFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
-
-  <!--Bootstrap-->
-  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">-->
+    <title>GE Shipment Tracker</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <!-- Manifest -->
+    <link href="/manifest.json" rel="manifest">
+    <!-- Application CSS Files -->
+    {{#each cssFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
 </head>
 
 <body>
-  <header ng-include="'/modules/core/client/views/header.client.view.html'"></header>
-  <section class="content">
-    <section class="container">
-      {{{block "content"}}}
-    </section>
-  </section>
-
-  <noscript>
-    <style>
-      [ng\:cloak], [ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-        display: block !important;
-      }
-    </style>
-    <div class="alert alert-warning">
-      <strong>This page requires JavaScript.</strong> Please enable it in your browser.
+  <div class="container">
+    <div class="brandingBar">
+        <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
     </div>
-  </noscript>
 
-  <!--Embedding The User Object-->
-  <script type="text/javascript">
-    var user = {{{ user }}};
-    var env = "{{ env }}";
-  </script>
+    <div class="leftSidebar">
+            <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
 
-  <!--Load The Socket.io File-->
-  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+            <div class="btn-group">
+                <button for="id1" class="btn btn--full" onclick="displayActive()">Active</button>
+                <button for="id2" class="btn btn--full" onclick="displayInactive()">Inactive</button>
+                <button for="id2" class="btn btn--full" onclick="displayAll()">All</button>
+            </div>
 
-  <!--Application JavaScript Files-->
-    {{#each jsFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
-  
-  <!--owasp config sync-->
-  <script type="text/javascript">
-    var sharedConfig = {{{ sharedConfig }}};
-    owaspPasswordStrengthTest.config(sharedConfig.owasp);
-  </script>
+            <div id="SOURCE" style="display:none;">
+                {{vm.customers}}
+            </div>
 
-  {{#if livereload}}
-  <!--Livereload script rendered -->
-  <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
-  {{/if}}
+            <div id="TREE">
+                <px-tree
+              keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
+               items='[
+               {
+                "label":"No Customers Selected",
+                "id":"branch-0-3",
+                "isSelectable": false
+               }
+               ]'
+              multi-activate>
+              </px-tree>
+            </div>
+    </div>
+    <div id="STEPS">
+        <px-steps
+        items='[
+        {
+          "id":"1",
+          "label":"(FROM)"
+        },
+        {
+          "id":"2",
+          "label":"(CURRENT)"
+        },
+        {
+          "id":"3",
+          "label":"(TO)"
+        }
+        ]'
+        completed='[]'>
+        </px-steps>
+    </div>
+    <div id="MAP_MARKERS">
+      <google-map zoom="3" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+      </google-map>
+    </div>
+    <div class="rightSidebar" id="hide">
+      <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Customer Information"
+          status="">
+            <div id="CUSTOMER_INFO">
+              <strong>Name: </strong><br />
+              <strong>Email: </strong><br />
+              <strong>Phone: </strong><br />
+              <strong>Address: </strong><br />
+            </div>
+      </px-accordion>
+        
+      <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Shipping Details"
+        status="">
+        <div id="SHIPPING_DETAILS">
+          <strong>Tracking Number: </strong><br />
+          <strong>Carrier: </strong><br />
+          <strong>Destination: </strong><br />
+                <c>Latitude: </text><br />
+                <text>Longitude:</text><br />
+          <strong>Current Location: </strong><br />
+                <text>Latitude: </text><br />
+                <text>Longitude: </text><br />
+          <strong>Shipped: </strong><br />
+          <strong>Expected Arrival: </strong><br />
+          <strong>Status: </strong><br />
+        </div>
+      </px-accordion>
+        
+      <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Package Details"
+        status="">
+        <div id="PACKAGE_COMMENTS">
+          <strong>Order Placed (Id): </strong><br />
+          <strong>Shipment Contents: </strong><br />
+          <strong>Description: </strong><br />
+        </div>
+      </px-accordion>
+        
+      <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Package Comments"
+        status="">
+      </px-accordion>
+    </div>
+</div>
+
+<!--Predix Import Links-->
+<link rel="import" href="../../../../../lib/px-branding-bar/px-branding-bar.html"/>
+<link rel="import" href="../../../../../lib/px-steps/px-steps.html" />
+<link rel="import" href="../../../../../lib/px-accordion/px-accordion.html" />
+<link rel="import" href="../../../../../lib/px-tree/px-tree.html"/>
+
+<!--Google Maps Scripts and Links-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="../../../../../lib/webcomponentsjs/webcomponents.js"></script>
+<link rel="import" href="../../../../../lib/google-map/google-map.html" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!--
+        <h1>My name is Vishnu</h1>
+        <div id="map"></div>
+        <script>
+          function initMap() {
+            // Styles a map in night mode.
+            var map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: 40.674, lng: -73.945},
+              zoom: 12,
+              styles: [
+                {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+                {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+                {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+                {
+                  featureType: 'administrative.locality',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#d59563'}]
+                },
+                {
+                  featureType: 'poi',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#d59563'}]
+                },
+                {
+                  featureType: 'poi.park',
+                  elementType: 'geometry',
+                  stylers: [{color: '#263c3f'}]
+                },
+                {
+                  featureType: 'poi.park',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#6b9a76'}]
+                },
+                {
+                  featureType: 'road',
+                  elementType: 'geometry',
+                  stylers: [{color: '#38414e'}]
+                },
+                {
+                  featureType: 'road',
+                  elementType: 'geometry.stroke',
+                  stylers: [{color: '#212a37'}]
+                },
+                {
+                  featureType: 'road',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#9ca5b3'}]
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'geometry',
+                  stylers: [{color: '#746855'}]
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'geometry.stroke',
+                  stylers: [{color: '#1f2835'}]
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#f3d19c'}]
+                },
+                {
+                  featureType: 'transit',
+                  elementType: 'geometry',
+                  stylers: [{color: '#2f3948'}]
+                },
+                {
+                  featureType: 'transit.station',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#d59563'}]
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'geometry',
+                  stylers: [{color: '#17263c'}]
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#515c6d'}]
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'labels.text.stroke',
+                  stylers: [{color: '#17263c'}]
+                }
+              ]
+            });
+        }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0&callback=initMap"
+        async defer></script>
+      -->
 </body>
 
 </html>
