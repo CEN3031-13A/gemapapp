@@ -11,30 +11,17 @@
 // Base
 @import "../../../../public/lib/px-flexbox-design/_base.flexbox.scss";
 @import "../../../../public/lib/px-viewport-design/_base.viewport.scss";
-$inuit-enable-input--search : true;
 @import "../../../../public/lib/px-forms-design/_base.forms.scss";
 
 // Meta
 
 // Objects
+$inuit-enable-layout--flush : true;
+$inuit-enable-layout--full : true;
+@import "../../../../public/lib/px-layout-design/_objects.layout.scss";
 @import "../../../../public/lib/px-button-group-design/_objects.button-group.scss";
 $inuit-enable-btn--full : true;
 @import "../../../../public/lib/px-buttons-design/_objects.buttons.scss";
-
-// Component 
-/*
-#map {
-  height: 100%;
-}
-*/
-/* Optional: Makes the sample page fill the window. */
-/*
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-*/
 
 
 .brandingBar{
