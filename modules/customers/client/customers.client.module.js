@@ -19,15 +19,15 @@ function myFunction() {
   var x = document.getElementById('hide');
   var y = document.getElementById('MAP_MARKERS');
   var z = document.getElementById("STEPS");
-  if (x.style.display === 'none') {
-    x.style.display = 'block';
-    y.style.width = "780px";
-    z.style.width = "780px";
+  if (x.style.display === 'block') {
+    x.style.display = 'none';
+    y.style.width = "85%";
+    z.style.width = "85%";
 
   } else {
-    x.style.display = 'none';
-    y.style.width = '85%';
-    z.style.width = '85%';
+    x.style.display = 'block';
+    y.style.width = '70%';
+    z.style.width = '70%';
   }
 }
 

@@ -1873,7 +1873,7 @@ button.btn {
 .leftSidebar {
   position: fixed;
   top: 30px;
-  width: 250px;
+  width: 15%;
   height: 85%; }
 
 .btn-group {
@@ -1882,7 +1882,7 @@ button.btn {
 .rightSidebar {
   position: fixed;
   top: 30px;
-  width: 250px;
+  width: 15%;
   right: 0px;
   height: 95%;
   background-color: white;
@@ -1899,16 +1899,16 @@ button.btn {
   position: fixed;
   top: 30px;
   height: 60px;
-  left: 250px;
-  right: 250px;
+  left: 15%;
+  right: 15%;
   width: 85%;
   border-left: 1px solid black; }
 
 #MAP_MARKERS {
   position: fixed;
   top: 90px;
-  left: 250px;
-  right: 250px;
+  left: 15%;
+  right: 15%;
   width: 85%;
   bottom: 0;
   background-color: white;
