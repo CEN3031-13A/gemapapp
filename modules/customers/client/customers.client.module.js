@@ -539,13 +539,6 @@ function packageDetails(){
 }
 
 
-var myVar = setTimeout(myTimer, 1000);
-
-function myTimer() {
-    pxTree();
-    getItemData();
-    console.log(customerList);
-}
 
 function mapPaths(){
     var string = "<google-map-poly closed fill-color=\""
@@ -580,10 +573,6 @@ function mapPaths(){
     return string;
 }
 
-google.maps.event.addListener(marker, 'dragend', function(event) {
-          var lng= event.latLng.lng();
-          var lat= event.latLng.lat();
-});
 
 function displayLocation(latitude,longitude,location){
         var request = new XMLHttpRequest();
@@ -611,6 +600,18 @@ function displayLocation(latitude,longitude,location){
     request.send();
 };
 
+
+setInterval(consistantTimer, 50);
+
+function consistantTimer() {
+ if(customerList.length === 0){
+   pxTree();
+   // console.log("TEST");
+ }
+ document.getElementById("YEET").attributes.latitude.value = 50;
+ document.getElementById("YEET").attributes.longitude.value = 50;
+ 
+}
 
 
 
