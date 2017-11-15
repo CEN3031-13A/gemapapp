@@ -402,6 +402,10 @@ function packageComments(){
 	document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
 }
 
+function addComment(){
+	
+}
+
 
 setInterval(consistantTimer, 50);
 
