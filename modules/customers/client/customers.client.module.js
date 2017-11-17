@@ -403,7 +403,34 @@ function packageComments(){
 }
 
 function addComment(){
+	var comment = document.getElementById("newComment").value;
+	var current = new Date();
+	var timestamp = current.getFullYear();
+	timestamp += "-";
+	timestamp += (current.getMonth() + 1);
+	timestamp += "-";
+	timestamp += current.getDate();
+	timestamp += "T";
+	timestamp += current.getHours();
+	timestamp += ":";
+	timestamp += current.getMinutes();
+	timestamp += ":";
+	timestamp += current.getSeconds();
+	timestamp += " ";
+	current = current.toString();
+	var zonepos = current.indexOf('+');
+	if (zonepos == -1){
+		zonepos = current.indexOf('-');
+	}
+	timestamp += current.substr(zonepos, 3);
+	timestamp += ":";
+	timestamp += current.substr(zonepos+3, 2);
 	
+	//timestamp and comment ready to be submited to db
+	console.log(timestamp + ": " + comment);
+	
+	//refresh comments
+	pakageComments();
 }
 
 
