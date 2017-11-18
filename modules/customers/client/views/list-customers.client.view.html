@@ -15,7 +15,7 @@
               </div>
               
               <div id="TREE">
-                  <px-tree
+                  <px-tree id="TEST11"
                 keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
                  items='[
                  {
@@ -24,7 +24,7 @@
                   "isSelectable": true
                  }
                  ]'
-                multi-activate>
+                multi-activate onclick="getItemData()">
                 </px-tree>
               </div>
           </div>
@@ -53,71 +53,10 @@
                     </px-steps>
                 </div>
       
-                <div class="rightSidebar" id="hide">  
-                    <div id="demo3" class="flex flex--col">
-                        <px-accordion
-                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                        header-value="Customer Information"
-                        status="">
-                          <div id="CUSTOMER_INFO">
-                            <strong>Name: </strong><br />
-                            <strong>Email: </strong><br />
-                            <strong>Phone: </strong><br />
-                            <strong>Address: </strong><br />
-                          </div>
-                      </px-accordion>
-            
-                      <px-accordion
-                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                        header-value="Shipping Details"
-                        status="">
-                        <div id="SHIPPING_DETAILS">
-                          <strong>Tracking Number: </strong><br />
-                          <strong>Carrier: </strong><br />
-                          <strong>Destination: </strong><br />
-                                <text>Latitude: </text><br />
-                                <text>Longitude:</text><br />
-                          <strong>Current Location: </strong><br />
-                                <text>Latitude: </text><br />
-                                <text>Longitude: </text><br />
-                          <strong>Shipped: </strong><br />
-                          <strong>Expected Arrival: </strong><br />
-                          <strong>Status: </strong><br />
-                      </div>
-                      </px-accordion>
-            
-                      <px-accordion
-                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                        header-value="Package Details"
-                        status="">
-                        <div id="PACKAGE_DETAILS">
-                          <strong>Order Placed (Id): </strong><br />
-                          <strong>Shipment Contents: </strong><br />
-                          <strong>Description: </strong><br />
-                        </div>
-                      </px-accordion>
-            
-                      <px-accordion
-                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                        header-value="Package Comments"
-                        status="" 
-                        disabled show-action>
-                      </px-accordion>
-            
-                      <form>
-                        <div class="sidebarBlock">
-                            <input placeholder="Type something..." class="text-input input--regular" type="text">
-                        </div>
-                        <div class="sidebarBlock">
-                            <input class="btn btn--primary" type="reset" value="Submit">
-                        </div>
-                      </form> 
-                    </div>
-                </div>
-              </div>
+              
               <div id="MAP_MARKERS">
-                <google-map fit-to-markers="true" api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-                  <google-map-marker latitude="36.77493" longitude="-121.41942">
+                <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+                  <!-- <google-map-marker latitude="36.77493" longitude="-121.41942">
                     <div class="popup">
                       <img src="image.png">
                       <p>
@@ -191,7 +130,7 @@
                     </google-map-point>
                     <google-map-point id="DEST_POINT" latitude="39.77493" longitude="-122.41942">
                     </google-map-point>
-                  </google-map-poly>
+                  </google-map-poly> -->
                 </google-map>
               </div>
           </div>
@@ -210,3 +149,6 @@
 <script src="../../../../../lib/webcomponentsjs/webcomponents.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="import" href="../../../../../lib/google-map/google-map-elements.html" />
+<script src="http://maps.googleapis.com/maps/api/js"></script> 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtX6UVj6lstPls2orNPnfW5GJ0_7eJ6fo">
+    </script>
