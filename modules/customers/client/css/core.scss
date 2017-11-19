@@ -24,178 +24,77 @@ $inuit-enable-btn--full : true;
 @import "../../../../public/lib/px-buttons-design/_objects.buttons.scss";
 
 // Components
-// We should be safe from about zoom level 80% - 110%
 
-#BRANDING_BAR{
-  position: absolute;
-  width: 100%;
+body {
+  height: 100vh;
 }
 
+
 #LEFT_SIDEBAR{
-  position: absolute;
-  width: 18%;
-  top: 2em;
-  height: 100%;
-  overflow-y: scroll;
+  background: $gray15;
   border-right: 1px solid black;
+  height: calc(100vh - 30px);
+  overflow: auto;
+  position: absolute;
+  top: 30px;
 }
 
 #PREDIX_TREE{
-  background: #2c404c;
   color: white;
   font-family: "GE Inspira Sans",sans-serif;
-  height: 100%;
 }
 
 #STEPS{
+  height: 60px;
+  padding-top: .5vh; 
   position: absolute;
-  height: 10%;
-  width: 64%;
-  top: 2em;
-  left: 18%;
+  right: 0;
+  top: 30px;
 }
 
 #MAP_MARKERS{
-  position: absolute;
-  height: 85%;
-  width: 64%;
-  top: 6em;
-  left: 18%;
   border-top: 1px solid black;
-}
-
-/*
-#MAP_BOX{
-  position: absolute;
-  height: 100%;
-  width: 64%;
-  top: 6em;
-  left: 18%;
-  background: #2c404c;
-}
-*/
-
-.rightSidebar{
-  position: absolute;
-  width: 18%;
-  top: 2em;
+  height: calc(100vh - 90px);
   right: 0;
-  height: 100%;
-  overflow-y: scroll;
-  border-left: 1px solid black;
-}
-
-/*
-px-accordion{
-  width: 500;
-}
-*/
-
-/*
-#TREE{
-  background: #2c404c;
-  color: white;
-  font-family: "GE Inspira Sans",sans-serif;
-  border-right: 1px solid black; 
-  height: 100%;
+  position: absolute;
   top: 90px;
-  overflow-y: auto;
-  position: fixed;
-  width: 16.65vw;
-  border-top: 1px solid black;
 }
 
-#searchAndButtonsAndTree{
-  border-right: 1px solid black;
-}
-*/
-
-/*
-#tree{
-  background: #2c404c;
-  height: 100%
-}
-
-.tree{
-  background: #2c404c;
-  color: white;
-  font-family: "GE Inspira Sans",sans-serif;
-  height: 100%;
-  position:fixed;
-  padding-top:12.5vh;
-  width: 17.5vw;
-}
-*/
-
-/*
-#MAP_MARKERS{
-  border-top: 1px solid black;
-  bottom: 0;
-  position: fixed;
-  top:14.2vh;
-  width:63.5%;
-}
-
-#info{
-  display: block;
-  font-size:24px;
-  margin:auto;
-  width: 0;
-}
-
-.popup{
-  height: 175px;
-  width: 175px;
-}
-
-.steps{
-  background: white;
-  width:63vw;
-  // border-right: 1px solid black; 
-}
-*/
-
-/*----------Right side detailed info----------*/
-/*
 .rightSidebar{
-  background: white;
-  border-left: 1px solid black; 
-  bottom: 0;
+  border-left: 1px solid black;
   display: none;
-  overflow-y: auto;
-  position: fixed;
+  height: calc(100vh - 30px);
+  overflow: auto;
+  position: absolute;
   right: 0;
-  top:4.7vh;
-  width:20%;
-  z-index: 7;
-}
-*/
-
-/*
-.sidebarBlock{
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
-  padding-right: 0.5em;
-  padding-left: 0.5em;
+  top: 30px;
 }
 
-px-accordion{
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
+//---------------------------------------Placeholder text center-----------------------------------------
+::-webkit-input-placeholder {
+   color: gray !important;
+   text-align: center;
 }
 
-textarea {
-  background-color: #f8f8f8;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-family: sans-serif;
-  height: 150px;
-  padding: 12px 20px;
-  resize: none;
-  width: 100%;
+:-moz-placeholder { /* Firefox 18- */
+   color: gray !important;  
+   text-align: center;
 }
-*/
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: gray !important;  
+   text-align: center;
+}
+
+:-ms-input-placeholder {  
+   color: gray !important; 
+   text-align: center;
+}
+
+//---------------------------------------remove the scrollbar for overall webpage-----------------------------------------
+body::-webkit-scrollbar { 
+    display: none; 
+}
 
 // Trumps
 @import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
