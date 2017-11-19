@@ -1866,7 +1866,7 @@ button.btn {
 
 #BRANDING_BAR {
   position: absolute;
-  height: 4.75%;
+  height: 5%;
   width: 100%; }
 
 #LEFT_SIDEBAR {
@@ -1876,7 +1876,7 @@ button.btn {
 
 #MAP_MARKERS {
   position: absolute;
-  height: 95.25%;
+  height: 95%;
   width: 80%;
   top: 4.75%;
   left: 20%; }
