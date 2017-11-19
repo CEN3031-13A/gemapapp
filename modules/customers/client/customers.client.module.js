@@ -108,7 +108,6 @@ function searchCustomers(){
 }
 
 function pxTreeDisplay(customerListSearch) {
-  
   customerListSearch.sort(function(a, b) {
     if (a.name.toUpperCase() < b.name.toUpperCase())
       return -1;
@@ -116,8 +115,9 @@ function pxTreeDisplay(customerListSearch) {
       return 1;
     return 0;
   });
-  var string = "<px-tree keys=\'{\"id\":\"id\",\"label\":\"label\",\"children\":\"children\"}\'";
-  string+="items=\'["
+  var treeElement = document.getElementById("TEST11");
+
+  string="["
   for(i=0;i<customerListSearch.length;i++){
     string+="{\"label\":\"";
     string+=customerListSearch[i].name;
@@ -126,6 +126,7 @@ function pxTreeDisplay(customerListSearch) {
     string+=customerListSearch[i]._id;
     string+="\",\"isSelectable\": false,\"children\":[";
     strcheck0 = string;
+
     for(j=0;j<customerListSearch[i].orders.length;j++){
       string+="{\"label\":\"Order #";
       string+=customerListSearch[i].orders[j].index+1;
@@ -134,9 +135,9 @@ function pxTreeDisplay(customerListSearch) {
       string+=customerListSearch[i].orders[j].id;
       string+="\",\"isSelectable\": true,\"children\":[";
       strcheck1 = string;
+
       for(k=0;k<customerListSearch[i].orders[j].shipments.length;k++){
         string+="{\"label\":\"";
-        //string+=customers[i].orders[j].shipments[k].ship_date;
         string+="Shipment #"+ (k+1);
         string+="\",\"id\":\"";
         string+=customerListSearch[i].orders[j].shipments[k].id;
@@ -151,10 +152,9 @@ function pxTreeDisplay(customerListSearch) {
     string+="]},";
   }
   string = string.substring(0, string.length-1);
-  string+="]\' onclick=\'getItemData()\'>";
-  string+="</px-tree>";
+  string+="]";
 
-  document.getElementById("TREE").innerHTML = string;
+  treeElement.attributes.items.value = string;
 }
 
 
