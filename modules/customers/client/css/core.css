@@ -1871,6 +1871,7 @@ body {
   background: #2c404c;
   border-right: 1px solid black;
   height: calc(100vh - 30px);
+  overflow: auto;
   position: absolute;
   top: 30px; }
 
@@ -1896,6 +1897,7 @@ body {
   border-left: 1px solid black;
   display: none;
   height: calc(100vh - 30px);
+  overflow: auto;
   position: absolute;
   right: 0;
   top: 30px; }
