@@ -561,7 +561,6 @@ function consistantTimer() {
    
  }
  if(map == undefined){
-  //map = new google.maps.Map(document.getElementById('MAP_MARKERS'))
   var uluru = {lat: -25.363, lng: 131.044};
     map = new google.maps.Map(document.getElementById('MAP_MARKERS'), {
           zoom: 4,

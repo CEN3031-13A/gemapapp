@@ -26,114 +26,25 @@ $inuit-enable-btn--full : true;
 // Component
 // Your css goes in here
 
-/*
-px-accordion{
-  width: 500;
+#BRANDING_BAR{
+    position: absolute;
+    height: 4.75%;
+    width: 100%;
 }
-*/
-
-
-#TREE{
-  background: #2c404c;
-  color: white;
-  font-family: "GE Inspira Sans",sans-serif;
-  border-right: 1px solid black; 
-  height: 100%;
-  top: 90px;
-  overflow-y: auto;
-  position: fixed;
-  width: 16.65vw;
-  border-top: 1px solid black;
+#LEFT_SIDEBAR{
+    position: absolute;
+    width: 20%;
+    top: 4.75%;
 }
-
-#searchAndButtonsAndTree{
-  border-right: 1px solid black;
-}
-
-/*
-#tree{
-  background: #2c404c;
-  height: 100%
-}
-
-.tree{
-  background: #2c404c;
-  color: white;
-  font-family: "GE Inspira Sans",sans-serif;
-  height: 100%;
-  position:fixed;
-  padding-top:12.5vh;
-  width: 17.5vw;
-}
-*/
-
-
 #MAP_MARKERS{
-  border-top: 1px solid black;
-  bottom: 0;
-  position: fixed;
-  top:14.2vh;
-  width:63.5%;
+    position: absolute;
+    height: 95.25%;
+    width: 80%;
+    top: 4.75%;
+    left: 20%;
 }
-
-#info{
-  display: block;
-  font-size:24px;
-  margin:auto;
-  width: 0;
-}
-
-.popup{
-  height: 175px;
-  width: 175px;
-}
-
-.steps{
-  background: white;
-  width:63vw;
-  // border-right: 1px solid black; 
-}
-
-/*----------Right side detailed info----------*/
-.rightSidebar{
-  background: white;
-  border-left: 1px solid black; 
-  bottom: 0;
-  overflow-y: auto;
-  position: fixed;
-  right: 0;
-  top:4.7vh;
-  width:20%;
-  z-index: 7;
-}
-
-/*
-.sidebarBlock{
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
-  padding-right: 0.5em;
-  padding-left: 0.5em;
-}
-
-px-accordion{
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-}
-
-textarea {
-  background-color: #f8f8f8;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-family: sans-serif;
-  height: 150px;
-  padding: 12px 20px;
-  resize: none;
-  width: 100%;
-}
-*/
 
 // Trumps
 @import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
 @import "../../../../public/lib/px-widths-responsive-design/_trumps.widths-responsive.scss";
-//@import "../../../../public/lib/px-widths-design/_trumps.widths.scss";
+@import "../../../../public/lib/px-widths-design/_trumps.widths.scss";
