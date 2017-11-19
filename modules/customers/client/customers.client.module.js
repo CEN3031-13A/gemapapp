@@ -14,23 +14,27 @@ var customerList =[];
 var activeCustomerList = [];
 var inactiveCustomerList = [];
 var activeInactiveState = "";
+var displayaddress;
+var orig;
+var current;
+var dest;
+var map;
+var mapsReady = false;
+var markersArray = [];
+var flightPathList =[];
 
 function myFunction() {
   var x = document.getElementById('hide');
-
-  if (x.style.display == 'block') {
-    x.style.display = 'none';
-    document.getElementById('MAP_MARKERS').className = "u-5/6";
-    document.getElementById('MAP_MARKERS').style.right = "0";
-    document.getElementById("STEPS").className = "u-5/6";
-    document.getElementById('STEPS').style.right = "0";
-
-  } else {
+  var y = document.getElementById('MAP_MARKERS');
+  var z = document.getElementById('STEPS');
+  if (x.style.display === 'none') {
     x.style.display = 'block';
-    document.getElementById('MAP_MARKERS').className = "u-4/6";
-    document.getElementById('MAP_MARKERS').style.right = "16.6666667%";
-    document.getElementById("STEPS").className = "u-4/6";
-    document.getElementById('STEPS').style.right = "16.6666667%";
+    y.style.width = '63.5%';
+    z.style.width = '63vw';
+  } else {
+    x.style.display = 'none';
+    y.style.width = '83.5%';
+    z.style.width = '83vw';
   }
 }
 
@@ -104,7 +108,6 @@ function searchCustomers(){
 }
 
 function pxTreeDisplay(customerListSearch) {
-  
   customerListSearch.sort(function(a, b) {
     if (a.name.toUpperCase() < b.name.toUpperCase())
       return -1;
@@ -112,8 +115,9 @@ function pxTreeDisplay(customerListSearch) {
       return 1;
     return 0;
   });
-  var string = "<px-tree keys=\'{\"id\":\"id\",\"label\":\"label\",\"children\":\"children\"}\'";
-  string+="items=\'["
+  var treeElement = document.getElementById("TEST11");
+
+  string="["
   for(i=0;i<customerListSearch.length;i++){
     string+="{\"label\":\"";
     string+=customerListSearch[i].name;
@@ -122,17 +126,18 @@ function pxTreeDisplay(customerListSearch) {
     string+=customerListSearch[i]._id;
     string+="\",\"isSelectable\": false,\"children\":[";
     strcheck0 = string;
+
     for(j=0;j<customerListSearch[i].orders.length;j++){
       string+="{\"label\":\"Order #";
       string+=customerListSearch[i].orders[j].index+1;
       string+="\",";
       string+="\"id\":\"";
       string+=customerListSearch[i].orders[j].id;
-      string+="\",\"isSelectable\": false,\"children\":[";
+      string+="\",\"isSelectable\": true,\"children\":[";
       strcheck1 = string;
+
       for(k=0;k<customerListSearch[i].orders[j].shipments.length;k++){
         string+="{\"label\":\"";
-        //string+=customers[i].orders[j].shipments[k].ship_date;
         string+="Shipment #"+ (k+1);
         string+="\",\"id\":\"";
         string+=customerListSearch[i].orders[j].shipments[k].id;
@@ -147,77 +152,79 @@ function pxTreeDisplay(customerListSearch) {
     string+="]},";
   }
   string = string.substring(0, string.length-1);
-  string+="]\' onclick=\'getItemData()\'>";
-  string+="</px-tree>";
+  string+="]";
 
-  document.getElementById("TREE").innerHTML = string;
-
+  treeElement.attributes.items.value = string;
 }
 
 
 
 
 function getItemData(){
-  // console.log(customers.current_location.latitude);
-  // console.log(customers.current_location.longitude);
-	//document.getElementById("SOURCE").innerHTML = "<px-spinner size=\"100\"></px-spinner>";
-	var customers = JSON.parse(document.getElementById("SOURCE").innerHTML);
-	var px_tree = document.querySelector('px-tree');
-	var selectedData =px_tree.selectedMeta;
-	var selectedShipment = px_tree.selected;
-	var selectedPath = px_tree.selectedRoute;
-	//(item:Object) -- reference to the selected item
-	var selectedShipment = selectedData.item;
-	var shipmentID = selectedShipment.id;
-	console.log("Shipment ID: " + shipmentID);
-	var customerID = selectedPath[0];
-	console.log("Customer ID: " + customerID);
-	var orderID = selectedPath[1];
-	console.log("Order ID: " + orderID);
+  var customers = JSON.parse(document.getElementById("SOURCE").innerHTML);
+  var px_tree = document.querySelector('px-tree');
+  // var selectedData =px_tree.selectedMeta;
+  var selectedShipment = px_tree.selected;
+  var selectedPath = px_tree.selectedRoute;
+  if(selectedPath <= 1)
+    return;
+  //console.log(selectedPath.length);
+  //(item:Object) -- reference to the selected item
+  // var selectedShipment = selectedData.item;
+  var shipmentID = selectedShipment.id;
+  //console.log(selectedPath.length);
+  var customerID = selectedPath[0];
+  //console.log("Customer ID: " + customerID);
+  var orderID = selectedPath[1];
+  //console.log("Order ID: " + orderID);
+  if(selectedPath.length == 2){
+    shipmentID = -1;
+  }
 
-	var found = false;
-	var i,j,k;
-	for(i=0;i<customers.length;i++){
-		if(customerID == customers[i]._id){
-			console.log("Found customer!");
-			customer = customers[i];
-			for(j=0;j<customers[i].orders.length;j++){
-				if(orderID == customers[i].orders[j].id){
-					order = customers[i].orders[j];
-					for(k=0;k<customers[i].orders[j].shipments.length;k++){
-						console.log(customers[i].orders[j].shipments[k].id);
-						if(shipmentID == customers[i].orders[j].shipments[k].id){
-							found = true;
-							shipment = customers[i].orders[j].shipments[k];
-							// console.log(shipment.carrier);
-							console.log(shipment.current_location.latitude);
-							console.log(shipment.current_location.longitude);
-							customerIndex = i;
-							orderIndex = j;
-							shipmentIndex = k;
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
+  var found = false;
+  var i,j,k;
+  for(i=0;i<customers.length;i++){
+    if(customerID == customers[i]._id){
+      //console.log("Found customer!");
+      customer = customers[i];
+      for(j=0;j<customers[i].orders.length;j++){
+        if(orderID == customers[i].orders[j].id){
+          order = customers[i].orders[j];
+          for(k=0;k<customers[i].orders[j].shipments.length;k++){
+            //console.log(customers[i].orders[j].shipments[k].id);
+            if(shipmentID == customers[i].orders[j].shipments[k].id){
+              found = true;
+              shipment = customers[i].orders[j].shipments[k];
+              customerIndex = i;
+              orderIndex    = j;
+              shipmentIndex = k;
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
 
-	if(found == false){
-		console.log("Shipment was not found!");
-	}
-  console.log("TEST1234")
-	pxSteps();
-	pxMapMarkers();
-	customerInfo();
-	shippingDetails();
-	packageDetails();
+  if(!found){
+    // console.log("Shipment was not found!");
+    pxMapMarkersOrder();
+  }
+  else{
+   pxMapMarkers();
+  }
+
+  // pxSteps();
+  // customerInfo();
+  // shippingDetails();
+  // packageDetails();
+
 }
 
 function loading(){
-	// while(!document.ready());
-	var spinner = document.querySelector('px-spinner');
-	spinner.finished = true;
+  // while(!document.ready());
+  var spinner = document.querySelector('px-spinner');
+  spinner.finished = true;
 }
 
 function pxTree() {
@@ -229,8 +236,9 @@ function pxTree() {
       return 1;
     return 0;
   });
-  var string = "<px-tree keys=\'{\"id\":\"id\",\"label\":\"label\",\"children\":\"children\"}\'";
-  string+="items=\'["
+  var treeElement = document.getElementById("TEST11");
+
+  string="["
   for(i=0;i<customers.length;i++){
     customerList.push(customers[i]);
     string+="{\"label\":\"";
@@ -240,17 +248,18 @@ function pxTree() {
     string+=customers[i]._id;
     string+="\",\"isSelectable\": false,\"children\":[";
     strcheck0 = string;
+
     for(j=0;j<customers[i].orders.length;j++){
       string+="{\"label\":\"Order #";
       string+=customers[i].orders[j].index+1;
       string+="\",";
       string+="\"id\":\"";
       string+=customers[i].orders[j].id;
-      string+="\",\"isSelectable\": false,\"children\":[";
+      string+="\",\"isSelectable\": true,\"children\":[";
       strcheck1 = string;
+
       for(k=0;k<customers[i].orders[j].shipments.length;k++){
         string+="{\"label\":\"";
-        //string+=customers[i].orders[j].shipments[k].ship_date;
         string+="Shipment #"+ (k+1);
         string+="\",\"id\":\"";
         string+=customers[i].orders[j].shipments[k].id;
@@ -265,74 +274,74 @@ function pxTree() {
     string+="]},";
   }
   string = string.substring(0, string.length-1);
-  string+="]\' onclick=\'getItemData()\'>";
-  string+="</px-tree>";
+  string+="]";
 
-  document.getElementById("TREE").innerHTML = string;
+  treeElement.attributes.items.value = string;
 
 }
 
 function pxSteps() {
-	var string = "<px-steps ";
-  	string += "items=\'[";
-  	string += "{\"id\":\"1\", \"label\":\"(ORIGIN) ";
-  	string += shipment.origin.latitude;
-  	string += ", ";
-  	string += shipment.origin.latitude;
-  	string += "\"},";
-  	string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
-  	string += shipment.current_location.latitude;
-  	string += ", ";
-  	string += shipment.current_location.latitude;
-  	string += "\"},";
-  	string += "{\"id\":\"3\", \"label\":\"(TO) ";
-  	string += shipment.destination.latitude;
-  	string += ", ";
-  	string += shipment.destination.latitude;
-  	string += "\"}]\' completed=\'[\"1\",\"2\"]\' </px-steps>";
+  var string = "<px-steps ";
+    string += "items=\'[";
+    string += "{\"id\":\"1\", \"label\":\"(ORIGIN) ";
+    // string += shipment.origin.latitude;
+    // string += ", ";
+    // string += shipment.origin.latitude;
+    //displayLocation(shipment.origin.latitude,shipment.origin.longitude, "origin");
+    string += orig;
+    string += "\"},";
+    string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
+    // string += shipment.current_location.latitude;
+    // string += ", ";
+    // string += shipment.current_location.latitude;
+    //displayLocation(shipment.current_location.latitude,shipment.current_location.longitude, "current");
+    string += current;
+    string += "\"},";
+    string += "{\"id\":\"3\", \"label\":\"(TO) ";
+    // string += shipment.destination.latitude;
+    // string += ", ";
+    // string += shipment.destination.latitude;
+    //displayLocation(shipment.destination.latitude,shipment.destination.longitude, "dest");
+    string += dest
+    string += "\"}]\' completed=\'[\"1\",\"2\"]\' </px-steps>";
 
-  	document.getElementById("STEPS").innerHTML = string;
+    document.getElementById("STEPS").innerHTML = string;
 }
 
 function pxMapMarkers(){
-	var string = "<google-map zoom=\"2\"";
-	string += " fit-to-markers api-key=\"AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0\">";
-	string += "<google-map-marker latitude=\"";
-	string += shipment.current_location.latitude;
-  console.log("shipment.current_location.latitude: "+shipment.current_location.latitude);
-  console.log("shipment.current_location.longitude: "+shipment.current_location.longitude);
-	string += "\" longitude=\"";
-	string += shipment.current_location.longitude;
-  string += "\"> <div class=\"popup\"><img src=\"image.png\">";
-	string += "<p><strong>Current Location: </strong><br />";
-	string += "<text>Latitude: ";
-	string += shipment.current_location.latitude + "</text><br />";
-  string += "<text>Longitude: ";
-  string += shipment.current_location.longitude + "</text><br /></p>";
-  string += "<p><strong>Shipped: </strong>";
-  string += shipment.ship_date + "<br />";
-  // string += "<strong>Expected Arrival: </strong>";
-  // string += shipment.expected_date +"<br /></p>";
-  // string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
-  string += "<button id=\"info\" onclick=\"myFunction()\"><i class=\"material-icons\">info</i></button></div></google-map-marker>";
-  string += "<google-map-marker latitude=\"";
-  string += shipment.destination.latitude
-  string += "\" longitude=\"";
-  string += shipment.destination.longitude;
-  string += "\"> <div class=\"popup\"><img src=\"image.png\">";
-  string += "<p><strong>Destination: </strong><br />";
-  string += "<text>Latitude: ";
-  string += shipment.destination.latitude+"</text><br />";
-  string += "<text>Longitude: ";
-  string += shipment.destination.longitude+"</text><br /></p>";
-  // string += "<p><strong>Shipped: </strong>";
-  // string += shipment.ship_date + "<br />";
-  string += "<strong>Expected Arrival: </strong>";
-  string += shipment.expected_date +"<br /></p>";
-  //string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
-  string += "<button id=\"info\" onclick=\"myFunction()\"><i class=\"material-icons\">info</i></button></div></google-map-marker>";
-  string += "</google-map>";
-  document.getElementById("MAP_MARKERS").innerHTML = string;
+  clearMarkers();
+  var origin = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
+  addMarker(origin, "Origin");
+
+  var current = {lat: shipment.current_location.latitude, lng: shipment.current_location.longitude};
+  addMarker(current, shipment.delivery_state);
+
+  var dest = {lat: shipment.destination.latitude, lng: shipment.destination.longitude};
+  addMarker(dest, "Destination");
+  if(flightPathList!=null)
+    removeLine()
+  drawLine(shipment.origin, shipment.current_location, shipment.destination);
+  
+}
+
+function pxMapMarkersOrder(){
+  if(flightPathList!=null)
+    removeLine()
+
+  clearMarkers();
+  
+  for(i = 0; i<order.shipments.length; i++){
+  var origin  = {lat: order.shipments[i].origin.latitude, lng: order.shipments[i].origin.longitude};
+  addMarker(origin, "Origin");
+
+  var current = {lat: order.shipments[i].current_location.latitude, lng: order.shipments[i].current_location.longitude};
+  addMarker(current, order.shipments[i].delivery_state);
+
+  var dest    = {lat: order.shipments[i].destination.latitude, lng: order.shipments[i].destination.longitude};
+  addMarker(dest, "Destination");
+
+  drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination);
+     }
 }
 
 function customerInfo(){
@@ -348,58 +357,169 @@ function customerInfo(){
     string += "<strong>Address: </strong>"
     string += customer.address;
     string += "<br />";
-	document.getElementById("CUSTOMER_INFO").innerHTML = string;
+  document.getElementById("CUSTOMER_INFO").innerHTML = string;
 }
 
 function shippingDetails(){
-	var string = "<strong>Tracking Number: </strong><text>";
-    string += shipment.id + "</text><br />";
-    string += "<strong>Carrier: </strong>";
-    string += shipment.carrier +"<br />";
-    string += "<strong>Current Location: </strong><br />";
-	string += "<text>Latitude: ";
-	string += shipment.current_location.latitude + "</text><br />";
-    string += "<text>Longitude: ";
-    string += shipment.current_location.longitude + "</text><br />";
-    string += "<strong>Destination: </strong><br />";
-	string += "<text>Latitude: ";
-	string += shipment.destination.latitude+"</text><br />";
-    string += "<text>Longitude: ";
-    string += shipment.destination.longitude+"</text><br />";
-    string += "<strong>Shipped: </strong>";
-    string += shipment.ship_date + "<br />";
-    string += "<strong>Expected Arrival: </strong>";
-    string += shipment.expected_date +"<br />";
-    string += "<strong>Status: </strong><strong>what is this?</strong><br />";
-	document.getElementById("SHIPPING_DETAILS").innerHTML = string;
+  var string = "<strong>Tracking Number: </strong><text>";
+  string += shipment.id + "</text><br />";
+  string += "<strong>Carrier: </strong>";
+  string += shipment.carrier +"<br />";
+  string += "<strong>Current Location: </strong><br />";
+  string += "<text>Latitude: ";
+  string += shipment.current_location.latitude + "</text><br />";
+  string += "<text>Longitude: ";
+  string += shipment.current_location.longitude + "</text><br />";
+  string += "<strong>Destination: </strong><br />";
+  string += "<text>Latitude: ";
+  string += shipment.destination.latitude+"</text><br />";
+  string += "<text>Longitude: ";
+  string += shipment.destination.longitude+"</text><br />";
+  string += "<strong>Shipped: </strong>";
+  string += shipment.ship_date + "<br />";
+  string += "<strong>Expected Arrival: </strong>";
+  string += shipment.expected_date +"<br />";
+  string += "<strong>Status: </strong><strong>what is this?</strong><br />";
+  document.getElementById("SHIPPING_DETAILS").innerHTML = string;
 }
 
 function packageDetails(){
-	var string = "<strong>Order Placed (Id): </strong>";
-	string += shipment.ship_date;
-    string += "<br />";
-    string += "<strong>Shipment Contents: </strong>";
-	string += shipment.contents;
-    string += "<br />";
-    string += "<strong>Description: </strong><br />";
-    string += customer.about + "<br />";
-	document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
+  var string = "<strong>Order Placed (Id): </strong>";
+  string += shipment.ship_date;
+  string += "<br />";
+  string += "<strong>Shipment Contents: </strong>";
+  string += shipment.contents;
+  string += "<br />";
+  string += "<strong>Description: </strong><br />";
+  string += customer.about + "<br />";
+  document.getElementById("PACKAGE_DETAILS").innerHTML = string;
 }
 
 
-setInterval(consistantTimer, 5000);
+
+function displayLocation(latitude,longitude,location){
+        var request = new XMLHttpRequest();
+
+        var method = 'GET';
+        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
+        var async = true;
+
+        request.open(method, url, async);
+        request.onreadystatechange = function(){
+          if(request.readyState == 4 && request.status == 200){
+            var data = JSON.parse(request.responseText);
+            var address = data.results[0];
+            if(address == undefined)
+              return;
+            if(address.formatted_address == undefined)
+              return;
+            if(address.address_components == undefined)
+              return;
+            console.log(address.formatted_address);
+            if(address.address_components[3].long_name == undefined || address.address_components[4].long_name == undefined )
+              return;
+              //console.log(address.address_components[3].long_name);
+              //console.log(address.address_components[4].long_name);
+          
+              if(location == "origin")
+                orig = address.formatted_address;
+              else if(location == "current")
+                current = address.formatted_address;
+              else if(location == "dest")
+                dest = address.formatted_address;
+          }
+        };
+    request.send();
+};
+
+
+setInterval(consistantTimer, 50);
 
 function consistantTimer() {
-	if(customerList.length === 0){
-		pxTree();
-		console.log("TEST");
-	}
-	console.log(customerList);
-
+ if(customerList.length === 0){
+   pxTree();
+   
+ }
+ if(map == undefined){
+  var uluru = {lat: -25.363, lng: 131.044};
+    map = new google.maps.Map(document.getElementById('MAP_MARKERS'), {
+          zoom: 4,
+          center: uluru
+        });
+    
+  mapsReady = true;
+}
+ 
 }
 
-setTimeout(myTimer, 1000);
-
-function myTimer() {
-    pxTree();
+function clearOverlays() {
+  for (var i = 0; i < markersArray.length; i++ )
+    markersArray[i].setMap(null);
+  markersArray.length = 0;
 }
+
+function addMarker(location, state) {
+  char = "%E2%80%A2"
+  if(state == "Ahead of Time")
+      pinColor = "00FF6F";
+  else if(state == "On Time")
+      pinColor = "00A849";
+  else if(state == "Likely to be On Time")
+      pinColor = "CEF700";
+  else if(state == "Likely to be Behind Schedule")
+      pinColor = "C0C439";
+  else if(state == "Behind Schedule")
+      pinColor = "FFA220";
+  else if(state == "Late")
+      pinColor = "BF1913";
+  else if(state == "Origin"){
+      pinColor = "86B6EC";
+      char = "%41"   
+  }else if(state == "Destination"){
+      pinColor = "86B6EC";
+      char = "%42"   
+  }else
+      pinColor = "BF1913";
+
+  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+char+"|"+pinColor);
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map,
+    icon: pinImage
+  });
+  markersArray.push(marker);
+}
+
+function setMapOnAll(map) {
+  for (var i = 0; i < markersArray.length; i++) {
+    markersArray[i].setMap(map);
+  }
+}
+
+function clearMarkers() {
+        setMapOnAll(null);
+}
+ 
+function drawLine(origin, current, destination){
+  
+  lineCoordinates = [
+    {lat: origin.latitude,      lng: origin.longitude},
+    {lat: current.latitude,     lng: current.longitude},
+    {lat: destination.latitude, lng: destination.longitude},
+  ];
+
+  flightPath = new google.maps.Polyline({
+  path: lineCoordinates,
+  geodesic: true,
+  strokeColor: '#C1C1C1',
+  strokeOpacity: 1.0,
+  strokeWeight: 2
+  });
+  flightPathList.push(flightPath)
+  flightPathList[flightPathList.length-1].setMap(map);
+}
+
+function removeLine() {
+  for(i=0;i<flightPathList.length;i++)
+        flightPathList[i].setMap(null);
+      }
