@@ -21,6 +21,7 @@ var dest;
 var map;
 var mapsReady = false;
 var markersArray = [];
+var flightPathList =[];
 
 function myFunction() {
   var x = document.getElementById('hide');
@@ -194,9 +195,6 @@ function getItemData(){
             if(shipmentID == customers[i].orders[j].shipments[k].id){
               found = true;
               shipment = customers[i].orders[j].shipments[k];
-              // console.log(shipment.carrier);
-              // console.log(shipment.current_location.latitude);
-              // console.log(shipment.current_location.longitude);
               customerIndex = i;
               orderIndex    = j;
               shipmentIndex = k;
@@ -209,7 +207,7 @@ function getItemData(){
   }
 
   if(!found){
-    console.log("Shipment was not found!");
+    // console.log("Shipment was not found!");
     pxMapMarkersOrder();
   }
   else{
@@ -321,53 +319,30 @@ function pxMapMarkers(){
 
   var dest = {lat: shipment.destination.latitude, lng: shipment.destination.longitude};
   addMarker(dest);
+  if(flightPathList!=null)
+    removeLine()
+  drawLine(shipment.origin, shipment.current_location, shipment.destination);
   
 }
 
 function pxMapMarkersOrder(){
-  clearMarkers();
-console.log(order.shipments.length)
+  if(flightPathList!=null)
+    removeLine()
 
-// console.log(order.shipments)
+  clearMarkers();
+  
   for(i = 0; i<order.shipments.length; i++){
-  // var origin  = {lat: order.shipments[i].origin.latitude, lng: order.shipments[i].origin.longitude};
-  // addMarker(origin);
+  var origin  = {lat: order.shipments[i].origin.latitude, lng: order.shipments[i].origin.longitude};
+  addMarker(origin);
 
   var current = {lat: order.shipments[i].current_location.latitude, lng: order.shipments[i].current_location.longitude};
   addMarker(current);
 
-  // var dest    = {lat: order.shipments[i].destination.latitude, lng: order.shipments[i].destination.longitude};
-  // addMarker(dest);
+  var dest    = {lat: order.shipments[i].destination.latitude, lng: order.shipments[i].destination.longitude};
+  addMarker(dest);
+
+  drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination);
      }
-  // for(i = 0; i<order.shipments.length; i++){
-  //   string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
-  //   string += "<google-map-point latitude=\"";
-  //   string += order.shipments[i].origin.latitude;
-  //   string += "\" longitude=\"";
-  //   string += order.shipments[i].origin.longitude;
-  //   string += "\"></google-map-point>";
-  //   string += "<google-map-point latitude=\"";
-  //   string += order.shipments[i].current_location.latitude;
-  //   string += "\" longitude=\"";
-  //   string += order.shipments[i].current_location.longitude;
-  //   string += "\"></google-map-point>";
-  //   string += "</google-map-poly>";
-  //   string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
-  //   string += "<google-map-point latitude=\"";
-  //   string += order.shipments[i].current_location.latitude;
-  //   string += "\" longitude=\"";
-  //   string += order.shipments[i].current_location.longitude;
-  //   string += "\"></google-map-point>";
-  //   string += "<google-map-point latitude=\"";
-  //   string += order.shipments[i].destination.latitude;
-  //   string += "\" longitude=\"";
-  //   string += order.shipments[i].destination.longitude;
-  //   string += "\"></google-map-point>";
-  //   string += "</google-map-poly>";
-  // }
-  // string += "</google-map>";
-  
-  // document.getElementById("MAP_MARKERS").innerHTML = string;
 }
 
 function customerInfo(){
@@ -501,7 +476,6 @@ function consistantTimer() {
    
  }
  if(map == undefined){
-  //map = new google.maps.Map(document.getElementById('MAP_MARKERS'))
   var uluru = {lat: -25.363, lng: 131.044};
     map = new google.maps.Map(document.getElementById('MAP_MARKERS'), {
           zoom: 4,
@@ -509,26 +483,17 @@ function consistantTimer() {
         });
     
   mapsReady = true;
-  console.log("TEST1")
 }
- // console.log("TEST1")
- // console.log(map)
- // console.log("TEST2")
- // console.log(document.getElementById('MAP_MARKERS'))
- //document.getElementById("YEET").attributes.latitude.value = 50;
- // document.getElementById("YEET").attributes.longitude.value = 50;
  
 }
 
 function clearOverlays() {
-  for (var i = 0; i < markersArray.length; i++ ) {
+  for (var i = 0; i < markersArray.length; i++ )
     markersArray[i].setMap(null);
-  }
   markersArray.length = 0;
 }
 
 function addMarker(location) {
-  console.log(location)
   var marker = new google.maps.Marker({
     position: location,
     map: map
@@ -545,3 +510,27 @@ function setMapOnAll(map) {
 function clearMarkers() {
         setMapOnAll(null);
 }
+ 
+function drawLine(origin, current, destination){
+  
+  lineCoordinates = [
+    {lat: origin.latitude,      lng: origin.longitude},
+    {lat: current.latitude,     lng: current.longitude},
+    {lat: destination.latitude, lng: destination.longitude},
+  ];
+
+  flightPath = new google.maps.Polyline({
+  path: lineCoordinates,
+  geodesic: true,
+  strokeColor: '#FF0000',
+  strokeOpacity: 1.0,
+  strokeWeight: 2
+  });
+  flightPathList.push(flightPath)
+  flightPathList[flightPathList.length-1].setMap(map);
+}
+
+function removeLine() {
+  for(i=0;i<flightPathList.length;i++)
+        flightPathList[i].setMap(null);
+      }
