@@ -20,6 +20,7 @@ var current;
 var dest;
 var map;
 var mapsReady = false;
+var markersArray = [];
 
 function myFunction() {
   var x = document.getElementById('hide');
@@ -197,7 +198,7 @@ function getItemData(){
               // console.log(shipment.current_location.latitude);
               // console.log(shipment.current_location.longitude);
               customerIndex = i;
-              orderIndex = j;
+              orderIndex    = j;
               shipmentIndex = k;
               break;
             }
@@ -208,7 +209,7 @@ function getItemData(){
   }
 
   if(!found){
-    //console.log("Shipment was not found!");
+    console.log("Shipment was not found!");
     pxMapMarkersOrder();
   }
   else{
@@ -220,14 +221,6 @@ function getItemData(){
   // shippingDetails();
   // packageDetails();
 
-  // document.getElementById("ORIGIN_POINT").attributes.latitude.value = shipment.origin.latitude;
-  // document.getElementById("ORIGIN_POINT").attributes.longitude.value = shipment.origin.longitude;
-  // document.getElementById("CURRENT_POINT").attributes.latitude.value = shipment.current_location.latitude;
-  // document.getElementById("CURRENT_POINT").attributes.longitude.value = shipment.current_location.longitude;
-  // document.getElementById("CURRENT_POINT2").attributes.latitude.value = shipment.current_location.latitude;
-  // document.getElementById("CURRENT_POINT2").attributes.longitude.value = shipment.current_location.longitude;
-  // document.getElementById("DEST_POINT").attributes.latitude.value = shipment.destination.latitude;
-  // document.getElementById("DEST_POINT").attributes.longitude.value = shipment.destination.longitude;
 }
 
 function loading(){
@@ -257,17 +250,18 @@ function pxTree() {
     string+=customers[i]._id;
     string+="\",\"isSelectable\": false,\"children\":[";
     strcheck0 = string;
+
     for(j=0;j<customers[i].orders.length;j++){
       string+="{\"label\":\"Order #";
       string+=customers[i].orders[j].index+1;
       string+="\",";
       string+="\"id\":\"";
       string+=customers[i].orders[j].id;
-      string+="\",\"isSelectable\": false,\"children\":[";
+      string+="\",\"isSelectable\": true,\"children\":[";
       strcheck1 = string;
+
       for(k=0;k<customers[i].orders[j].shipments.length;k++){
         string+="{\"label\":\"";
-        //string+=customers[i].orders[j].shipments[k].ship_date;
         string+="Shipment #"+ (k+1);
         string+="\",\"id\":\"";
         string+=customers[i].orders[j].shipments[k].id;
@@ -317,117 +311,63 @@ function pxSteps() {
 }
 
 function pxMapMarkers(){
-  map.clearOverlays();
-
+  
+  clearMarkers();
   var origin = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
-  new google.maps.Marker({
-          position: origin,
-          map: map
-  });
-  var current = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
-  new google.maps.Marker({
-          position: current,
-          map: map
-  });
+  addMarker(origin);
+
+  var current = {lat: shipment.current_location.latitude, lng: shipment.current_location.longitude};
+  addMarker(current);
+
   var dest = {lat: shipment.destination.latitude, lng: shipment.destination.longitude};
-  new google.maps.Marker({
-          position: dest,
-          map: map
-  });
+  addMarker(dest);
   
 }
 
 function pxMapMarkersOrder(){
-  var string = "<google-map zoom=\"2\"";
-  string += " fit-to-markers api-key=\"AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0\">";
+  clearMarkers();
+console.log(order.shipments.length)
+
+// console.log(order.shipments)
   for(i = 0; i<order.shipments.length; i++){
-    string += "<google-map-marker latitude=\"";
-    string += order.shipments[i].origin.latitude;
-    string += "\" longitude=\"";
-    string += order.shipments[i].origin.longitude;
-    string += "\"><div class=\"popup\"><img src=\"image.png\">";
-    string += "<p><strong>Origin: </strong><br />";
-    string += "<text>Latitude: ";
-    string += order.shipments[i].origin.latitude + "</text><br />";
-    string += "<text>Longitude: ";
-    string += order.shipments[i].origin.longitude + "</text><br /></p>";
-    //displayLocation(shipment.origin.latitude,shipment.origin.longitude,"origin");
-    string += "<p><strong>Address: </strong>";
-    string += orig;
-    string += "<br/></p>";
-    string += "<p><strong>Shipped: </strong>";
-    string += order.shipments[i].ship_date + "<br />";
-    string += "<strong>Expected Arrival: </strong>";
-    string += shipment.expected_date +"<br /></p>";
-    string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
-    string += "<google-map-marker latitude=\"";
-    string += order.shipments[i].current_location.latitude
-    string += "\" longitude=\"";
-    string += order.shipments[i].current_location.longitude;
-    string += "\"><div class=\"popup\"><img src=\"image.png\">";
-    string += "<p><strong>Current Location: </strong><br />";
-    string += "<text>Latitude: ";
-    string += order.shipments[i].current_location.latitude + "</text><br />";
-    string += "<text>Longitude: ";
-    string += order.shipments[i].current_location.longitude + "</text><br /></p>";
-    //displayLocation(shipment.current_location.latitude,shipment.current_location.longitude, "current");
-    string += "<p><strong>Address: </strong>";
-    string += current;
-    string += "<br/></p>";
-    string += "<p><strong>Shipped: </strong>";
-    string += order.shipments[i].ship_date + "<br />";
-    string += "<strong>Expected Arrival: </strong>";
-    string += order.shipments[i].expected_date +"<br /></p>";
-    string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
-    string += "<google-map-marker latitude=\"";
-    string += order.shipments[i].destination.latitude
-    string += "\" longitude=\"";
-    string += order.shipments[i].destination.longitude;
-    string += "\"> <div class=\"popup\"><img src=\"image.png\">";
-    string += "<p><strong>Destination: </strong><br />";
-    string += "<text>Latitude: ";
-    string += order.shipments[i].destination.latitude+"</text><br />";
-    string += "<text>Longitude: ";
-    string += order.shipments[i].destination.longitude+"</text><br /></p>";
-    //displayLocation(shipment.destination.latitude,shipment.destination.longitude, "dest");
-    string += "<p><strong>Address: </strong>";
-    string += dest;
-    string += "<br/></p>";
-    string += "<p><strong>Shipped: </strong>";
-    string += order.shipments[i].ship_date + "<br />";
-    string += "<strong>Expected Arrival: </strong>";
-    string += order.shipments[i].expected_date +"<br /></p>";
-    string += "<i class=\"fa fa-info-circle\" id=\"info\" onclick=\"myFunction()\"></i></div></google-map-marker>";
-  }
-  for(i = 0; i<order.shipments.length; i++){
-    string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
-    string += "<google-map-point latitude=\"";
-    string += order.shipments[i].origin.latitude;
-    string += "\" longitude=\"";
-    string += order.shipments[i].origin.longitude;
-    string += "\"></google-map-point>";
-    string += "<google-map-point latitude=\"";
-    string += order.shipments[i].current_location.latitude;
-    string += "\" longitude=\"";
-    string += order.shipments[i].current_location.longitude;
-    string += "\"></google-map-point>";
-    string += "</google-map-poly>";
-    string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
-    string += "<google-map-point latitude=\"";
-    string += order.shipments[i].current_location.latitude;
-    string += "\" longitude=\"";
-    string += order.shipments[i].current_location.longitude;
-    string += "\"></google-map-point>";
-    string += "<google-map-point latitude=\"";
-    string += order.shipments[i].destination.latitude;
-    string += "\" longitude=\"";
-    string += order.shipments[i].destination.longitude;
-    string += "\"></google-map-point>";
-    string += "</google-map-poly>";
-  }
-  string += "</google-map>";
+  // var origin  = {lat: order.shipments[i].origin.latitude, lng: order.shipments[i].origin.longitude};
+  // addMarker(origin);
+
+  var current = {lat: order.shipments[i].current_location.latitude, lng: order.shipments[i].current_location.longitude};
+  addMarker(current);
+
+  // var dest    = {lat: order.shipments[i].destination.latitude, lng: order.shipments[i].destination.longitude};
+  // addMarker(dest);
+     }
+  // for(i = 0; i<order.shipments.length; i++){
+  //   string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
+  //   string += "<google-map-point latitude=\"";
+  //   string += order.shipments[i].origin.latitude;
+  //   string += "\" longitude=\"";
+  //   string += order.shipments[i].origin.longitude;
+  //   string += "\"></google-map-point>";
+  //   string += "<google-map-point latitude=\"";
+  //   string += order.shipments[i].current_location.latitude;
+  //   string += "\" longitude=\"";
+  //   string += order.shipments[i].current_location.longitude;
+  //   string += "\"></google-map-point>";
+  //   string += "</google-map-poly>";
+  //   string += "<google-map-poly closed fill-color=\"red\" fill-opacity=\".5\">";
+  //   string += "<google-map-point latitude=\"";
+  //   string += order.shipments[i].current_location.latitude;
+  //   string += "\" longitude=\"";
+  //   string += order.shipments[i].current_location.longitude;
+  //   string += "\"></google-map-point>";
+  //   string += "<google-map-point latitude=\"";
+  //   string += order.shipments[i].destination.latitude;
+  //   string += "\" longitude=\"";
+  //   string += order.shipments[i].destination.longitude;
+  //   string += "\"></google-map-point>";
+  //   string += "</google-map-poly>";
+  // }
+  // string += "</google-map>";
   
-  document.getElementById("MAP_MARKERS").innerHTML = string;
+  // document.getElementById("MAP_MARKERS").innerHTML = string;
 }
 
 function customerInfo(){
@@ -580,3 +520,28 @@ function consistantTimer() {
  
 }
 
+function clearOverlays() {
+  for (var i = 0; i < markersArray.length; i++ ) {
+    markersArray[i].setMap(null);
+  }
+  markersArray.length = 0;
+}
+
+function addMarker(location) {
+  console.log(location)
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map
+  });
+  markersArray.push(marker);
+}
+
+function setMapOnAll(map) {
+  for (var i = 0; i < markersArray.length; i++) {
+    markersArray[i].setMap(map);
+  }
+}
+
+function clearMarkers() {
+        setMapOnAll(null);
+}
