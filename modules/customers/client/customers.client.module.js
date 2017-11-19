@@ -459,6 +459,7 @@ function clearOverlays() {
 }
 
 function addMarker(location, state) {
+  char = "%E2%80%A2"
   if(state == "Ahead of Time")
       pinColor = "00FF6F";
   else if(state == "On Time")
@@ -471,14 +472,16 @@ function addMarker(location, state) {
       pinColor = "FFA220";
   else if(state == "Late")
       pinColor = "BF1913";
-  else if(state == "Origin")
-      pinColor = "000000";
-  else if(state == "Destination")
-      pinColor = "0000FF";
-  else
+  else if(state == "Origin"){
+      pinColor = "86B6EC";
+      char = "%41"   
+  }else if(state == "Destination"){
+      pinColor = "86B6EC";
+      char = "%42"   
+  }else
       pinColor = "BF1913";
 
-  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor);
+  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+char+"|"+pinColor);
   var marker = new google.maps.Marker({
     position: location,
     map: map,
@@ -508,7 +511,7 @@ function drawLine(origin, current, destination){
   flightPath = new google.maps.Polyline({
   path: lineCoordinates,
   geodesic: true,
-  strokeColor: '#606060',
+  strokeColor: '#C1C1C1',
   strokeOpacity: 1.0,
   strokeWeight: 2
   });
