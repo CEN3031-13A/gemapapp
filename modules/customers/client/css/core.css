@@ -1864,33 +1864,20 @@ button.btn {
 .btn--full {
   width: 100%; }
 
-.brandingBar {
-  position: fixed;
-  top: 0;
-  width: 100%; }
-
 .leftSidebar {
   background-color: white;
-  height: 94vh;
+  height: 96vh;
   position: fixed;
-  top: 30px;
-  width: 15%;
-  z-index: 100; }
-
-.btn-group {
-  border-bottom: 1px solid black;
-  width: 100%; }
+  top: 30px; }
 
 .rightSidebar {
   background-color: white;
   border-left: 0.5px solid black;
   display: none;
   height: 96vh;
-  overflow-y: auto;
   position: fixed;
   right: 0;
-  top: 30px;
-  width: 15%; }
+  top: 30px; }
 
 #TREE {
   height: 93.5%;
@@ -1900,21 +1887,19 @@ button.btn {
 #STEPS {
   border-left: 1px solid black;
   height: 60px;
-  left: 15%;
   padding-top: .5vh;
   position: fixed;
-  top: 30px;
-  width: 85%; }
+  right: 0;
+  top: 30px; }
 
 #MAP_MARKERS {
   background-color: white;
   border-left: 1px solid black;
   border-top: 1px solid black;
   bottom: 0;
-  left: 15%;
   position: fixed;
-  top: 90px;
-  width: 85%; }
+  right: 0;
+  top: 90px; }
 
 ::-webkit-input-placeholder {
   color: gray !important;
@@ -1941,6 +1926,12 @@ body::-webkit-scrollbar {
   display: block;
   margin-left: 45%; }
 
+/**
+ * Margin and padding helper classes. Use these to tweak layout on a micro
+ * level.
+ *
+ * `.u-(m|p)(t|r|b|l|h|v)(-|+|0) {}` = utility - margin/padding top/right/bottom/left/horizontal/vertical less/more/none
+ */
 /**
  * Margin and padding helper classes with breakpoint prefixes. Use these to tweak layout on a micro
  * level based on viewport widths.

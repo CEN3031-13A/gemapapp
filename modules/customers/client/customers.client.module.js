@@ -17,17 +17,20 @@ var activeInactiveState = "";
 
 function myFunction() {
   var x = document.getElementById('hide');
-  var y = document.getElementById('MAP_MARKERS');
-  var z = document.getElementById("STEPS");
+
   if (x.style.display == 'block') {
     x.style.display = 'none';
-    y.style.width = '85%';
-    z.style.width = '85%';
+    document.getElementById('MAP_MARKERS').className = "u-5/6";
+    document.getElementById('MAP_MARKERS').style.right = "0";
+    document.getElementById("STEPS").className = "u-5/6";
+    document.getElementById('STEPS').style.right = "0";
 
   } else {
     x.style.display = 'block';
-    y.style.width = '70%';
-    z.style.width = '70%';
+    document.getElementById('MAP_MARKERS').className = "u-4/6";
+    document.getElementById('MAP_MARKERS').style.right = "16.6666667%";
+    document.getElementById("STEPS").className = "u-4/6";
+    document.getElementById('STEPS').style.right = "16.6666667%";
   }
 }
 

@@ -24,24 +24,11 @@ $inuit-enable-btn--full : true;
 @import "../../../../public/lib/px-buttons-design/_objects.buttons.scss";
 
 
-.brandingBar{
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
 .leftSidebar {
   background-color: white;
-  height: 94vh;
+  height: 96vh;
   position: fixed;
   top: 30px;
-  width: 15%;
-  z-index: 100;
-}
-
-.btn-group{
-  border-bottom: 1px solid black;
-  width: 100%
 }
 
 .rightSidebar{
@@ -49,11 +36,9 @@ $inuit-enable-btn--full : true;
   border-left: 0.5px solid black;
   display: none;
   height: 96vh;
-  overflow-y: auto;
   position: fixed;
   right: 0;
   top: 30px;
-  width: 15%;
 }
 
 #TREE{
@@ -65,11 +50,10 @@ $inuit-enable-btn--full : true;
 #STEPS{
   border-left: 1px solid black;
   height: 60px;
-  left:15%;
   padding-top: .5vh;
   position: fixed;
+  right: 0;
   top: 30px;
-  width: 85%;
 }
 
 #MAP_MARKERS{
@@ -77,10 +61,9 @@ $inuit-enable-btn--full : true;
   border-left: 1px solid black;
   border-top: 1px solid black;
   bottom: 0;
-  left:15%;
   position: fixed;
+  right: 0;
   top: 90px;
-  width: 85%;
 }
 
 //---------------------------------------Placeholder text center-----------------------------------------
@@ -114,5 +97,7 @@ body::-webkit-scrollbar {
 }
 
 // Trumps
+$inuit-enable-margins--none:u-m0;
+@import "../../../../public/lib/px-spacing-design/_trumps.spacing.scss";
 @import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
 @import "../../../../public/lib/px-widths-responsive-design/_trumps.widths-responsive.scss";
