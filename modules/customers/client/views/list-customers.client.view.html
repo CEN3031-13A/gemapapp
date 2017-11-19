@@ -1,129 +1,118 @@
-<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+<div id="BRANDING_BAR">
+    <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+</div>
 
-<div class="layout layout--flush">
-  <div class="u-1/6-desk" class="layout_item">
-    <div id="searchAndButtonsAndTree" class="flex flex--col">
-      <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
-      <div class="btn-group">
+<div id="LEFT_SIDEBAR">
+    <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
+    <div class="btn-group">
         <button for="id1" class="btn btn--full" onclick="displayActive()">Active</button>
         <button for="id2" class="btn btn--full" onclick="displayInactive()">Inactive</button>
-        <button for="id2" class="btn btn--full" onclick="displayAll()">All</button>
-      </div>
-
-      <div id="SOURCE" style="display:none;">
-          {{vm.customers}}
-      </div>
-        
-      <div id="TREE">
+        <button for="id3" class="btn btn--full" onclick="displayAll()">All</button>
+    </div>
+    <div id="SOURCE" style="display:none;">
+        {{vm.customers}}
+    </div>
+    <div id="PREDIX_TREE">
         <px-tree id="TEST11"
-        keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
-         items='[
-         {
-          "label":"No Customers Selected",
-          "id":"branch-0-3",
-          "isSelectable": true
-         }
-         ]'
-        multi-activate onclick="getItemData()">
+          keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
+          items='[
+          {
+            "label":"No Customers Selected",
+            "id":"branch-0-3",
+            "isSelectable": true
+          }
+          ]'
+          multi-activate onclick="getItemData()">
         </px-tree>
-      </div>
     </div>
-  </div>
-    
-  <div class="layout_item">
-    <div class="rightSidebar" id="hide">  
-      <div id="demo3" class="flex flex--col">
-          <px-accordion
-          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-          header-value="Customer Information"
-          status="">
-            <div id="CUSTOMER_INFO">
-              <strong>Name: </strong><br />
-              <strong>Email: </strong><br />
-              <strong>Phone: </strong><br />
-              <strong>Address: </strong><br />
-            </div>
-          </px-accordion>
+</div>
 
-          <px-accordion
-            icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-            header-value="Shipping Details"
-            status="">
-            <div id="SHIPPING_DETAILS">
-              <strong>Tracking Number: </strong><br />
-              <strong>Carrier: </strong><br />
-              <strong>Destination: </strong><br />
-                    <text>Latitude: </text><br />
-                    <text>Longitude:</text><br />
-              <strong>Current Location: </strong><br />
-                    <text>Latitude: </text><br />
-                    <text>Longitude: </text><br />
-              <strong>Shipped: </strong><br />
-              <strong>Expected Arrival: </strong><br />
-              <strong>Status: </strong><br />
-            </div>
-          </px-accordion>
+<div id="STEPS" class="steps">
+    <px-steps
+    items='[
+    {
+      "id":"1",
+      "label":"(FROM)"
+    },
+    {
+      "id":"2",
+      "label":"(CURRENT)"
+    },
+    {
+      "id":"3",
+      "label":"(TO)"
+    }
+    ]'
+    completed='[]'>
+    </px-steps>
+</div>
 
-          <px-accordion
-            icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-            header-value="Package Details"
-            status="">
-            <div id="PACKAGE_COMMENTS">
-              <strong>Order Placed (Id): </strong><br />
-              <strong>Shipment Contents: </strong><br />
-              <strong>Description: </strong><br />
-            </div>
-          </px-accordion>
+<div id="MAP_MARKERS">
+    <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+    </google-map>
+</div>
 
-          <px-accordion
-            icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-            header-value="Package Comments"
-            status="" 
-            disabled show-action>
-          </px-accordion>
-
-          <form>
-            <div class="sidebarBlock">
-                <input placeholder="Type something..." class="text-input input--regular" type="text">
-            </div>
-            <div class="sidebarBlock">
-                <input class="btn btn--primary" type="reset" value="Submit">
-            </div>
-          </form> 
-        </div>
-      </div>
-    </div>
-
+<div class="rightSidebar" id="hide">  
     <div id="demo3" class="flex flex--col">
-      <div id="demo3" class="flex flex--row flex--spaced">
-        <div class="steps" id="STEPS">
-            <px-steps
-            items='[
-            {
-              "id":"1",
-              "label":"(FROM)"
-            },
-            {
-              "id":"2",
-              "label":"(CURRENT)"
-            },
-            {
-              "id":"3",
-              "label":"(TO)"
-            }
-            ]'
-            completed='[]'>
-            </px-steps>
-        </div>
-    
-            
-        <div id="MAP_MARKERS">
-          <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-          </google-map>
-        </div>
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Customer Information"
+        status="">
+          <div id="CUSTOMER_INFO">
+            <strong>Name: </strong><br />
+            <strong>Email: </strong><br />
+            <strong>Phone: </strong><br />
+            <strong>Address: </strong><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Shipping Details"
+          status="">
+          <div id="SHIPPING_DETAILS">
+            <strong>Tracking Number: </strong><br />
+            <strong>Carrier: </strong><br />
+            <strong>Destination: </strong><br />
+                  <text>Latitude: </text><br />
+                  <text>Longitude:</text><br />
+            <strong>Current Location: </strong><br />
+                  <text>Latitude: </text><br />
+                  <text>Longitude: </text><br />
+            <strong>Shipped: </strong><br />
+            <strong>Expected Arrival: </strong><br />
+            <strong>Status: </strong><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Package Details"
+          status="">
+          <div id="PACKAGE_COMMENTS">
+            <strong>Order Placed (Id): </strong><br />
+            <strong>Shipment Contents: </strong><br />
+            <strong>Description: </strong><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Package Comments"
+          status="" 
+          disabled show-action>
+        </px-accordion>
+
+        <form>
+          <div class="sidebarBlock">
+              <input placeholder="Type something..." class="text-input input--regular" type="text">
+          </div>
+          <div class="sidebarBlock">
+              <input class="btn btn--primary" type="reset" value="Submit">
+          </div>
+        </form> 
       </div>
     </div>
-  </div>
 </div>
 
 <!--Predix Import Links-->
@@ -138,5 +127,4 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="import" href="../../../../../lib/google-map/google-map-elements.html" />
 <script src="http://maps.googleapis.com/maps/api/js"></script> 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtX6UVj6lstPls2orNPnfW5GJ0_7eJ6fo">
-    </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtX6UVj6lstPls2orNPnfW5GJ0_7eJ6fo"></script>

@@ -26,13 +26,72 @@ $inuit-enable-btn--full : true;
 // Component
 // Your css goes in here
 
+#BRANDING_BAR{
+  position: absolute;
+  width: 100%;
+}
+
+#LEFT_SIDEBAR{
+  position: absolute;
+  width: 18%;
+  top: 2em;
+  height: 100%;
+  overflow-y: scroll;
+  border-right: 1px solid black;
+}
+
+#PREDIX_TREE{
+  background: #2c404c;
+  color: white;
+  font-family: "GE Inspira Sans",sans-serif;
+  height: 100%;
+}
+
+#STEPS{
+  position: absolute;
+  height: 10%;
+  width: 64%;
+  top: 2em;
+  left: 18%;
+}
+
+#MAP_MARKERS{
+  position: absolute;
+  height: 85%;
+  width: 64%;
+  top: 6em;
+  left: 18%;
+  border-top: 1px solid black;
+}
+
+/*
+#MAP_BOX{
+  position: absolute;
+  height: 100%;
+  width: 64%;
+  top: 6em;
+  left: 18%;
+  background: #2c404c;
+}
+*/
+
+.rightSidebar{
+  position: absolute;
+  width: 18%;
+  top: 2em;
+  right: 0;
+  height: 100%;
+  overflow-y: scroll;
+  border-left: 1px solid black;
+}
+
 /*
 px-accordion{
   width: 500;
 }
 */
 
-
+/*
 #TREE{
   background: #2c404c;
   color: white;
@@ -49,6 +108,7 @@ px-accordion{
 #searchAndButtonsAndTree{
   border-right: 1px solid black;
 }
+*/
 
 /*
 #tree{
@@ -67,7 +127,7 @@ px-accordion{
 }
 */
 
-
+/*
 #MAP_MARKERS{
   border-top: 1px solid black;
   bottom: 0;
@@ -93,8 +153,10 @@ px-accordion{
   width:63vw;
   // border-right: 1px solid black; 
 }
+*/
 
 /*----------Right side detailed info----------*/
+/*
 .rightSidebar{
   background: white;
   border-left: 1px solid black; 
@@ -107,6 +169,7 @@ px-accordion{
   width:20%;
   z-index: 7;
 }
+*/
 
 /*
 .sidebarBlock{
@@ -137,4 +200,4 @@ textarea {
 // Trumps
 @import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
 @import "../../../../public/lib/px-widths-responsive-design/_trumps.widths-responsive.scss";
-//@import "../../../../public/lib/px-widths-design/_trumps.widths.scss";
+@import "../../../../public/lib/px-widths-design/_trumps.widths.scss";
