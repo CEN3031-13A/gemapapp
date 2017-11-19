@@ -1866,19 +1866,23 @@ button.btn {
 
 #BRANDING_BAR {
   position: absolute;
-  height: 5%;
   width: 100%; }
 
 #LEFT_SIDEBAR {
   position: absolute;
   width: 20%;
-  top: 4.75%; }
+  top: 2em;
+  height: 95.25%;
+  overflow-y: scroll; }
+
+#BUTTONS {
+  width: 17.25em; }
 
 #MAP_MARKERS {
   position: absolute;
-  height: 95%;
+  height: 95.25%;
   width: 80%;
-  top: 4.75%;
+  top: 2em;
   left: 20%; }
 
 /**
