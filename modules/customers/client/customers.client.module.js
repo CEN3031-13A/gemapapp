@@ -309,16 +309,15 @@ function pxSteps() {
 }
 
 function pxMapMarkers(){
-  
   clearMarkers();
   var origin = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
-  addMarker(origin);
+  addMarker(origin, "Origin");
 
   var current = {lat: shipment.current_location.latitude, lng: shipment.current_location.longitude};
-  addMarker(current);
+  addMarker(current, shipment.delivery_state);
 
   var dest = {lat: shipment.destination.latitude, lng: shipment.destination.longitude};
-  addMarker(dest);
+  addMarker(dest, "Destination");
   if(flightPathList!=null)
     removeLine()
   drawLine(shipment.origin, shipment.current_location, shipment.destination);
@@ -333,13 +332,13 @@ function pxMapMarkersOrder(){
   
   for(i = 0; i<order.shipments.length; i++){
   var origin  = {lat: order.shipments[i].origin.latitude, lng: order.shipments[i].origin.longitude};
-  addMarker(origin);
+  addMarker(origin, "Origin");
 
   var current = {lat: order.shipments[i].current_location.latitude, lng: order.shipments[i].current_location.longitude};
-  addMarker(current);
+  addMarker(current, order.shipments[i].delivery_state);
 
   var dest    = {lat: order.shipments[i].destination.latitude, lng: order.shipments[i].destination.longitude};
-  addMarker(dest);
+  addMarker(dest, "Destination");
 
   drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination);
      }
@@ -396,40 +395,6 @@ function packageDetails(){
   document.getElementById("PACKAGE_DETAILS").innerHTML = string;
 }
 
-
-
-function mapPaths(){
-    var string = "<google-map-poly closed fill-color=\""
-    string += black + "\" "; 
-    string += "fill-opacity=\"" + 0.5 + "\">"
-    string += "<google-map-point latitude=\"";
-    string += shipment.origin.latitude;
-    string += "\" longitude=\"" ;
-    string += shipment.origin.longitude;
-    string += "\"></google-map-point>";
-    string += "<google-map-point latitude=\"";
-    string += shipment.current_location.latitude;
-    string += "\" longitude=\"" ;
-    string += shipment.current_location.longitude;
-    string += "\"></google-map-point>";
-    string += "</google-map-poly>";
-    string += "<google-map-poly closed fill-color=\""
-    string += black + "\" "; 
-    string += "fill-opacity=\"" + 0.5 + "\">"
-    string += "<google-map-point latitude=\"";
-    string += shipment.current_location.latitude;
-    string += "\" longitude=\"" ;
-    string += shipment.current_location.longitude;
-    string += "\"></google-map-point>";
-    string += "<google-map-point latitude=\"";
-    string += shipment.destination.latitude;
-    string += "\" longitude=\"" ;
-    string += shipment.destination.longitude;
-    string += "\"></google-map-point>";
-    string += "</google-map-poly>";
-
-    return string;
-}
 
 
 function displayLocation(latitude,longitude,location){
@@ -493,10 +458,31 @@ function clearOverlays() {
   markersArray.length = 0;
 }
 
-function addMarker(location) {
+function addMarker(location, state) {
+  if(state == "Ahead of Time")
+      pinColor = "00FF6F";
+  else if(state == "On Time")
+      pinColor = "00A849";
+  else if(state == "Likely to be On Time")
+      pinColor = "CEF700";
+  else if(state == "Likely to be Behind Schedule")
+      pinColor = "C0C439";
+  else if(state == "Behind Schedule")
+      pinColor = "FFA220";
+  else if(state == "Late")
+      pinColor = "BF1913";
+  else if(state == "Origin")
+      pinColor = "000000";
+  else if(state == "Destination")
+      pinColor = "0000FF";
+  else
+      pinColor = "BF1913";
+
+  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor);
   var marker = new google.maps.Marker({
     position: location,
-    map: map
+    map: map,
+    icon: pinImage
   });
   markersArray.push(marker);
 }
@@ -522,7 +508,7 @@ function drawLine(origin, current, destination){
   flightPath = new google.maps.Polyline({
   path: lineCoordinates,
   geodesic: true,
-  strokeColor: '#FF0000',
+  strokeColor: '#606060',
   strokeOpacity: 1.0,
   strokeWeight: 2
   });
