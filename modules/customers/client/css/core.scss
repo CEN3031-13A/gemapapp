@@ -23,8 +23,8 @@ $inuit-enable-layout--full : true;
 $inuit-enable-btn--full : true;
 @import "../../../../public/lib/px-buttons-design/_objects.buttons.scss";
 
-// Component
-// Your css goes in here
+// Components
+// We should be safe from about zoom level 80% - 110%
 
 #BRANDING_BAR{
   position: absolute;
