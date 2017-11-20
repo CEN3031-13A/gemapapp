@@ -308,9 +308,16 @@ function pxMapMarkers() {
   clearMarkers();
   setSingleShipmentOnMap(map, shipmentIndex);
 
+<<<<<<< HEAD
   if (flightPathList != null)
     removeLine();
   drawLine(shipment.origin, shipment.current_location, shipment.destination);
+=======
+  if(flightPathList!=null)
+    removeLine()
+
+  drawLine(shipment.origin, shipment.current_location, shipment.destination, shipment.delivery_state);
+>>>>>>> origin/kassandra_s3
 }
 
 function pxMapMarkersOrder() {
@@ -324,6 +331,7 @@ function pxMapMarkersOrder() {
   originInfoWindowList = [];
   currentInfoWindowList = [];
   destinationInfoWindowList = [];
+<<<<<<< HEAD
   let latSum = 0;
   let longSum = 0;
   for (let i = 0; i < order.shipments.length; i++) {
@@ -335,6 +343,19 @@ function pxMapMarkersOrder() {
     longSum += order.shipments[i].origin.longitude;
     longSum += order.shipments[i].current_location.longitude;
     longSum += order.shipments[i].destination.longitude;
+=======
+  latSum = 0;
+  longSum =0;
+  for(i = 0; i<order.shipments.length; i++){
+  	addShipmentMarkers(order.shipments[i], i+1, order.shipments.length);
+  	drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination, order.shipments[i].delivery_state);
+  	latSum  += order.shipments[i].origin.latitude;
+  	latSum  += order.shipments[i].current_location.latitude;
+  	latSum  += order.shipments[i].destination.latitude;
+  	longSum += order.shipments[i].origin.longitude;
+  	longSum += order.shipments[i].current_location.longitude;
+  	longSum += order.shipments[i].destination.longitude;
+>>>>>>> origin/kassandra_s3
   }
   let latAvg = latSum / (order.shipments.length * 3);
   let longAvg = longSum / (order.shipments.length * 3);
@@ -443,19 +464,19 @@ function addShipmentMarkers(shipment, index, orderSize) {
 
 
   if(shipment.delivery_state == "Ahead of Time")
-      pinColor = "00FF6F";
+      pinColor = "10C6FF";
   else if(shipment.delivery_state == "On Time")
-      pinColor = "00A849";
+      pinColor = "00C300";
   else if(shipment.delivery_state == "Likely to be On Time")
-      pinColor = "CEF700";
+      pinColor = "DEE800";
   else if(shipment.delivery_state == "Likely to be Behind Schedule")
-      pinColor = "C0C439";
+      pinColor = "FFBF0C";
   else if(shipment.delivery_state == "Behind Schedule")
-      pinColor = "FFA220";
+      pinColor = "E85E00";
   else if(shipment.delivery_state == "Late")
-      pinColor = "BF1913"; 
+      pinColor = "FF0000"; 
   else
-      pinColor = "BF1913";
+      pinColor = "999999";
       
   origin  = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
   current = {lat: shipment.current_location.latitude, lng: shipment.current_location.longitude};
@@ -512,11 +533,11 @@ function addShipmentMarkers(shipment, index, orderSize) {
             '</div>'+
             '</div>';    
 
-  originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|86B6EC");
+  originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
 
   currentPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+index+"|"+pinColor);
 
-  destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|86B6EC");
+  destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
 
 
   originMarker = new google.maps.Marker({
@@ -600,18 +621,46 @@ function clearMarkers() {
         setMapOnAll(null);
 }
  
-function drawLine(origin, current, destination){
+function drawLine(origin, current, destination, state){
   
   lineCoordinates = [
     {lat: origin.latitude,      lng: origin.longitude},
     {lat: current.latitude,     lng: current.longitude},
     {lat: destination.latitude, lng: destination.longitude},
   ];
-
+  var lineColor;
+  switch(state){
+	  case "Ahead of Time":
+	  lineColor = "#10C6FF";
+	  break;
+	  
+	  case "On Time":
+	  lineColor = "#00C300";
+	  break;
+	  
+	  case "Likely to be On Time":
+	  lineColor = "#DEE800";
+	  break;
+	  
+	  case "Likely to be Behind Schedule":
+	  lineColor = "#FFBF0C";
+	  break;
+	  
+	  case "Behind Schedule":
+	  lineColor = "#E85E00";
+	  break;
+	  
+	  case "Late":
+	  lineColor = "#FF0000";
+	  break;
+	  
+	  default:
+	  lineColor = "#999999"
+  }
   flightPath = new google.maps.Polyline({
   path: lineCoordinates,
   geodesic: false,
-  strokeColor: '#C1C1C1',
+  strokeColor: lineColor,
   strokeOpacity: 1.0,
   strokeWeight: 2
   });
