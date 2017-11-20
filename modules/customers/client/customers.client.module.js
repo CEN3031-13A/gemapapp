@@ -155,6 +155,8 @@ function pxTreeDisplay(customerListSearch) {
 
 function getItemData(){
 	var customers = JSON.parse(document.getElementById("SOURCE").innerHTML);
+  // update(customers);
+
 	var px_tree = document.querySelector('px-tree');
 	// var selectedData =px_tree.selectedMeta;
 	var selectedShipment = px_tree.selected;
@@ -399,6 +401,8 @@ function packageComments(){
 		string += "<strong>" + shipment.comments[i].comment_date + "</strong>" + ": ";
 		string += shipment.comments[i].comment + "<br />";
 	}
+  //document.getElementById("COOMENT_BOI").innerHTML = "<input  type=\"button\" value=\"Post Comment\" ng-click=\"vm.update(\'BEST\')\"  />";
+  console.log(document.getElementById("COOMENT_BOI"))
 	document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
 }
 
@@ -441,9 +445,9 @@ function consistantTimer() {
    pxTree();
    // console.log("TEST");
  }
- //console.log(customerList);
+  
+ }
 
-}
 
 /*setTimeout(myTimer, 1000);
 
@@ -451,3 +455,11 @@ function myTimer() {
    pxTree();
 }
 */
+function update(customers){
+  updateElement = document.getElementById("UPDATE");
+  vm.update("TEST")
+  console.log(updateElement.innerHTML)
+  //updateElement.innerHTML = string;
+  updateElement.innerHTML = "{{vm.update(\"YEAH BOI\")}}";
+
+}

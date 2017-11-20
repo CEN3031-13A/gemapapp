@@ -38,14 +38,13 @@
       })
       .state('customers.edit', {
         url: '/:customerId/edit',
-        templateUrl: 'modules/customers/client/views/form-customer.client.view.html',
+        templateUrl: 'modules/customers/client/views/list-customers.client.view.html',
         controller: 'CustomersController',
         controllerAs: 'vm',
         resolve: {
           customerResolve: getCustomer
         },
         data: {
-          roles: ['user', 'admin'],
           pageTitle: 'Edit Customer {{ customerResolve.name }}'
         }
       })
