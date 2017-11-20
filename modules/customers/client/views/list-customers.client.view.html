@@ -13,7 +13,9 @@
               <div id="SOURCE" style="display:none;">
                   {{vm.customers}}
               </div>
-              
+<!--               <div id="UPDATE" style="display:none;">
+                  {{vm.update("YEET1")}}
+              </div> -->
               <div id="TREE">
                   <px-tree
                 keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
@@ -107,11 +109,10 @@
 						<div id="PACKAGE_COMMENTS">
 						  <strong>Comments: </strong><br />
 						</div>
-						  <form>
-							<input type="text" id="newComment" /> </br>
-							<input type="button" value="Post Comment" onclick="addComment()" />
+						  <form name="CommentsYEET" ng-controller="CustomersListController">
+							  <input type="text" id="newComment" /> </br>
 						  </form> 
-						  
+						  <input  type="button" value="Post Comment" ng-click="vm.addComment()"  />
                       </px-accordion>
             
                     </div>
