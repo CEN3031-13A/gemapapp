@@ -10,18 +10,21 @@ var shipment;
 var customerIndex;
 var orderIndex;
 var shipmentIndex;
-var customerList =[];
-var activeCustomerList = [];
+var customerList 		 = [];
+var activeCustomerList 	 = [];
 var inactiveCustomerList = [];
 var activeInactiveState = "";
 var displayaddress;
-var orig;
-var current;
-var dest;
 var map;
 var mapsReady = false;
-var markersArray = [];
+var originMarkersArray 	= [];
+var currentMarkersArray = [];
+var destinationMarkersArray   = [];
+var originInfoWindowList 	  = [];
+var currentInfoWindowList 	  = [];
+var destinationInfoWindowList = [];
 var flightPathList =[];
+var displayedGMapsErrorMsg = false;
 
 function myFunction() {
   var x = document.getElementById('hide');
@@ -172,15 +175,13 @@ function getItemData(){
   var selectedPath = px_tree.selectedRoute;
   if(selectedPath <= 1)
     return;
-  //console.log(selectedPath.length);
-  //(item:Object) -- reference to the selected item
-  // var selectedShipment = selectedData.item;
+
   var shipmentID = selectedShipment.id;
-  //console.log(selectedPath.length);
+
   var customerID = selectedPath[0];
-  //console.log("Customer ID: " + customerID);
+
   var orderID = selectedPath[1];
-  //console.log("Order ID: " + orderID);
+
   if(selectedPath.length == 2){
     shipmentID = -1;
   }
@@ -189,13 +190,11 @@ function getItemData(){
   var i,j,k;
   for(i=0;i<customers.length;i++){
     if(customerID == customers[i]._id){
-      //console.log("Found customer!");
       customer = customers[i];
       for(j=0;j<customers[i].orders.length;j++){
         if(orderID == customers[i].orders[j].id){
           order = customers[i].orders[j];
           for(k=0;k<customers[i].orders[j].shipments.length;k++){
-            //console.log(customers[i].orders[j].shipments[k].id);
             if(shipmentID == customers[i].orders[j].shipments[k].id){
               found = true;
               shipment = customers[i].orders[j].shipments[k];
@@ -219,9 +218,9 @@ function getItemData(){
   }
 
   // pxSteps();
-  // customerInfo();
-  // shippingDetails();
-  // packageDetails();
+  customerInfo();
+  shippingDetails();
+  packageDetails();
 
 }
 
@@ -291,21 +290,18 @@ function pxSteps() {
     // string += shipment.origin.latitude;
     // string += ", ";
     // string += shipment.origin.latitude;
-    //displayLocation(shipment.origin.latitude,shipment.origin.longitude, "origin");
     string += orig;
     string += "\"},";
     string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
     // string += shipment.current_location.latitude;
     // string += ", ";
     // string += shipment.current_location.latitude;
-    //displayLocation(shipment.current_location.latitude,shipment.current_location.longitude, "current");
     string += current;
     string += "\"},";
     string += "{\"id\":\"3\", \"label\":\"(TO) ";
     // string += shipment.destination.latitude;
     // string += ", ";
     // string += shipment.destination.latitude;
-    //displayLocation(shipment.destination.latitude,shipment.destination.longitude, "dest");
     string += dest
     string += "\"}]\' completed=\'[\"1\",\"2\"]\' </px-steps>";
 
@@ -313,19 +309,14 @@ function pxSteps() {
 }
 
 function pxMapMarkers(){
+
   clearMarkers();
-  var origin = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
-  addMarker(origin, "Origin");
+  setSingleShipmentOnMap(map, shipmentIndex);
 
-  var current = {lat: shipment.current_location.latitude, lng: shipment.current_location.longitude};
-  addMarker(current, shipment.delivery_state);
-
-  var dest = {lat: shipment.destination.latitude, lng: shipment.destination.longitude};
-  addMarker(dest, "Destination");
   if(flightPathList!=null)
     removeLine()
-  drawLine(shipment.origin, shipment.current_location, shipment.destination);
-  
+
+  drawLine(shipment.origin, shipment.current_location, shipment.destination, shipment.delivery_state);
 }
 
 function pxMapMarkersOrder(){
@@ -333,106 +324,91 @@ function pxMapMarkersOrder(){
     removeLine()
 
   clearMarkers();
-  
+  originMarkersArray        = [];
+  currentMarkersArray       = [];
+  destinationMarkersArray   = [];
+  originInfoWindowList      = [];
+  currentInfoWindowList     = [];
+  destinationInfoWindowList = [];
+  latSum = 0;
+  longSum =0;
   for(i = 0; i<order.shipments.length; i++){
-  var origin  = {lat: order.shipments[i].origin.latitude, lng: order.shipments[i].origin.longitude};
-  addMarker(origin, "Origin");
+  	addShipmentMarkers(order.shipments[i], i+1, order.shipments.length);
+  	drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination, order.shipments[i].delivery_state);
+  	latSum  += order.shipments[i].origin.latitude;
+  	latSum  += order.shipments[i].current_location.latitude;
+  	latSum  += order.shipments[i].destination.latitude;
+  	longSum += order.shipments[i].origin.longitude;
+  	longSum += order.shipments[i].current_location.longitude;
+  	longSum += order.shipments[i].destination.longitude;
+  }
+  latAvg  = latSum/(order.shipments.length*3);
+  longAvg = longSum/(order.shipments.length*3);
+  avgPos  = {lat:latAvg, lng:longAvg};
 
-  var current = {lat: order.shipments[i].current_location.latitude, lng: order.shipments[i].current_location.longitude};
-  addMarker(current, order.shipments[i].delivery_state);
+  map.panTo(avgPos);
 
-  var dest    = {lat: order.shipments[i].destination.latitude, lng: order.shipments[i].destination.longitude};
-  addMarker(dest, "Destination");
-
-  drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination);
-     }
 }
 
 function customerInfo(){
-    var string = "<strong>Name: </strong>";
-    string += customer.name;
-    string += "<br />";
-    string += "<strong>Email: </strong>";
-    string += customer.email;
-    string += "<br />";
-    string += "<strong>Phone: </strong>";
-    string += customer.phone;
-    string += "<br />";
-    string += "<strong>Address: </strong>"
-    string += customer.address;
-    string += "<br />";
-  document.getElementById("CUSTOMER_INFO").innerHTML = string;
+
+	customerInfoElement = document.getElementById("CUSTOMER_INFO").children;
+    customerInfoElement[1].innerText  = customer.name;
+    customerInfoElement[4].innerText  = customer.email;
+    customerInfoElement[7].innerText  = customer.phone;
+    customerInfoElement[10].innerText = customer.address;
 }
 
 function shippingDetails(){
-  var string = "<strong>Tracking Number: </strong><text>";
-  string += shipment.id + "</text><br />";
-  string += "<strong>Carrier: </strong>";
-  string += shipment.carrier +"<br />";
-  string += "<strong>Current Location: </strong><br />";
-  string += "<text>Latitude: ";
-  string += shipment.current_location.latitude + "</text><br />";
-  string += "<text>Longitude: ";
-  string += shipment.current_location.longitude + "</text><br />";
-  string += "<strong>Destination: </strong><br />";
-  string += "<text>Latitude: ";
-  string += shipment.destination.latitude+"</text><br />";
-  string += "<text>Longitude: ";
-  string += shipment.destination.longitude+"</text><br />";
-  string += "<strong>Shipped: </strong>";
-  string += shipment.ship_date + "<br />";
-  string += "<strong>Expected Arrival: </strong>";
-  string += shipment.expected_date +"<br />";
-  string += "<strong>Status: </strong><strong>what is this?</strong><br />";
-  document.getElementById("SHIPPING_DETAILS").innerHTML = string;
+
+  if(shipment != undefined){
+	  shipmentInfoElement = document.getElementById("SHIPPING_DETAILS").children;
+	  shipmentInfoElement[1].innerText  = shipment.id;
+	  shipmentInfoElement[4].innerText  = shipment.carrier;
+	  shipmentInfoElement[9].innerText  = shipment.current_location.latitude;
+	  shipmentInfoElement[12].innerText = shipment.current_location.longitude;
+	  shipmentInfoElement[17].innerText = shipment.destination.latitude;
+	  shipmentInfoElement[20].innerText = shipment.destination.longitude;
+	  shipmentInfoElement[23].innerText = shipment.ship_date;
+	  shipmentInfoElement[26].innerText = shipment.expected_date;
+	  shipmentInfoElement[29].innerText = shipment.delivery_state;
+  }
 }
 
 function packageDetails(){
-  var string = "<strong>Order Placed (Id): </strong>";
-  string += shipment.ship_date;
-  string += "<br />";
-  string += "<strong>Shipment Contents: </strong>";
-  string += shipment.contents;
-  string += "<br />";
-  string += "<strong>Description: </strong><br />";
-  string += customer.about + "<br />";
-  document.getElementById("PACKAGE_DETAILS").innerHTML = string;
+
+  if(shipment != undefined){
+  	packageInfoElement = document.getElementById("PACKAGE_DETAILS").children;
+  	packageInfoElement[1].innerText  = shipment.ship_date;
+  	packageInfoElement[4].innerText  = shipment.contents;
+  	packageInfoElement[7].innerText  = customer.about ;
+  }
 }
 
 
 
-function displayLocation(latitude,longitude,location){
-        var request = new XMLHttpRequest();
+function displayLocation(latitude,longitude){
+    var request = new XMLHttpRequest();
 
-        var method = 'GET';
-        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
-        var async = true;
+    var method = 'GET';
+    var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
+    var async = true;
 
-        request.open(method, url, async);
-        request.onreadystatechange = function(){
-          if(request.readyState == 4 && request.status == 200){
-            var data = JSON.parse(request.responseText);
-            var address = data.results[0];
-            if(address == undefined)
-              return;
-            if(address.formatted_address == undefined)
-              return;
-            if(address.address_components == undefined)
-              return;
-            console.log(address.formatted_address);
-            if(address.address_components[3].long_name == undefined || address.address_components[4].long_name == undefined )
-              return;
-              //console.log(address.address_components[3].long_name);
-              //console.log(address.address_components[4].long_name);
-          
-              if(location == "origin")
-                orig = address.formatted_address;
-              else if(location == "current")
-                current = address.formatted_address;
-              else if(location == "dest")
-                dest = address.formatted_address;
-          }
-        };
+    request.open(method, url, async);
+    request.onreadystatechange = function(){
+      if(request.readyState == 4 && request.status == 200){
+        var data = JSON.parse(request.responseText);
+        var address = data.results[0];
+        if(address == undefined)
+          return;
+        if(address.formatted_address == undefined)
+          return;
+        if(address.address_components == undefined)
+          return;
+      	// console.log(address.formatted_address)
+        return address.formatted_address;
+      }
+    };
     request.send();
 };
 
@@ -445,13 +421,22 @@ function consistantTimer() {
    
  }
  if(map == undefined){
-  var uluru = {lat: -25.363, lng: 131.044};
+  var GEHeadquarters = {lat: 42.3522898, lng: -71.0495636};
+  try{
     map = new google.maps.Map(document.getElementById('MAP_MARKERS'), {
-          zoom: 4,
-          center: uluru
+          zoom: 2,
+          center: GEHeadquarters,
+          mapTypeId: 'hybrid',
         });
+  }
+  catch(ReferenceError){
+
+    if(displayedGMapsErrorMsg == false){
+      console.log("Google Maps APIs have not been loaded yet.")
+      displayedGMapsErrorMsg = true;
+    }
     
-  mapsReady = true;
+  }
 }
  
 }
@@ -462,41 +447,163 @@ function clearOverlays() {
   markersArray.length = 0;
 }
 
-function addMarker(location, state) {
-  char = "%E2%80%A2"
-  if(state == "Ahead of Time")
-      pinColor = "00FF6F";
-  else if(state == "On Time")
-      pinColor = "00A849";
-  else if(state == "Likely to be On Time")
-      pinColor = "CEF700";
-  else if(state == "Likely to be Behind Schedule")
-      pinColor = "C0C439";
-  else if(state == "Behind Schedule")
-      pinColor = "FFA220";
-  else if(state == "Late")
-      pinColor = "BF1913";
-  else if(state == "Origin"){
-      pinColor = "86B6EC";
-      char = "%41"   
-  }else if(state == "Destination"){
-      pinColor = "86B6EC";
-      char = "%42"   
-  }else
-      pinColor = "BF1913";
+function addShipmentMarkers(shipment, index, orderSize) {
+  // generalLocationOrigin      = displayLocation(shipment.origin.latitude, shipment.origin.longitude)
+  // generalLocationCurrent     = displayLocation(shipment.current_location.latitude, shipment.current_location.longitude)
+  // generalLocationDestination = displayLocation(shipment.destination.latitude, shipment.destination.longitude)
 
-  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+char+"|"+pinColor);
-  var marker = new google.maps.Marker({
-    position: location,
+
+  if(shipment.delivery_state == "Ahead of Time")
+      pinColor = "10C6FF";
+  else if(shipment.delivery_state == "On Time")
+      pinColor = "00C300";
+  else if(shipment.delivery_state == "Likely to be On Time")
+      pinColor = "DEE800";
+  else if(shipment.delivery_state == "Likely to be Behind Schedule")
+      pinColor = "FFBF0C";
+  else if(shipment.delivery_state == "Behind Schedule")
+      pinColor = "E85E00";
+  else if(shipment.delivery_state == "Late")
+      pinColor = "FF0000"; 
+  else
+      pinColor = "999999";
+      
+  origin  = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
+  current = {lat: shipment.current_location.latitude, lng: shipment.current_location.longitude};
+  dest    = {lat: shipment.destination.latitude, lng: shipment.destination.longitude};
+
+  originContentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h3 id="firstHeading" class="firstHeading">Consignment Origin '+
+            '('+index+' of '+orderSize+')'+
+            '</h3>'+
+            '<div id="bodyContent">'+
+            '<p><b>Coordinates:</b></br>'+
+            'Latitude: '+shipment.origin.latitude+"</br>"+
+            'Longitude: '+shipment.origin.longitude+"</br>"+
+            "</br>"+
+            '<b>Date: </b></br>'+
+            shipment.ship_date+
+            '</p>'+
+            '</div>'+
+            '</div>'; 
+
+  var currentContentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h3 id="firstHeading" class="firstHeading">Consignment Current Location '+
+            '('+index+' of '+orderSize+')'+
+            '</h3>'+
+            '<div id="bodyContent">'+
+            '<p><b>Coordinates:</b></br>'+
+            'Latitude: '+shipment.current_location.latitude+"</br>"+
+            'Longitude: '+shipment.current_location.longitude+"</br>"+
+            "</br>"+
+            '<b>Date: </b></br>'+
+            shipment.ship_date+
+            '</p>'+
+            '</div>'+
+            '</div>'; 
+
+  var destinationContentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h3 id="firstHeading" class="firstHeading">Consignment Destination '+
+            '('+index+' of '+orderSize+')'+
+            '</h3>'+
+            '<div id="bodyContent">'+
+            '<p><b>Coordinates:</b></br>'+
+            'Latitude: '+shipment.destination.latitude+"</br>"+
+            'Longitude: '+shipment.destination.longitude+"</br>"+
+            "</br>"+
+            '<b>Date: </b></br>'+
+            shipment.ship_date+
+            '</p>'+
+            '</div>'+
+            '</div>';    
+
+  originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
+
+  currentPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+index+"|"+pinColor);
+
+  destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
+
+
+  originMarker = new google.maps.Marker({
+    position: origin,
     map: map,
-    icon: pinImage
+    icon: originPinImage
   });
-  markersArray.push(marker);
+
+  currentMarker = new google.maps.Marker({
+    position: current,
+    map: map,
+    icon: currentPinImage
+  });
+
+  destinationMarker = new google.maps.Marker({
+    position: dest,
+    map: map,
+    icon: destinationPinImage
+  });
+
+  originMarkersArray.push(originMarker);
+  currentMarkersArray.push(currentMarker);
+  destinationMarkersArray.push(destinationMarker);
+
+  originInfoWindow = new google.maps.InfoWindow({
+        content: originContentString
+      });
+  currentInfoWindow= new google.maps.InfoWindow({
+        content: currentContentString
+      });
+  destinationInfoWindow = new google.maps.InfoWindow({
+        content: destinationContentString
+      });
+
+  originInfoWindowList.push(originInfoWindow);
+  currentInfoWindowList.push(currentInfoWindow);
+  destinationInfoWindowList.push(destinationInfoWindow);  
+  originMarkersArray[index-1].addListener('click', function() {
+  	console.log(originMarkersArray)
+    originInfoWindowList[index-1].open(map, originMarkersArray[index-1]);
+  });
+  
+  currentMarkersArray[index-1].addListener('click', function() {
+    currentInfoWindowList[index-1].open(map, currentMarkersArray[index-1]);
+  });
+  
+  destinationMarkersArray[index-1].addListener('click', function() {
+    destinationInfoWindowList[index-1].open(map, destinationMarkersArray[index-1]);
+  });
+  
+
+  currentMarkersArray[index-1].setAnimation(google.maps.Animation.BOUNCE);
+  setTimeout(function(){ currentMarkersArray[index-1].setAnimation(null);}, 750);
+
+
+}
+var inAnimation = false;
+function setSingleShipmentOnMap(map, index) {
+    originMarkersArray[index].setMap(map);
+    currentMarkersArray[index].setMap(map);
+    destinationMarkersArray[index].setMap(map);
+
+    map.panTo(currentMarkersArray[index].position)
+    currentMarkersArray[index].setAnimation(google.maps.Animation.BOUNCE);
+  setTimeout(function(){ currentMarkersArray[index].setAnimation(null); }, 750);
 }
 
 function setMapOnAll(map) {
-  for (var i = 0; i < markersArray.length; i++) {
-    markersArray[i].setMap(map);
+  for (var i = 0; i < originMarkersArray.length; i++) {
+    originMarkersArray[i].setMap(map);
+  }
+  for (var i = 0; i < currentMarkersArray.length; i++) {
+    currentMarkersArray[i].setMap(map);
+  }
+  for (var i = 0; i < destinationMarkersArray.length; i++) {
+    destinationMarkersArray[i].setMap(map);
   }
 }
 
@@ -504,18 +611,46 @@ function clearMarkers() {
         setMapOnAll(null);
 }
  
-function drawLine(origin, current, destination){
+function drawLine(origin, current, destination, state){
   
   lineCoordinates = [
     {lat: origin.latitude,      lng: origin.longitude},
     {lat: current.latitude,     lng: current.longitude},
     {lat: destination.latitude, lng: destination.longitude},
   ];
-
+  var lineColor;
+  switch(state){
+	  case "Ahead of Time":
+	  lineColor = "#10C6FF";
+	  break;
+	  
+	  case "On Time":
+	  lineColor = "#00C300";
+	  break;
+	  
+	  case "Likely to be On Time":
+	  lineColor = "#DEE800";
+	  break;
+	  
+	  case "Likely to be Behind Schedule":
+	  lineColor = "#FFBF0C";
+	  break;
+	  
+	  case "Behind Schedule":
+	  lineColor = "#E85E00";
+	  break;
+	  
+	  case "Late":
+	  lineColor = "#FF0000";
+	  break;
+	  
+	  default:
+	  lineColor = "#999999"
+  }
   flightPath = new google.maps.Polyline({
   path: lineCoordinates,
-  geodesic: true,
-  strokeColor: '#C1C1C1',
+  geodesic: false,
+  strokeColor: lineColor,
   strokeOpacity: 1.0,
   strokeWeight: 2
   });
@@ -526,4 +661,4 @@ function drawLine(origin, current, destination){
 function removeLine() {
   for(i=0;i<flightPathList.length;i++)
         flightPathList[i].setMap(null);
-      }
+}

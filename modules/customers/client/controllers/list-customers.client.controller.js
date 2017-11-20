@@ -10,6 +10,9 @@
   function CustomersListController(CustomersService) {
     var vm = this;
     vm.customers = CustomersService.query();
-
+    vm.currentlySelected = function(){
+    	// console.log(vm.customers);
+    }
+    
   }
 }());

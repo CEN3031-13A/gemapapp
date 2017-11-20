@@ -22,7 +22,7 @@
             "isSelectable": true
           }
           ]'
-          multi-activate onclick="getItemData()">
+          onclick="getItemData()" ng-click="vm.currentlySelected()">
         </px-tree>
     </div>
 </div>
@@ -59,10 +59,10 @@
         header-value="Customer Information"
         status="">
           <div id="CUSTOMER_INFO">
-            <strong>Name: </strong><br />
-            <strong>Email: </strong><br />
-            <strong>Phone: </strong><br />
-            <strong>Address: </strong><br />
+            <strong>Name: </strong><span></span><br />
+            <strong>Email: </strong><span></span><br />
+            <strong>Phone: </strong><span></span><br />
+            <strong>Address: </strong><span></span><br />
           </div>
         </px-accordion>
 
@@ -71,17 +71,17 @@
           header-value="Shipping Details"
           status="">
           <div id="SHIPPING_DETAILS">
-            <strong>Tracking Number: </strong><br />
-            <strong>Carrier: </strong><br />
+            <strong>Tracking Number: </strong><span></span><br />
+            <strong>Carrier: </strong><span></span><br />
             <strong>Destination: </strong><br />
-                  <text>Latitude: </text><br />
-                  <text>Longitude:</text><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude:</text><span></span><br />
             <strong>Current Location: </strong><br />
-                  <text>Latitude: </text><br />
-                  <text>Longitude: </text><br />
-            <strong>Shipped: </strong><br />
-            <strong>Expected Arrival: </strong><br />
-            <strong>Status: </strong><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude: </text><span></span><br />
+            <strong>Shipped: </strong><span></span><br />
+            <strong>Expected Arrival: </strong><span></span><br />
+            <strong>Status: </strong><span></span><br />
           </div>
         </px-accordion>
 
@@ -89,18 +89,21 @@
           icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
           header-value="Package Details"
           status="">
-          <div id="PACKAGE_COMMENTS">
-            <strong>Order Placed (Id): </strong><br />
-            <strong>Shipment Contents: </strong><br />
-            <strong>Description: </strong><br />
+          <div id="PACKAGE_DETAILS">
+            <strong>Order Placed (Id): </strong><span></span><br />
+            <strong>Shipment Contents: </strong><span></span><br />
+            <strong>Description: </strong><span></span><br />
           </div>
         </px-accordion>
 
         <px-accordion
           icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
           header-value="Package Comments"
-          status="" 
-          disabled show-action>
+          status="">
+          <div id="PACKAGE_COMMENTS">
+            <strong>Timestamp: </strong><span></span><br />
+            <strong>Comment: </strong><span></span><br />
+          </div>
         </px-accordion>
 
         <form>
