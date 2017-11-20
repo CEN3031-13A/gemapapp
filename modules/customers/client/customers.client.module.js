@@ -309,19 +309,23 @@ function pxSteps() {
 }
 
 function pxMapMarkers(){
+
   clearMarkers();
   var origin = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
   addMarker(origin, "Origin");
 
   var current = {lat: shipment.current_location.latitude, lng: shipment.current_location.longitude};
-  addMarker(current, shipment.delivery_state);
+  addMarker(current, shipment.delivery_state, "current");
 
   var dest = {lat: shipment.destination.latitude, lng: shipment.destination.longitude};
   addMarker(dest, "Destination");
   if(flightPathList!=null)
     removeLine()
   drawLine(shipment.origin, shipment.current_location, shipment.destination);
+
   
+      map.panTo(current)
+
 }
 
 function pxMapMarkersOrder(){
@@ -335,7 +339,7 @@ function pxMapMarkersOrder(){
   addMarker(origin, "Origin");
 
   var current = {lat: order.shipments[i].current_location.latitude, lng: order.shipments[i].current_location.longitude};
-  addMarker(current, order.shipments[i].delivery_state);
+  addMarker(current, order.shipments[i].delivery_state, "current");
 
   var dest    = {lat: order.shipments[i].destination.latitude, lng: order.shipments[i].destination.longitude};
   addMarker(dest, "Destination");
@@ -441,10 +445,11 @@ function consistantTimer() {
    
  }
  if(map == undefined){
-  var uluru = {lat: -25.363, lng: 131.044};
+  var uluru = {lat: 42.3522898, lng: -71.0495636};
     map = new google.maps.Map(document.getElementById('MAP_MARKERS'), {
-          zoom: 4,
-          center: uluru
+          zoom: 2,
+          center: uluru,
+          mapTypeId: 'hybrid',
         });
     
   mapsReady = true;
@@ -458,7 +463,7 @@ function clearOverlays() {
   markersArray.length = 0;
 }
 
-function addMarker(location, state) {
+function addMarker(location, state, type) {
   char = "%E2%80%A2"
   if(state == "Ahead of Time")
       pinColor = "00FF6F";
@@ -487,6 +492,10 @@ function addMarker(location, state) {
     map: map,
     icon: pinImage
   });
+  if(type == "current"){
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function(){ marker.setAnimation(null); }, 750);
+  }
   markersArray.push(marker);
 }
 
@@ -510,7 +519,7 @@ function drawLine(origin, current, destination){
 
   flightPath = new google.maps.Polyline({
   path: lineCoordinates,
-  geodesic: true,
+  geodesic: false,
   strokeColor: '#C1C1C1',
   strokeOpacity: 1.0,
   strokeWeight: 2
