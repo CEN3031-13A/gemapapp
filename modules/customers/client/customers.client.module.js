@@ -13,7 +13,7 @@ var shipmentIndex;
 var customerList 		 = [];
 var activeCustomerList 	 = [];
 var inactiveCustomerList = [];
-var activeInactiveState = "";
+var activeInactiveState = '';
 var displayaddress;
 var map;
 var mapsReady = false;
@@ -202,10 +202,8 @@ function getItemData() {
     }
   }
 
-  if (!found) {
-    // console.log("Shipment was not found!");
+  if (!found)
     pxMapMarkersOrder();
-  }
   else {
     pxMapMarkers();
   }
@@ -304,26 +302,17 @@ function pxSteps() {
 */
 
 function pxMapMarkers() {
-
   clearMarkers();
   setSingleShipmentOnMap(map, shipmentIndex);
-
-<<<<<<< HEAD
   if (flightPathList != null)
     removeLine();
-  drawLine(shipment.origin, shipment.current_location, shipment.destination);
-=======
-  if(flightPathList!=null)
-    removeLine()
-
   drawLine(shipment.origin, shipment.current_location, shipment.destination, shipment.delivery_state);
->>>>>>> origin/kassandra_s3
 }
 
 function pxMapMarkersOrder() {
   if (flightPathList != null)
     removeLine();
-
+    
   clearMarkers();
   originMarkersArray = [];
   currentMarkersArray = [];
@@ -331,38 +320,23 @@ function pxMapMarkersOrder() {
   originInfoWindowList = [];
   currentInfoWindowList = [];
   destinationInfoWindowList = [];
-<<<<<<< HEAD
   let latSum = 0;
   let longSum = 0;
   for (let i = 0; i < order.shipments.length; i++) {
     addShipmentMarkers(order.shipments[i], i + 1, order.shipments.length);
-    drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination);
+    drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination, order.shipments[i].delivery_state);
     latSum += order.shipments[i].origin.latitude;
     latSum += order.shipments[i].current_location.latitude;
     latSum += order.shipments[i].destination.latitude;
     longSum += order.shipments[i].origin.longitude;
     longSum += order.shipments[i].current_location.longitude;
     longSum += order.shipments[i].destination.longitude;
-=======
-  latSum = 0;
-  longSum =0;
-  for(i = 0; i<order.shipments.length; i++){
-  	addShipmentMarkers(order.shipments[i], i+1, order.shipments.length);
-  	drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination, order.shipments[i].delivery_state);
-  	latSum  += order.shipments[i].origin.latitude;
-  	latSum  += order.shipments[i].current_location.latitude;
-  	latSum  += order.shipments[i].destination.latitude;
-  	longSum += order.shipments[i].origin.longitude;
-  	longSum += order.shipments[i].current_location.longitude;
-  	longSum += order.shipments[i].destination.longitude;
->>>>>>> origin/kassandra_s3
   }
   let latAvg = latSum / (order.shipments.length * 3);
   let longAvg = longSum / (order.shipments.length * 3);
   let avgPos = { lat: latAvg, lng: longAvg };
 
   map.panTo(avgPos);
-
 }
 
 function customerInfo() {
@@ -426,133 +400,130 @@ function displayLocation(latitude, longitude) {
 setInterval(consistantTimer, 50);
 
 function consistantTimer() {
- if(customerList.length === 0){
-   pxTree();
-   
- }
- if(map == undefined){
-  var GEHeadquarters = {lat: 42.3522898, lng: -71.0495636};
-  try{
-    map = new google.maps.Map(document.getElementById('MAP_MARKERS'), {
-          zoom: 2,
-          center: GEHeadquarters,
-          mapTypeId: 'hybrid',
-        });
+  if (customerList.length === 0) {
+    pxTree();
   }
-  catch(ReferenceError){
-
-    if(displayedGMapsErrorMsg == false){
-      console.log("Google Maps APIs have not been loaded yet.")
-      displayedGMapsErrorMsg = true;
+  if (map === undefined) {
+    var GEHeadquarters = { lat: 42.3522898, lng: -71.0495636 };
+    try {
+      map = new google.maps.Map(document.getElementById('MAP_MARKERS'), {
+        zoom: 2,
+        center: GEHeadquarters,
+        mapTypeId: 'hybrid'
+      });
     }
-    
+    catch (ReferenceError) {
+      if (displayedGMapsErrorMsg === false) {
+        console.log("Google Maps APIs have not been loaded yet.");
+        displayedGMapsErrorMsg = true;
+      }
+    }
   }
 }
- 
-}
 
+/*
 function clearOverlays() {
-  for (var i = 0; i < markersArray.length; i++ )
+  for (var i = 0; i < markersArray.length; i++)
     markersArray[i].setMap(null);
-  markersArray.length = 0;
+    markersArray.length = 0;
 }
+*/
 
 function addShipmentMarkers(shipment, index, orderSize) {
   // generalLocationOrigin      = displayLocation(shipment.origin.latitude, shipment.origin.longitude)
   // generalLocationCurrent     = displayLocation(shipment.current_location.latitude, shipment.current_location.longitude)
   // generalLocationDestination = displayLocation(shipment.destination.latitude, shipment.destination.longitude)
+  let pinColor;
 
+  if (shipment.delivery_state === "Ahead of Time")
+    pinColor = "10C6FF";
+  else if (shipment.delivery_state === "On Time")
+    pinColor = "00C300";
+  else if (shipment.delivery_state === "Likely to be On Time")
+    pinColor = "DEE800";
+  else if (shipment.delivery_state === "Likely to be Behind Schedule")
+    pinColor = "FFBF0C";
+  else if (shipment.delivery_state === "Behind Schedule")
+    pinColor = "E85E00";
+  else if (shipment.delivery_state === "Late")
+    pinColor = "FF0000";
+  else {
+    pinColor = "999999";
+  }
 
-  if(shipment.delivery_state == "Ahead of Time")
-      pinColor = "10C6FF";
-  else if(shipment.delivery_state == "On Time")
-      pinColor = "00C300";
-  else if(shipment.delivery_state == "Likely to be On Time")
-      pinColor = "DEE800";
-  else if(shipment.delivery_state == "Likely to be Behind Schedule")
-      pinColor = "FFBF0C";
-  else if(shipment.delivery_state == "Behind Schedule")
-      pinColor = "E85E00";
-  else if(shipment.delivery_state == "Late")
-      pinColor = "FF0000"; 
-  else
-      pinColor = "999999";
-      
-  origin  = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
-  current = {lat: shipment.current_location.latitude, lng: shipment.current_location.longitude};
-  dest    = {lat: shipment.destination.latitude, lng: shipment.destination.longitude};
+  let origin = { lat: shipment.origin.latitude, lng: shipment.origin.longitude };
+  let current = { lat: shipment.current_location.latitude, lng: shipment.current_location.longitude };
+  let dest = { lat: shipment.destination.latitude, lng: shipment.destination.longitude };
 
-  originContentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h3 id="firstHeading" class="firstHeading">Consignment Origin '+
-            '('+index+' of '+orderSize+')'+
-            '</h3>'+
-            '<div id="bodyContent">'+
-            '<p><b>Coordinates:</b></br>'+
-            'Latitude: '+shipment.origin.latitude+"</br>"+
-            'Longitude: '+shipment.origin.longitude+"</br>"+
-            "</br>"+
-            '<b>Date: </b></br>'+
-            shipment.ship_date+
-            '</p>'+
-            '</div>'+
-            '</div>'; 
+  let originContentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h3 id="firstHeading" class="firstHeading">Consignment Origin ' +
+            '(' + index + ' of ' + orderSize + ')' +
+             '</h3>' +
+            '<div id="bodyContent">' +
+            '<p><b>Coordinates:</b></br>' +
+            'Latitude: ' + shipment.origin.latitude + "</br>" +
+            'Longitude: ' + shipment.origin.longitude + "</br>" +
+            "</br>" +
+            '<b>Date: </b></br>' +
+            shipment.ship_date +
+            '</p>' +
+            '</div>' +
+            '</div>';
 
-  var currentContentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h3 id="firstHeading" class="firstHeading">Consignment Current Location '+
-            '('+index+' of '+orderSize+')'+
-            '</h3>'+
-            '<div id="bodyContent">'+
-            '<p><b>Coordinates:</b></br>'+
-            'Latitude: '+shipment.current_location.latitude+"</br>"+
-            'Longitude: '+shipment.current_location.longitude+"</br>"+
-            "</br>"+
-            '<b>Date: </b></br>'+
-            shipment.ship_date+
-            '</p>'+
-            '</div>'+
-            '</div>'; 
+  var currentContentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h3 id="firstHeading" class="firstHeading">Consignment Current Location ' +
+            '(' + index + ' of ' + orderSize + ')' +
+            '</h3>' +
+            '<div id="bodyContent">' +
+            '<p><b>Coordinates:</b></br>' +
+            'Latitude: ' + shipment.current_location.latitude + "</br>" +
+            'Longitude: ' + shipment.current_location.longitude + "</br>" +
+            "</br>" +
+            '<b>Date: </b></br>' +
+            shipment.ship_date +
+            '</p>' +
+            '</div>' +
+            '</div>';
 
-  var destinationContentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h3 id="firstHeading" class="firstHeading">Consignment Destination '+
-            '('+index+' of '+orderSize+')'+
-            '</h3>'+
-            '<div id="bodyContent">'+
-            '<p><b>Coordinates:</b></br>'+
-            'Latitude: '+shipment.destination.latitude+"</br>"+
-            'Longitude: '+shipment.destination.longitude+"</br>"+
-            "</br>"+
-            '<b>Date: </b></br>'+
-            shipment.ship_date+
-            '</p>'+
-            '</div>'+
-            '</div>';    
+  var destinationContentString = '<div id="content">' +
+            '<div id="siteNotice">' + '</div>' +
+            '<h3 id="firstHeading" class="firstHeading">Consignment Destination ' +
+            '(' + index + ' of ' + orderSize + ')' +
+            '</h3>' +
+            '<div id="bodyContent">' +
+            '<p><b>Coordinates:</b></br>' +
+            'Latitude: ' + shipment.destination.latitude + '</br>' +
+            'Longitude: ' + shipment.destination.longitude + '</br>' +
+            '</br>' +
+            '<b>Date: </b></br>' +
+            shipment.ship_date +
+            '</p>' +
+            '</div>' +
+            '</div>';
 
-  originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
+  let originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
 
-  currentPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+index+"|"+pinColor);
+  let currentPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+index+"|"+pinColor);
 
-  destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
+  let destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
 
-
-  originMarker = new google.maps.Marker({
+  let originMarker = new google.maps.Marker({
     position: origin,
     map: map,
     icon: originPinImage
   });
 
-  currentMarker = new google.maps.Marker({
+  let currentMarker = new google.maps.Marker({
     position: current,
     map: map,
     icon: currentPinImage
   });
 
-  destinationMarker = new google.maps.Marker({
+  let destinationMarker = new google.maps.Marker({
     position: dest,
     map: map,
     icon: destinationPinImage
@@ -562,54 +533,50 @@ function addShipmentMarkers(shipment, index, orderSize) {
   currentMarkersArray.push(currentMarker);
   destinationMarkersArray.push(destinationMarker);
 
-  originInfoWindow = new google.maps.InfoWindow({
-        content: originContentString
-      });
-  currentInfoWindow= new google.maps.InfoWindow({
-        content: currentContentString
-      });
-  destinationInfoWindow = new google.maps.InfoWindow({
-        content: destinationContentString
-      });
+  let originInfoWindow = new google.maps.InfoWindow({
+    content: originContentString
+  });
+  let currentInfoWindow = new google.maps.InfoWindow({
+    content: currentContentString
+  });
+  let destinationInfoWindow = new google.maps.InfoWindow({
+    content: destinationContentString
+  });
 
   originInfoWindowList.push(originInfoWindow);
   currentInfoWindowList.push(currentInfoWindow);
-  destinationInfoWindowList.push(destinationInfoWindow);  
-  originMarkersArray[index-1].addListener('click', function() {
-  	console.log(originMarkersArray)
-    originInfoWindowList[index-1].open(map, originMarkersArray[index-1]);
+  destinationInfoWindowList.push(destinationInfoWindow);
+  originMarkersArray[index - 1].addListener('click', function () {
+    console.log(originMarkersArray);
+    originInfoWindowList[index - 1].open(map, originMarkersArray[index - 1]);
   });
-  
-  currentMarkersArray[index-1].addListener('click', function() {
-    currentInfoWindowList[index-1].open(map, currentMarkersArray[index-1]);
+  currentMarkersArray[index - 1].addListener('click', function () {
+    currentInfoWindowList[index - 1].open(map, currentMarkersArray[index - 1]);
   });
-  
-  destinationMarkersArray[index-1].addListener('click', function() {
-    destinationInfoWindowList[index-1].open(map, destinationMarkersArray[index-1]);
+  destinationMarkersArray[index - 1].addListener('click', function () {
+    destinationInfoWindowList[index - 1].open(map, destinationMarkersArray[index - 1]);
   });
-  
 
-  currentMarkersArray[index-1].setAnimation(google.maps.Animation.BOUNCE);
-  setTimeout(function(){ currentMarkersArray[index-1].setAnimation(null);}, 750);
+  currentMarkersArray[index - 1].setAnimation(google.maps.Animation.BOUNCE);
+  setTimeout(function () { currentMarkersArray[index - 1].setAnimation(null);}, 750);
 
 
 }
 var inAnimation = false;
 function setSingleShipmentOnMap(map, index) {
-    originMarkersArray[index].setMap(map);
-    currentMarkersArray[index].setMap(map);
-    destinationMarkersArray[index].setMap(map);
-
-    map.panTo(currentMarkersArray[index].position)
-    currentMarkersArray[index].setAnimation(google.maps.Animation.BOUNCE);
-  setTimeout(function(){ currentMarkersArray[index].setAnimation(null); }, 750);
+  originMarkersArray[index].setMap(map);
+  currentMarkersArray[index].setMap(map);
+  destinationMarkersArray[index].setMap(map);
+  map.panTo(currentMarkersArray[index].position);
+  currentMarkersArray[index].setAnimation(google.maps.Animation.BOUNCE);
+  setTimeout(function () { currentMarkersArray[index].setAnimation(null); }, 750);
 }
 
 function setMapOnAll(map) {
-  for (var i = 0; i < originMarkersArray.length; i++) {
+  for (let i = 0; i < originMarkersArray.length; i++) {
     originMarkersArray[i].setMap(map);
   }
-  for (var i = 0; i < currentMarkersArray.length; i++) {
+  for (let i = 0; i < currentMarkersArray.length; i++) {
     currentMarkersArray[i].setMap(map);
   }
   for (var i = 0; i < destinationMarkersArray.length; i++) {
@@ -618,57 +585,50 @@ function setMapOnAll(map) {
 }
 
 function clearMarkers() {
-        setMapOnAll(null);
+  setMapOnAll(null);
 }
- 
-function drawLine(origin, current, destination, state){
-  
-  lineCoordinates = [
-    {lat: origin.latitude,      lng: origin.longitude},
-    {lat: current.latitude,     lng: current.longitude},
-    {lat: destination.latitude, lng: destination.longitude},
+
+function drawLine(origin, current, destination, state) {
+  let lineCoordinates = [
+    { lat: origin.latitude, lng: origin.longitude },
+    { lat: current.latitude, lng: current.longitude },
+    { lat: destination.latitude, lng: destination.longitude }
   ];
   var lineColor;
-  switch(state){
-	  case "Ahead of Time":
-	  lineColor = "#10C6FF";
-	  break;
-	  
-	  case "On Time":
-	  lineColor = "#00C300";
-	  break;
-	  
-	  case "Likely to be On Time":
-	  lineColor = "#DEE800";
-	  break;
-	  
-	  case "Likely to be Behind Schedule":
-	  lineColor = "#FFBF0C";
-	  break;
-	  
-	  case "Behind Schedule":
-	  lineColor = "#E85E00";
-	  break;
-	  
-	  case "Late":
-	  lineColor = "#FF0000";
-	  break;
-	  
-	  default:
-	  lineColor = "#999999"
+  switch (state) {
+    case 'Ahead of Time':
+      lineColor = '#10C6FF';
+      break;
+    case 'On Time':
+      lineColor = '#00C300';
+      break;
+    case 'Likely to be On Time':
+      lineColor = '#DEE800';
+      break;
+    case 'Likely to be Behind Schedule':
+      lineColor = '#FFBF0C';
+      break;
+    case 'Behind Schedule':
+      lineColor = '#E85E00';
+      break;
+    case 'Late':
+      lineColor = '#FF0000';
+      break;
+    default:
+      lineColor = '#999999';
   }
-  flightPath = new google.maps.Polyline({
-  path: lineCoordinates,
-  geodesic: false,
-  strokeColor: lineColor,
-  strokeOpacity: 1.0,
-  strokeWeight: 2
+  let flightPath = new google.maps.Polyline({
+    path: lineCoordinates,
+    geodesic: false,
+    strokeColor: lineColor,
+    strokeOpacity: 1.0,
+    strokeWeight: 2
   });
-  flightPathList.push(flightPath)
-  flightPathList[flightPathList.length-1].setMap(map);
+  flightPathList.push(flightPath);
+  flightPathList[flightPathList.length - 1].setMap(map);
 }
 
 function removeLine() {
-  for(i=0;i<flightPathList.length;i++)
-        flightPathList[i].setMap(null);
+  for (let i = 0; i < flightPathList.length; i++)
+    flightPathList[i].setMap(null);
 }
