@@ -430,7 +430,7 @@ function addComment(){
 	console.log(timestamp + ": " + comment);
 	
 	//refresh comments
-	pakageComments();
+	packageComments();
 }
 
 
