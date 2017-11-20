@@ -11,7 +11,7 @@
     var vm = this;
     vm.customers = CustomersService.query();
     vm.currentlySelected = function(){
-    	console.log(document.querySelector('px-tree'));
+    	// console.log(vm.customers);
     }
     
   }
