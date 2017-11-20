@@ -19,11 +19,11 @@ var map;
 var mapsReady = false;
 var originMarkersArray 	= [];
 var currentMarkersArray = [];
-var destinationMarkersArray   = [];
+var destinationMarkersArray = [];
 var originInfoWindowList 	  = [];
 var currentInfoWindowList 	  = [];
 var destinationInfoWindowList = [];
-var flightPathList =[];
+var flightPathList = [];
 var displayedGMapsErrorMsg = false;
 
 function myFunction() {
@@ -41,77 +41,75 @@ function myFunction() {
   }
 }
 
-function displayActive(){
-  document.getElementById("myInput").value="";
+function displayActive() {
+  document.getElementById("myInput").value = "";
   activeInactiveState = "Active";
-  activeCustomerList =[];
-  for(i=0;i<customerList.length;i++){
-    if(customerList[i].isActive == true)
+  activeCustomerList = [];
+  for (let i = 0; i < customerList.length; i++) {
+    if (customerList[i].isActive === true)
       activeCustomerList.push(customerList[i]);
   }
-  pxTreeDisplay(activeCustomerList)
+  pxTreeDisplay(activeCustomerList);
 }
 
-function displayInactive(){
-  document.getElementById("myInput").value="";
+function displayInactive() {
+  document.getElementById("myInput").value = "";
   activeInactiveState = "Inactive";
-  inactiveCustomerList =[];
-  for(i=0;i<customerList.length;i++){
-    if(customerList[i].isActive == false)
+  inactiveCustomerList = [];
+  for (let i = 0; i < customerList.length; i++) {
+    if (customerList[i].isActive === false)
       inactiveCustomerList.push(customerList[i]);
   }
-  pxTreeDisplay(inactiveCustomerList)
+  pxTreeDisplay(inactiveCustomerList);
 }
 
-function displayAll(){
-  document.getElementById("myInput").value="";
+function displayAll() {
+  document.getElementById("myInput").value = "";
   activeInactiveState = "All";
   pxTreeDisplay(customerList);
 }
 
-
-
-function searchCustomers(){
-  str =  document.getElementById("myInput").value;
-  customerListSearch =[];
-  if(activeInactiveState == 'Active'){
-    if(str == ""){
+function searchCustomers() {
+  var str = document.getElementById("myInput").value;
+  var customerListSearch = [];
+  if (activeInactiveState === 'Active') {
+    if (str === "") {
       pxTreeDisplay(activeCustomerList);
       return;
     }
-    for(i=0;i<activeCustomerList.length;i++){
-      regularExpression = new RegExp(str, 'i');
-      if(activeCustomerList[i].name.search(regularExpression) != -1)
+    for (let i = 0; i < activeCustomerList.length; i++) {
+      let regularExpression = new RegExp(str, 'i');
+      if (activeCustomerList[i].name.search(regularExpression) !== -1)
         customerListSearch.push(activeCustomerList[i]);
     }
-    pxTreeDisplay(customerListSearch)
-  }else if(activeInactiveState == 'Inactive'){
-    if(str == ""){
+    pxTreeDisplay(customerListSearch);
+  } else if (activeInactiveState === 'Inactive') {
+    if (str === "") {
       pxTreeDisplay(inactiveCustomerList);
       return;
     }
-    for(i=0;i<inactiveCustomerList.length;i++){
-      regularExpression = new RegExp(str, 'i');
-      if(inactiveCustomerList[i].name.search(regularExpression) != -1)
+    for (let i = 0; i < inactiveCustomerList.length; i++) {
+      let regularExpression = new RegExp(str, 'i');
+      if (inactiveCustomerList[i].name.search(regularExpression) !== -1)
         customerListSearch.push(inactiveCustomerList[i]);
     }
-    pxTreeDisplay(customerListSearch)
-  }else{
-    if(str == ""){
+    pxTreeDisplay(customerListSearch);
+  } else {
+    if (str === "") {
       pxTreeDisplay(customerList);
       return;
     }
-    for(i=0;i<customerList.length;i++){
-      regularExpression = new RegExp(str, 'i');
-      if(customerList[i].name.search(regularExpression) != -1)
+    for (let i = 0; i < customerList.length; i++) {
+      let regularExpression = new RegExp(str, 'i');
+      if (customerList[i].name.search(regularExpression) !== -1)
         customerListSearch.push(customerList[i]);
     }
-    pxTreeDisplay(customerListSearch)  
+    pxTreeDisplay(customerListSearch);
   }
 }
 
 function pxTreeDisplay(customerListSearch) {
-  customerListSearch.sort(function(a, b) {
+  customerListSearch.sort(function (a, b) {
     if (a.name.toUpperCase() < b.name.toUpperCase())
       return -1;
     if (a.name.toUpperCase() > b.name.toUpperCase())
@@ -120,56 +118,53 @@ function pxTreeDisplay(customerListSearch) {
   });
   var treeElement = document.getElementById("TEST11");
 
-  string="["
-  for(i=0;i<customerListSearch.length;i++){
-    string+="{\"label\":\"";
-    string+=customerListSearch[i].name;
-    string+="\",";
-    string+="\"id\":\"";
-    string+=customerListSearch[i]._id;
-    string+="\",\"isSelectable\": false,\"children\":[";
-    strcheck0 = string;
+  let string = "[";
+  for (let i = 0; i < customerListSearch.length; i++) {
+    string += "{\"label\":\"";
+    string += customerListSearch[i].name;
+    string += "\",";
+    string += "\"id\":\"";
+    string += customerListSearch[i]._id;
+    string += "\",\"isSelectable\": false,\"children\":[";
+    var strcheck0 = string;
 
-    for(j=0;j<customerListSearch[i].orders.length;j++){
-      string+="{\"label\":\"Order #";
-      string+=customerListSearch[i].orders[j].index+1;
-      string+="\",";
-      string+="\"id\":\"";
-      string+=customerListSearch[i].orders[j].id;
-      string+="\",\"isSelectable\": true,\"children\":[";
-      strcheck1 = string;
+    for (let j = 0; j < customerListSearch[i].orders.length; j++) {
+      string += "{\"label\":\"Order #";
+      string += customerListSearch[i].orders[j].index + 1;
+      string += "\",";
+      string += "\"id\":\"";
+      string += customerListSearch[i].orders[j].id;
+      string += "\",\"isSelectable\": true,\"children\":[";
+      var strcheck1 = string;
 
-      for(k=0;k<customerListSearch[i].orders[j].shipments.length;k++){
-        string+="{\"label\":\"";
-        string+="Shipment #"+ (k+1);
-        string+="\",\"id\":\"";
-        string+=customerListSearch[i].orders[j].shipments[k].id;
-        string+="\"},"
+      for (let k = 0; k < customerListSearch[i].orders[j].shipments.length; k++) {
+        string += "{\"label\":\"";
+        string += "Shipment #" + (k + 1);
+        string += "\",\"id\":\"";
+        string += customerListSearch[i].orders[j].shipments[k].id;
+        string += "\"},";
       }
-      if(strcheck1 != string)
-        string = string.substring(0, string.length-1);
-      string+="]},";
+      if (strcheck1 !== string)
+        string = string.substring(0, string.length - 1);
+      string += "]},";
     }
-    if(strcheck1 != string)
-      string = string.substring(0, string.length-1);
-    string+="]},";
+    if (strcheck0 !== string)
+      string = string.substring(0, string.length - 1);
+    string += "]},";
   }
-  string = string.substring(0, string.length-1);
-  string+="]";
+  string = string.substring(0, string.length - 1);
+  string += "]";
 
   treeElement.attributes.items.value = string;
 }
 
-
-
-
-function getItemData(){
+function getItemData() {
   var customers = JSON.parse(document.getElementById("SOURCE").innerHTML);
   var px_tree = document.querySelector('px-tree');
   // var selectedData =px_tree.selectedMeta;
   var selectedShipment = px_tree.selected;
   var selectedPath = px_tree.selectedRoute;
-  if(selectedPath <= 1)
+  if (selectedPath <= 1)
     return;
 
   var shipmentID = selectedShipment.id;
@@ -178,24 +173,26 @@ function getItemData(){
 
   var orderID = selectedPath[1];
 
-  if(selectedPath.length == 2){
+  if (selectedPath.length === 2) {
     shipmentID = -1;
   }
 
   var found = false;
-  var i,j,k;
-  for(i=0;i<customers.length;i++){
-    if(customerID == customers[i]._id){
+  var i;
+  var j;
+  var k;
+  for (let i = 0; i < customers.length; i++) {
+    if (customerID === customers[i]._id) {
       customer = customers[i];
-      for(j=0;j<customers[i].orders.length;j++){
-        if(orderID == customers[i].orders[j].id){
+      for (let j = 0; j < customers[i].orders.length; j++) {
+        if (orderID === customers[i].orders[j].id) {
           order = customers[i].orders[j];
-          for(k=0;k<customers[i].orders[j].shipments.length;k++){
-            if(shipmentID == customers[i].orders[j].shipments[k].id){
+          for (k = 0; k < customers[i].orders[j].shipments.length; k++) {
+            if (shipmentID === customers[i].orders[j].shipments[k].id) {
               found = true;
               shipment = customers[i].orders[j].shipments[k];
               customerIndex = i;
-              orderIndex    = j;
+              orderIndex = j;
               shipmentIndex = k;
               break;
             }
@@ -205,12 +202,12 @@ function getItemData(){
     }
   }
 
-  if(!found){
+  if (!found) {
     // console.log("Shipment was not found!");
     pxMapMarkersOrder();
   }
-  else{
-   pxMapMarkers();
+  else {
+    pxMapMarkers();
   }
 
   // pxSteps();
@@ -220,7 +217,7 @@ function getItemData(){
 
 }
 
-function loading(){
+function loading() {
   // while(!document.ready());
   var spinner = document.querySelector('px-spinner');
   spinner.finished = true;
@@ -228,7 +225,7 @@ function loading(){
 
 function pxTree() {
   var customers = JSON.parse(document.getElementById("SOURCE").innerHTML);
-  customers.sort(function(a, b) {
+  customers.sort(function (a, b) {
     if (a.name.toUpperCase() < b.name.toUpperCase())
       return -1;
     if (a.name.toUpperCase() > b.name.toUpperCase())
@@ -237,57 +234,58 @@ function pxTree() {
   });
   var treeElement = document.getElementById("TEST11");
 
-  string="["
-  for(i=0;i<customers.length;i++){
+  let string = "[";
+  for (let i = 0; i < customers.length; i++) {
     customerList.push(customers[i]);
-    string+="{\"label\":\"";
-    string+=customers[i].name;
-    string+="\",";
-    string+="\"id\":\"";
-    string+=customers[i]._id;
-    string+="\",\"isSelectable\": false,\"children\":[";
-    strcheck0 = string;
+    string += "{\"label\":\"";
+    string += customers[i].name;
+    string += "\",";
+    string += "\"id\":\"";
+    string += customers[i]._id;
+    string += "\",\"isSelectable\": false,\"children\":[";
+    var strcheck0 = string;
 
-    for(j=0;j<customers[i].orders.length;j++){
-      string+="{\"label\":\"Order #";
-      string+=customers[i].orders[j].index+1;
-      string+="\",";
-      string+="\"id\":\"";
-      string+=customers[i].orders[j].id;
-      string+="\",\"isSelectable\": true,\"children\":[";
-      strcheck1 = string;
+    for (let j = 0; j < customers[i].orders.length; j++) {
+      string += "{\"label\":\"Order #";
+      string += customers[i].orders[j].index + 1;
+      string += "\",";
+      string += "\"id\":\"";
+      string += customers[i].orders[j].id;
+      string += "\",\"isSelectable\": true,\"children\":[";
+      var strcheck1 = string;
 
-      for(k=0;k<customers[i].orders[j].shipments.length;k++){
-        string+="{\"label\":\"";
-        string+="Shipment #"+ (k+1);
-        string+="\",\"id\":\"";
-        string+=customers[i].orders[j].shipments[k].id;
-        string+="\"},"
+      for (let k = 0; k < customers[i].orders[j].shipments.length; k++) {
+        string += "{\"label\":\"";
+        string += "Shipment #" + (k + 1);
+        string += "\",\"id\":\"";
+        string += customers[i].orders[j].shipments[k].id;
+        string += "\"},";
       }
-      if(strcheck1 != string)
-        string = string.substring(0, string.length-1);
-      string+="]},";
+      if (strcheck1 !== string)
+        string = string.substring(0, string.length - 1);
+      string += "]},";
     }
-    if(strcheck1 != string)
-      string = string.substring(0, string.length-1);
-    string+="]},";
+    if (strcheck0 !== string)
+      string = string.substring(0, string.length - 1);
+    string += "]},";
   }
-  string = string.substring(0, string.length-1);
-  string+="]";
+  string = string.substring(0, string.length - 1);
+  string += "]";
 
   treeElement.attributes.items.value = string;
 
 }
 
+/*
 function pxSteps() {
   var string = "<px-steps ";
-    string += "items=\'[";
-    string += "{\"id\":\"1\", \"label\":\"(ORIGIN) ";
+  string += "items=\'[";
+  string += "{\"id\":\"1\", \"label\":\"(ORIGIN) ";
     // string += shipment.origin.latitude;
     // string += ", ";
     // string += shipment.origin.latitude;
-    string += orig;
-    string += "\"},";
+  string += orig;
+  string += "\"},";
     string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
     // string += shipment.current_location.latitude;
     // string += ", ";
@@ -303,109 +301,105 @@ function pxSteps() {
 
     document.getElementById("STEPS").innerHTML = string;
 }
+*/
 
-function pxMapMarkers(){
+function pxMapMarkers() {
 
   clearMarkers();
   setSingleShipmentOnMap(map, shipmentIndex);
 
-  if(flightPathList!=null)
-    removeLine()
+  if (flightPathList != null)
+    removeLine();
   drawLine(shipment.origin, shipment.current_location, shipment.destination);
 }
 
-function pxMapMarkersOrder(){
-  if(flightPathList!=null)
-    removeLine()
+function pxMapMarkersOrder() {
+  if (flightPathList != null)
+    removeLine();
 
   clearMarkers();
-  originMarkersArray        = [];
-  currentMarkersArray       = [];
-  destinationMarkersArray   = [];
-  originInfoWindowList      = [];
-  currentInfoWindowList     = [];
+  originMarkersArray = [];
+  currentMarkersArray = [];
+  destinationMarkersArray = [];
+  originInfoWindowList = [];
+  currentInfoWindowList = [];
   destinationInfoWindowList = [];
-  latSum = 0;
-  longSum =0;
-  for(i = 0; i<order.shipments.length; i++){
-  	addShipmentMarkers(order.shipments[i], i+1, order.shipments.length);
-  	drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination);
-  	latSum  += order.shipments[i].origin.latitude;
-  	latSum  += order.shipments[i].current_location.latitude;
-  	latSum  += order.shipments[i].destination.latitude;
-  	longSum += order.shipments[i].origin.longitude;
-  	longSum += order.shipments[i].current_location.longitude;
-  	longSum += order.shipments[i].destination.longitude;
+  let latSum = 0;
+  let longSum = 0;
+  for (let i = 0; i < order.shipments.length; i++) {
+    addShipmentMarkers(order.shipments[i], i + 1, order.shipments.length);
+    drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination);
+    latSum += order.shipments[i].origin.latitude;
+    latSum += order.shipments[i].current_location.latitude;
+    latSum += order.shipments[i].destination.latitude;
+    longSum += order.shipments[i].origin.longitude;
+    longSum += order.shipments[i].current_location.longitude;
+    longSum += order.shipments[i].destination.longitude;
   }
-  latAvg  = latSum/(order.shipments.length*3);
-  longAvg = longSum/(order.shipments.length*3);
-  avgPos  = {lat:latAvg, lng:longAvg};
+  let latAvg = latSum / (order.shipments.length * 3);
+  let longAvg = longSum / (order.shipments.length * 3);
+  let avgPos = { lat: latAvg, lng: longAvg };
 
   map.panTo(avgPos);
 
 }
 
-function customerInfo(){
-
-	customerInfoElement = document.getElementById("CUSTOMER_INFO").children;
-    customerInfoElement[1].innerText  = customer.name;
-    customerInfoElement[4].innerText  = customer.email;
-    customerInfoElement[7].innerText  = customer.phone;
-    customerInfoElement[10].innerText = customer.address;
+function customerInfo() {
+  let customerInfoElement = document.getElementById("CUSTOMER_INFO").children;
+  customerInfoElement[1].innerText = customer.name;
+  customerInfoElement[4].innerText = customer.email;
+  customerInfoElement[7].innerText = customer.phone;
+  customerInfoElement[10].innerText = customer.address;
 }
 
-function shippingDetails(){
-
-  if(shipment != undefined){
-	  shipmentInfoElement = document.getElementById("SHIPPING_DETAILS").children;
-	  shipmentInfoElement[1].innerText  = shipment.id;
-	  shipmentInfoElement[4].innerText  = shipment.carrier;
-	  shipmentInfoElement[9].innerText  = shipment.current_location.latitude;
-	  shipmentInfoElement[12].innerText = shipment.current_location.longitude;
-	  shipmentInfoElement[17].innerText = shipment.destination.latitude;
-	  shipmentInfoElement[20].innerText = shipment.destination.longitude;
-	  shipmentInfoElement[23].innerText = shipment.ship_date;
-	  shipmentInfoElement[26].innerText = shipment.expected_date;
-	  shipmentInfoElement[29].innerText = shipment.delivery_state;
+function shippingDetails() {
+  if (shipment !== undefined) {
+    let shipmentInfoElement = document.getElementById("SHIPPING_DETAILS").children;
+    shipmentInfoElement[1].innerText = shipment.id;
+    shipmentInfoElement[4].innerText = shipment.carrier;
+    shipmentInfoElement[9].innerText = shipment.current_location.latitude;
+    shipmentInfoElement[12].innerText = shipment.current_location.longitude;
+    shipmentInfoElement[17].innerText = shipment.destination.latitude;
+    shipmentInfoElement[20].innerText = shipment.destination.longitude;
+    shipmentInfoElement[23].innerText = shipment.ship_date;
+    shipmentInfoElement[26].innerText = shipment.expected_date;
+    shipmentInfoElement[29].innerText = shipment.delivery_state;
   }
 }
 
-function packageDetails(){
+function packageDetails() {
 
-  if(shipment != undefined){
-  	packageInfoElement = document.getElementById("PACKAGE_DETAILS").children;
-  	packageInfoElement[1].innerText  = shipment.ship_date;
-  	packageInfoElement[4].innerText  = shipment.contents;
-  	packageInfoElement[7].innerText  = customer.about ;
+  if (shipment !== undefined) {
+    let packageInfoElement = document.getElementById("PACKAGE_DETAILS").children;
+    packageInfoElement[1].innerText = shipment.ship_date;
+    packageInfoElement[4].innerText = shipment.contents;
+    packageInfoElement[7].innerText = customer.about;
   }
 }
 
+function displayLocation(latitude, longitude) {
+  var request = new XMLHttpRequest();
+  var method = 'GET';
+  var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
+  var async = true;
 
-
-function displayLocation(latitude,longitude){
-    var request = new XMLHttpRequest();
-
-    var method = 'GET';
-    var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
-    var async = true;
-
-    request.open(method, url, async);
-    request.onreadystatechange = function(){
-      if(request.readyState == 4 && request.status == 200){
-        var data = JSON.parse(request.responseText);
-        var address = data.results[0];
-        if(address == undefined)
-          return;
-        if(address.formatted_address == undefined)
-          return;
-        if(address.address_components == undefined)
-          return;
-      	// console.log(address.formatted_address)
-        return address.formatted_address;
-      }
-    };
-    request.send();
-};
+  request.open(method, url, async);
+  request.onreadystatechange = function () {
+    if (request.readyState === 4 && request.status === 200) {
+      var data = JSON.parse(request.responseText);
+      var address = data.results[0];
+      if (address === undefined)
+        return;
+      if (address.formatted_address === undefined)
+        return;
+      if (address.address_components === undefined)
+        return;
+        // console.log(address.formatted_address)
+      return address.formatted_address;
+    }
+  };
+  request.send();
+}
 
 
 setInterval(consistantTimer, 50);
