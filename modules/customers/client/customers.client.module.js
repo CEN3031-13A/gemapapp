@@ -321,7 +321,7 @@ function pxMapMarkers(){
   addMarker(dest, "Destination");
   if(flightPathList!=null)
     removeLine()
-  drawLine(shipment.origin, shipment.current_location, shipment.destination);
+  drawLine(shipment.origin, shipment.current_location, shipment.destination, shipment.delivery_state);
 
   
       map.panTo(current)
@@ -344,7 +344,7 @@ function pxMapMarkersOrder(){
   var dest    = {lat: order.shipments[i].destination.latitude, lng: order.shipments[i].destination.longitude};
   addMarker(dest, "Destination");
 
-  drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination);
+  drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination, order.shipments[i].delivery_state);
      }
 }
 
@@ -464,24 +464,25 @@ function clearOverlays() {
 }
 
 function addMarker(location, state, type) {
-  char = "%E2%80%A2"
-  if(state == "Ahead of Time")
-      pinColor = "00FF6F";
+  char = "5"
+ if(state == "Ahead of Time")
+      pinColor = "10C6FF";
   else if(state == "On Time")
-      pinColor = "00A849";
+      pinColor = "00C300";
   else if(state == "Likely to be On Time")
-      pinColor = "CEF700";
+      pinColor = "DEE800";
   else if(state == "Likely to be Behind Schedule")
-      pinColor = "C0C439";
+      pinColor = "FFBF0C";
   else if(state == "Behind Schedule")
-      pinColor = "FFA220";
+      pinColor = "E85E00";
   else if(state == "Late")
-      pinColor = "BF1913";
+      pinColor = "FF0000";
+
   else if(state == "Origin"){
-      pinColor = "86B6EC";
+      pinColor = "999999";
       char = "%41"   
   }else if(state == "Destination"){
-      pinColor = "86B6EC";
+      pinColor = "999999";
       char = "%42"   
   }else
       pinColor = "BF1913";
@@ -509,18 +510,46 @@ function clearMarkers() {
         setMapOnAll(null);
 }
  
-function drawLine(origin, current, destination){
+function drawLine(origin, current, destination, state){
   
   lineCoordinates = [
     {lat: origin.latitude,      lng: origin.longitude},
     {lat: current.latitude,     lng: current.longitude},
     {lat: destination.latitude, lng: destination.longitude},
   ];
-
+  var lineColor;
+  switch(state){
+	  case "Ahead of Time":
+	  lineColor = "#10C6FF";
+	  break;
+	  
+	  case "On Time":
+	  lineColor = "#00C300";
+	  break;
+	  
+	  case "Likely to be On Time":
+	  lineColor = "#DEE800";
+	  break;
+	  
+	  case "Likely to be Behind Schedule":
+	  lineColor = "#FFBF0C";
+	  break;
+	  
+	  case "Behind Schedule":
+	  lineColor = "#E85E00";
+	  break;
+	  
+	  case "Late":
+	  lineColor = "#FF0000";
+	  break;
+	  
+	  default:
+	  lineColor = "#999999";
+  }
   flightPath = new google.maps.Polyline({
   path: lineCoordinates,
   geodesic: false,
-  strokeColor: '#C1C1C1',
+  strokeColor: lineColor,
   strokeOpacity: 1.0,
   strokeWeight: 2
   });
