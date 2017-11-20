@@ -312,7 +312,7 @@ function pxMapMarkers(){
   if(flightPathList!=null)
     removeLine()
 
-  drawLine(shipment.origin, shipment.current_location, shipment.destination);
+  drawLine(shipment.origin, shipment.current_location, shipment.destination, shipment.delivery_state);
 }
 
 function pxMapMarkersOrder(){
@@ -330,7 +330,7 @@ function pxMapMarkersOrder(){
   longSum =0;
   for(i = 0; i<order.shipments.length; i++){
   	addShipmentMarkers(order.shipments[i], i+1, order.shipments.length);
-  	drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination);
+  	drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination, order.shipments[i].delivery_state);
   	latSum  += order.shipments[i].origin.latitude;
   	latSum  += order.shipments[i].current_location.latitude;
   	latSum  += order.shipments[i].destination.latitude;
@@ -462,7 +462,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
   else if(shipment.delivery_state == "Late")
       pinColor = "FF0000"; 
   else
-      pinColor = "BF1913";
+      pinColor = "999999";
       
   origin  = {lat: shipment.origin.latitude, lng: shipment.origin.longitude};
   current = {lat: shipment.current_location.latitude, lng: shipment.current_location.longitude};
@@ -519,11 +519,11 @@ function addShipmentMarkers(shipment, index, orderSize) {
             '</div>'+
             '</div>';    
 
-  originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|86B6EC");
+  originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
 
   currentPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+index+"|"+pinColor);
 
-  destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|86B6EC");
+  destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
 
 
   originMarker = new google.maps.Marker({
@@ -641,7 +641,7 @@ function drawLine(origin, current, destination, state){
 	  break;
 	  
 	  default:
-	  lineColor = "#999999";
+	  lineColor = "#999999"
   }
   flightPath = new google.maps.Polyline({
   path: lineCoordinates,
