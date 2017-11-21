@@ -98,7 +98,7 @@ html {
   color: var(--px-base-text-color, #2c404c);
   line-height: 1.3333333333;
   /* [1] */
-  text-size-adjust: 100%;
+  font-size-adjust: 100%;
   /* [4] */
   -moz-osx-font-smoothing: grayscale;
   /* [5] */
@@ -1227,12 +1227,6 @@ a {
   margin: 0;
   margin-left: -1rem;
   padding: 0; }
-  .layout > {
-    /**
-      * 1. Space columns apart.
-      * 2. Full-width unless told to behave otherwise.
-      * 3. Required to combine fluid widths and fixed gutters.
-      */ }
     .layout > .layout__item {
       padding-left: 1rem;
       /* [1] */
