@@ -9,9 +9,7 @@
   CustomersService.$inject = ['$resource'];
 
   function CustomersService($resource) {
-    return $resource('api/customers/:customerId', {
-      customerId: '@_id'
-    }, {
+    return $resource('api/customers/', {
       update: {
         method: 'PUT'
       }

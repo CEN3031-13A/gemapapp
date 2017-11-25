@@ -101,19 +101,27 @@
           header-value="Package Comments"
           status="">
           <div id="PACKAGE_COMMENTS">
-            <strong>Timestamp: </strong><span></span><br />
-            <strong>Comment: </strong><span></span><br />
+            <strong>Comments: </strong><br />
           </div>
+          <form>
+             <div class="sidebarBlock">
+              <input id="NEW_COMMENT" placeholder="Input comment..." class="text-input input--regular" type="text" value="">
+             </div>
+            <div class="sidebarBlock">
+              <input class="btn btn--primary" type="reset" value="Submit" ng-click="vm.submitComment()" >
+            </div>
+          </form> 
+            
         </px-accordion>
 
-        <form>
+<!--         <form>
           <div class="sidebarBlock">
               <input placeholder="Type something..." class="text-input input--regular" type="text">
           </div>
           <div class="sidebarBlock">
               <input class="btn btn--primary" type="reset" value="Submit">
           </div>
-        </form> 
+        </form>  -->
       </div>
     </div>
 </div>

@@ -8,14 +8,14 @@ var customersPolicy = require('../policies/customers.server.policy'),
 
 module.exports = function (app) {
   // Customers Routes
-  app.route('/api/customers').all(customersPolicy.isAllowed)
+  app.route('/api/customers')
     .get(customers.list)
+    .put(customers.update);
     .post(customers.create);
 
-  app.route('/api/customers/:customerId').all(customersPolicy.isAllowed)
+  app.route('/api/customers/update')
     .get(customers.read)
-    .put(customers.update)
-    .delete(customers.delete);
+    
 
   // Finish by binding the Customer middleware
   app.param('customerId', customers.customerByID);

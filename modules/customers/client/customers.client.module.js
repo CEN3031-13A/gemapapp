@@ -212,6 +212,7 @@ function getItemData() {
   customerInfo();
   shippingDetails();
   packageDetails();
+  packageComments();
 
 }
 
@@ -370,6 +371,17 @@ function packageDetails() {
     packageInfoElement[4].innerText = shipment.contents;
     packageInfoElement[7].innerText = customer.about;
   }
+}
+
+function packageComments(){
+	if(shipment.comments != undefined){
+		var string =  "<strong>Comments: </strong><br />";
+		for(i=0;i < shipment.comments.length; i++){
+			string += "<strong>" + shipment.comments[i].comment_date + "</strong>" + ": ";
+			string += shipment.comments[i].comment + "<br />";
+		}
+		document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
+	}
 }
 
 function displayLocation(latitude, longitude) {
