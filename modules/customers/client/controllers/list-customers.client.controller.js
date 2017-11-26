@@ -62,13 +62,13 @@
         }
     }
     vm.submitComment = function(input){
-      document.getElementById("NEW_COMMENT").value;
-      console.log(vm.customers[vm.currentIndices.customer].orders[vm.currentIndices.order].shipments[vm.currentIndices.shipment].comments);
-          // Update existing Article
+      // document.getElementById("NEW_COMMENT").value;
+      // console.log(vm.customers[vm.currentIndices.customer].orders[vm.currentIndices.order].shipments[vm.currentIndices.shipment].comments);
+      //     // Update existing Article
 
-      console.log(CustomersService)
-      var customers = vm.customers;
-      CustomersService.save();
+      // console.log(CustomersService)
+      // var customers = vm.customers;
+      // CustomersService.save();
       // customers.$update(function () {
       //   $location.path('customers/update');
       // }, function (errorResponse) {

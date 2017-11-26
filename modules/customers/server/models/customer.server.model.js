@@ -47,6 +47,7 @@ var CustomerSchema = new Schema({
   }]
 });
 
+/* 'pre' function that adds the updated_at (and created_at if not already there) property */
 CustomerSchema.pre('save', function(next) {
   var currentDate = new Date();
   this.updated_at = currentDate;

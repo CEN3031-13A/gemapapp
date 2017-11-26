@@ -52,79 +52,28 @@
     </google-map>
 </div>
 
-<div class="rightSidebar" id="hide">  
+  <div class="rightSidebar" id="hide">  
     <div id="demo3" class="flex flex--col">
-        <px-accordion
-        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-        header-value="Customer Information"
-        status="">
-          <div id="CUSTOMER_INFO">
-            <strong>Name: </strong><span></span><br />
-            <strong>Email: </strong><span></span><br />
-            <strong>Phone: </strong><span></span><br />
-            <strong>Address: </strong><span></span><br />
-          </div>
-        </px-accordion>
-
-        <px-accordion
-          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-          header-value="Shipping Details"
-          status="">
-          <div id="SHIPPING_DETAILS">
-            <strong>Tracking Number: </strong><span></span><br />
-            <strong>Carrier: </strong><span></span><br />
-            <strong>Destination: </strong><br />
-                  <text>Latitude: </text><span></span><br />
-                  <text>Longitude:</text><span></span><br />
-            <strong>Current Location: </strong><br />
-                  <text>Latitude: </text><span></span><br />
-                  <text>Longitude: </text><span></span><br />
-            <strong>Shipped: </strong><span></span><br />
-            <strong>Expected Arrival: </strong><span></span><br />
-            <strong>Status: </strong><span></span><br />
-          </div>
-        </px-accordion>
-
-        <px-accordion
-          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-          header-value="Package Details"
-          status="">
-          <div id="PACKAGE_DETAILS">
-            <strong>Order Placed (Id): </strong><span></span><br />
-            <strong>Shipment Contents: </strong><span></span><br />
-            <strong>Description: </strong><span></span><br />
-          </div>
-        </px-accordion>
-
-        <px-accordion
-          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-          header-value="Package Comments"
-          status="">
-          <div id="PACKAGE_COMMENTS">
-            <strong>Comments: </strong><br />
-          </div>
-          <form>
-             <div class="sidebarBlock">
-              <input id="NEW_COMMENT" placeholder="Input comment..." class="text-input input--regular" type="text" value="">
-             </div>
-            <div class="sidebarBlock">
-              <input class="btn btn--primary" type="reset" value="Submit" ng-click="vm.submitComment()" >
-            </div>
-          </form> 
-            
-        </px-accordion>
-
-<!--         <form>
-          <div class="sidebarBlock">
-              <input placeholder="Type something..." class="text-input input--regular" type="text">
-          </div>
-          <div class="sidebarBlock">
-              <input class="btn btn--primary" type="reset" value="Submit">
-          </div>
-        </form>  -->
-      </div>
+    <div class="page-header">
+    <h1>Customers</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="customer in vm.customers"
+       ui-sref="customers.edit({ customerId: customer._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="customer.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="customer.user" ng-bind="customer.user.displayName"></span>
+        <span ng-if="!customer.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="customer.name"></h4>
+    </a>
+  </div>
     </div>
-</div>
+  </div>
+
 
 <!--Predix Import Links-->
 <link rel="import" href="../../../../../lib/px-branding-bar/px-branding-bar.html"/>
