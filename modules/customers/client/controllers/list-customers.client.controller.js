@@ -11,6 +11,7 @@
     var vm = this;
     vm.currentIndices = {'customer':null, 'order':null, 'shipment':null};
     vm.customers = CustomersService.query();
+    console.log(vm.customers)
     vm.currentlySelected = function(){
     	  var customers = vm.customers;
         var px_tree = document.querySelector('px-tree');

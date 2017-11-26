@@ -28,6 +28,12 @@ var CustomerSchema = new Schema({
       id: String,
       tracking_number: String,
       carrier: String,
+      delivery_state: String,
+      late_penalties: String,
+      comments: [{
+        comment_date: String,
+        comment: String
+      }],
       origin: {
         latitude: Number,
         longitude: Number
@@ -45,6 +51,7 @@ var CustomerSchema = new Schema({
       contents: [String],
     }],
   }]
+  
 });
 
 /* 'pre' function that adds the updated_at (and created_at if not already there) property */
