@@ -1958,6 +1958,7 @@ px-accordion{
   width:63.5%;
 }
 
+
 #info{
   display: block;
   font-size:24px;
@@ -1976,6 +1977,7 @@ px-accordion{
   // border-right: 1px solid black; 
 }
 */
+
 /*----------Right side detailed info----------*/
 /*
 .rightSidebar{
@@ -1991,6 +1993,7 @@ px-accordion{
   z-index: 7;
 }
 */
+
 /*
 .sidebarBlock{
   padding-top: 0.25em;

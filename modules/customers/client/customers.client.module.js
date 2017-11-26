@@ -340,6 +340,7 @@ function pxMapMarkersOrder() {
   map.panTo(avgPos);
 }
 
+
 function customerInfo() {
   let customerInfoElement = document.getElementById("CUSTOMER_INFO").children;
   customerInfoElement[1].innerText = customer.name;
