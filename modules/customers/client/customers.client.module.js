@@ -474,6 +474,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
             shipment.ship_date +
             '</p>' +
             '</div>' +
+            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   var currentContentString = '<div id="content">' +
@@ -491,6 +492,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
             shipment.ship_date +
             '</p>' +
             '</div>' +
+            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   var destinationContentString = '<div id="content">' +
@@ -507,6 +509,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
             shipment.ship_date +
             '</p>' +
             '</div>' +
+            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   let originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
