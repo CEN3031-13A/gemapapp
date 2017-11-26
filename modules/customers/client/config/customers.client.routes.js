@@ -11,7 +11,7 @@
     $stateProvider
       .state('customers', {
         abstract: true,
-        url: '/map',
+        url: '/customers',
         template: '<ui-view/>'
       })
       .state('customers.list', {
@@ -42,10 +42,11 @@
         controller: 'CustomersController',
         controllerAs: 'vm',
         resolve: {
+
           customerResolve: getCustomer
         },
         data: {
-          roles: ['user', 'admin'],
+          roles: ['user', 'admin', 'guest'],
           pageTitle: 'Edit Customer {{ customerResolve.name }}'
         }
       })
