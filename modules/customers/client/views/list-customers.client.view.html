@@ -1,125 +1,121 @@
 <div class="u-1/1">
-  <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+    <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
 
 <div class="u-1/6" id="LEFT_SIDEBAR">
-  <input style="background: white;" class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
-  <div class="btn-group">
-    <style type="text/css">
-      button:active { background: red; }
-    </style>
-
-  <button for="id1" class="btn btn--full" onclick="displayActive()">Active</button>
-  <button for="id2" class="btn btn--full" onclick="displayInactive()">Inactive</button>
-  <button for="id3" class="btn btn--full" onclick="displayAll()">All</button>
-</div>
-<div id="SOURCE" style="display:none;">
-  {{vm.customers}}
-</div>
-<div id="PREDIX_TREE">
-  <px-tree id="TEST11"
-  keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
-  items='[
-  {
-    "label":"No Customers Selected",
-    "id":"branch-0-3",
-    "isSelectable": true
-  }
-  ]'
-  onclick="getItemData()" ng-click="vm.currentlySelected()">
-</px-tree>
-</div>
+    <input style="background: white;" class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
+    <div class="btn-group">
+        <button for="id1" class="btn btn--full" onclick="displayActive()">Active</button>
+        <button for="id2" class="btn btn--full" onclick="displayInactive()">Inactive</button>
+        <button for="id3" class="btn btn--full" onclick="displayAll()">All</button>
+    </div>
+    <div id="SOURCE" style="display:none;">
+        {{vm.customers}}
+    </div>
+    <div id="PREDIX_TREE">
+        <px-tree id="TEST11"
+          keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
+          items='[
+          {
+            "label":"No Customers Selected",
+            "id":"branch-0-3",
+            "isSelectable": true
+          }
+          ]'
+          onclick="getItemData()" ng-click="vm.currentlySelected()">
+        </px-tree>
+    </div>
 </div>
 
 <div id="STEPS" class="u-5/6 steps">
-  <px-steps
-  items='[
-  {
-    "id":"1",
-    "label":"(FROM)"
-  },
-  {
-    "id":"2",
-    "label":"(CURRENT)"
-  },
-  {
-    "id":"3",
-    "label":"(TO)"
-  }
-  ]'
-  completed='[]'>
-</px-steps>
+    <px-steps
+    items='[
+    {
+      "id":"1",
+      "label":"(FROM)"
+    },
+    {
+      "id":"2",
+      "label":"(CURRENT)"
+    },
+    {
+      "id":"3",
+      "label":"(TO)"
+    }
+    ]'
+    completed='[]'>
+    </px-steps>
 </div>
 
 <div class="u-5/6" id="MAP_MARKERS">
-  <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-  </google-map>
+    <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+    </google-map>
 </div>
 
 <div class="rightSidebar u-1/6" id="hide">  
-  <div id="demo3" class="flex flex--col">
-    <px-accordion
-    icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-    header-value="Customer Information"
-    status="">
-    <div id="CUSTOMER_INFO">
-      <strong>Name: </strong><span></span><br />
-      <strong>Email: </strong><span></span><br />
-      <strong>Phone: </strong><span></span><br />
-      <strong>Address: </strong><span></span><br />
+    <div id="demo3" class="flex flex--col">
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Customer Information"
+        status="">
+          <div id="CUSTOMER_INFO">
+            <strong>Name: </strong><span></span><br />
+            <strong>Email: </strong><span></span><br />
+            <strong>Phone: </strong><span></span><br />
+            <strong>Address: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Shipping Details"
+          status="">
+          <div id="SHIPPING_DETAILS">
+            <strong>Tracking Number: </strong><span></span><br />
+            <strong>Carrier: </strong><span></span><br />
+            <strong>Destination: </strong><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude:</text><span></span><br />
+            <strong>Current Location: </strong><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude: </text><span></span><br />
+            <strong>Shipped: </strong><span></span><br />
+            <strong>Expected Arrival: </strong><span></span><br />
+            <strong>Status: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Package Details"
+          status="">
+          <div id="PACKAGE_DETAILS">
+            <strong>Order Placed (Id): </strong><span></span><br />
+            <strong>Shipment Contents: </strong><span></span><br />
+            <strong>Description: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Package Comments"
+          status="">
+          <div id="PACKAGE_COMMENTS">
+            <strong>Timestamp: </strong><span></span><br />
+            <strong>Comment: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <form>
+          <div class="sidebarBlock">
+              <input placeholder="Type something..." class="text-input input--regular" type="text">
+          </div>
+          <div class="sidebarBlock">
+              <input class="btn btn--primary" type="reset" value="Submit">
+          </div>
+        </form> 
+      </div>
     </div>
-  </px-accordion>
-
-  <px-accordion
-  icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-  header-value="Shipping Details"
-  status="">
-  <div id="SHIPPING_DETAILS">
-    <strong>Tracking Number: </strong><span></span><br />
-    <strong>Carrier: </strong><span></span><br />
-    <strong>Destination: </strong><br />
-    <text>Latitude: </text><span></span><br />
-    <text>Longitude:</text><span></span><br />
-    <strong>Current Location: </strong><br />
-    <text>Latitude: </text><span></span><br />
-    <text>Longitude: </text><span></span><br />
-    <strong>Shipped: </strong><span></span><br />
-    <strong>Expected Arrival: </strong><span></span><br />
-    <strong>Status: </strong><span></span><br />
-  </div>
-</px-accordion>
-
-<px-accordion
-icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-header-value="Package Details"
-status="">
-<div id="PACKAGE_DETAILS">
-  <strong>Order Placed (Id): </strong><span></span><br />
-  <strong>Shipment Contents: </strong><span></span><br />
-  <strong>Description: </strong><span></span><br />
-</div>
-</px-accordion>
-
-<px-accordion
-icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-header-value="Package Comments"
-status="">
-<div id="PACKAGE_COMMENTS">
-  <strong>Timestamp: </strong><span></span><br />
-  <strong>Comment: </strong><span></span><br />
-</div>
-</px-accordion>
-
-<form>
-  <div class="sidebarBlock">
-    <input placeholder="Type something..." class="text-input input--regular" type="text">
-  </div>
-  <div class="sidebarBlock">
-    <input class="btn btn--primary" type="reset" value="Submit">
-  </div>
-</form> 
-</div>
-</div>
 </div>
 
 <!--Predix Import Links-->
