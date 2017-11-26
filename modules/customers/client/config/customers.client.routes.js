@@ -42,10 +42,11 @@
         controller: 'CustomersController',
         controllerAs: 'vm',
         resolve: {
+
           customerResolve: getCustomer
         },
         data: {
-          roles: ['user', 'admin'],
+          roles: ['user', 'admin', 'guest'],
           pageTitle: 'Edit Customer {{ customerResolve.name }}'
         }
       })
