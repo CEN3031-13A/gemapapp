@@ -1,134 +1,140 @@
-<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
-
-<div class="layout layout--flush">
-        <div class="u-1/6-desk" class="layout_item">
-          <div id="searchAndButtonsAndTree" class="flex flex--col">
-              <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
-              <div class="btn-group">
-                  <button for="id1" class="btn btn--full" onclick="displayActive()">Active</button>
-                  <button for="id2" class="btn btn--full" onclick="displayInactive()">Inactive</button>
-                  <button for="id2" class="btn btn--full" onclick="displayAll()">All</button>
-              </div>
-
-              <div id="SOURCE" style="display:none;">
-                  {{vm.customers}}
-              </div>
-              
-              <div id="TREE">
-                  <px-tree
-                keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
-                 items='[
-                 {
-                  "label":"No Customers Selected",
-                  "id":"branch-0-3",
-                  "isSelectable": false
-                 }
-                 ]'
-                multi-activate>
-                </px-tree>
-              </div>
-          </div>
-        </div>
-    
-        <div class="layout_item">
-          <div id="demo3" class="flex flex--col">
-              <div id="demo3" class="flex flex--row flex--spaced">
-                <div class="steps" id="STEPS">
-                    <px-steps
-                    items='[
-                    {
-                      "id":"1",
-                      "label":"(FROM)"
-                    },
-                    {
-                      "id":"2",
-                      "label":"(CURRENT)"
-                    },
-                    {
-                      "id":"3",
-                      "label":"(TO)"
-                    }
-                    ]'
-                    completed='[]'>
-                    </px-steps>
-                </div>
-      
-                <div class="rightSidebar" id="hide">  
-                    <div id="demo3" class="flex flex--col">
-                        <px-accordion
-                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                        header-value="Customer Information"
-                        status="">
-                          <div id="CUSTOMER_INFO">
-                            <strong>Name: </strong><br />
-                            <strong>Email: </strong><br />
-                            <strong>Phone: </strong><br />
-                            <strong>Address: </strong><br />
-                          </div>
-                      </px-accordion>
-            
-                      <px-accordion
-                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                        header-value="Shipping Details"
-                        status="">
-                        <div id="SHIPPING_DETAILS">
-                          <strong>Tracking Number: </strong><br />
-                          <strong>Carrier: </strong><br />
-						  <strong>Origin: </strong><br />
-                                <text>Latitude: </text><br />
-                                <text>Longitude:</text><br />
-                          <strong>Destination: </strong><br />
-                                <text>Latitude: </text><br />
-                                <text>Longitude:</text><br />
-                          <strong>Current Location: </strong><br />
-                                <text>Latitude: </text><br />
-                                <text>Longitude: </text><br />
-                          <strong>Shipped: </strong><br />
-                          <strong>Expected Arrival: </strong><br />
-                          <strong>Status: </strong><br />
-                      </div>
-                      </px-accordion>
-            
-                      <px-accordion
-                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                        header-value="Package Details"
-                        status="">
-                        <div id="PACKAGE_DETAILS">
-                          <strong>Order Placed (Id): </strong><br />
-                          <strong>Shipment Contents: </strong><br />
-                          <strong>Description: </strong><br />
-                        </div>
-                      </px-accordion>
-            
-                      <px-accordion
-                        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                        header-value="Package Comments"
-                        status="">
-						<div id="PACKAGE_COMMENTS">
-						  <strong>Comments: </strong><br />
-						</div>
-						  <form>
-							<div class="sidebarBlock">
-								<input placeholder="Input comment..." class="text-input input--regular" type="text">
-							</div>
-							<div class="sidebarBlock">
-								<input class="btn btn--primary" type="reset" value="Submit">
-							</div>
-						  </form> 
-						  
-                      </px-accordion>
-            
-                    </div>
-                </div>
-              </div>
-      
-              <div id="MAP_MARKERS">
-                  <google-map zoom="2" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-                  </google-map>
-              </div>
-          </div>
-        </div>
+<div id="BRANDING_BAR">
+    <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
+
+<div id="LEFT_SIDEBAR">
+    <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
+    <div class="btn-group">
+        <button for="id1" class="btn btn--full" onclick="displayActive()">Active</button>
+        <button for="id2" class="btn btn--full" onclick="displayInactive()">Inactive</button>
+        <button for="id3" class="btn btn--full" onclick="displayAll()">All</button>
+    </div>
+    <div id="SOURCE" style="display:none;">
+        {{vm.customers}}
+    </div>
+    <div id="PREDIX_TREE">
+        <px-tree id="TEST11"
+          keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
+          items='[
+          {
+            "label":"No Customers Selected",
+            "id":"branch-0-3",
+            "isSelectable": true
+          }
+          ]'
+          onclick="getItemData()" ng-click="vm.currentlySelected()">
+        </px-tree>
+    </div>
+</div>
+
+<div id="STEPS" class="steps">
+    <px-steps
+    items='[
+    {
+      "id":"1",
+      "label":"(FROM)"
+    },
+    {
+      "id":"2",
+      "label":"(CURRENT)"
+    },
+    {
+      "id":"3",
+      "label":"(TO)"
+    }
+    ]'
+    completed='[]'>
+    </px-steps>
+</div>
+
+<div id="MAP_MARKERS">
+    <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+    </google-map>
+</div>
+
+  <div class="rightSidebar" id="hide">  
+    <div id="demo3" class="flex flex--col">
+    <div class="page-header">
+    <h1>Customers</h1>
+  </div>
+  <div class="list-group">
+
+<px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Customer Information"
+        status="">
+          <div id="CUSTOMER_INFO">
+            <strong>Name: </strong><span></span><br />
+            <strong>Email: </strong><span></span><br />
+            <strong>Phone: </strong><span></span><br />
+            <strong>Address: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Shipping Details"
+          status="">
+          <div id="SHIPPING_DETAILS">
+            <strong>Tracking Number: </strong><span></span><br />
+            <strong>Carrier: </strong><span></span><br />
+            <strong>Destination: </strong><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude:</text><span></span><br />
+            <strong>Current Location: </strong><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude: </text><span></span><br />
+            <strong>Shipped: </strong><span></span><br />
+            <strong>Expected Arrival: </strong><span></span><br />
+            <strong>Status: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Package Details"
+          status="">
+          <div id="PACKAGE_DETAILS">
+            <strong>Order Placed (Id): </strong><span></span><br />
+            <strong>Shipment Contents: </strong><span></span><br />
+            <strong>Description: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Package Comments"
+          status="">
+          <div id="PACKAGE_COMMENTS">
+            <strong>Comments: </strong><br />
+          </div>
+          <form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
+             <fieldset>
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="new_comment">Add a new comment:</label>
+                  <input name="new_comment" type="text" ng-model="vm.newComment" id="new_comment" class="form-control" placeholder="Type something..." required>
+                  <div ng-messages="vm.form.customerForm.name.$error" role="alert">
+                    <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                      <a 
+       ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
+       class="list-group-item">
+                  <button type="submit" class="btn btn-default">Add Comment</button>
+                </a>
+                </div>
+                <div ng-show="vm.error" class="text-danger">
+                  <strong ng-bind="vm.error"></strong>
+                </div>
+              </fieldset>
+          </form> 
+            
+        </px-accordion>
+
+  </div>
+    </div>
+  </div>
 
 
 <!--Predix Import Links-->
@@ -140,5 +146,7 @@
 <!--Google Maps Scripts and Links-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="../../../../../lib/webcomponentsjs/webcomponents.js"></script>
-<link rel="import" href="../../../../../lib/google-map/google-map.html" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="import" href="../../../../../lib/google-map/google-map-elements.html" />
+<script src="http://maps.googleapis.com/maps/api/js"></script> 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtX6UVj6lstPls2orNPnfW5GJ0_7eJ6fo"></script>
