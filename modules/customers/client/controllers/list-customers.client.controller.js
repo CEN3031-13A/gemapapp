@@ -50,12 +50,15 @@
           }
         }
         if(orderID != undefined){
-          if (!found)
+          if (!found){
             pxMapMarkersOrder();
-          else 
+            pxSteps(false);
+          }
+          else{ 
             pxMapMarkers();
+            pxSteps(true);
+          }
         
-          // pxSteps();
           customerInfo();
           shippingDetails();
           packageDetails();
@@ -151,18 +154,27 @@
     var customerList     = [];
     var activeCustomerList   = [];
     var inactiveCustomerList = [];
+
     var activeInactiveState = '';
     var displayaddress;
     var map;
     var mapsReady = false;
+
     var originMarkersArray  = [];
     var currentMarkersArray = [];
     var destinationMarkersArray = [];
+
     var originInfoWindowList    = [];
     var currentInfoWindowList     = [];
     var destinationInfoWindowList = [];
+
     var flightPathList = [];
+
     var displayedGMapsErrorMsg = false;
+
+    var generalLocationOrigin = [];      
+    var generalLocationCurrent = [];     
+    var generalLocationDestination = []; 
       
     function pxTreeDisplay(customerListSearch) {
       customerListSearch.sort(function (a, b) {
@@ -274,32 +286,42 @@
     
     }
     
-    /*
-    function pxSteps() {
+    
+    function pxSteps(infoNeeded) {
+      let currentCustomer = vm.customers[vm.currentIndices.customer];
+      let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
+      let currentShipment;
+      if(infoNeeded == true)
+         currentShipment = currentOrder.shipments[vm.currentIndices.shipment];
       var string = "<px-steps ";
       string += "items=\'[";
       string += "{\"id\":\"1\", \"label\":\"(ORIGIN) ";
-        // string += shipment.origin.latitude;
-        // string += ", ";
-        // string += shipment.origin.latitude;
-      string += orig;
+      if(infoNeeded == true){
+        if(generalLocationOrigin[vm.currentIndices.shipment] == "")
+          string += currentShipment.origin.latitude + "," + currentShipment.origin.longitude;
+        else
+          string += generalLocationOrigin[vm.currentIndices.shipment];
+      }
       string += "\"},";
-        string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
-        // string += shipment.current_location.latitude;
-        // string += ", ";
-        // string += shipment.current_location.latitude;
-        string += current;
-        string += "\"},";
-        string += "{\"id\":\"3\", \"label\":\"(TO) ";
-        // string += shipment.destination.latitude;
-        // string += ", ";
-        // string += shipment.destination.latitude;
-        string += dest
-        string += "\"}]\' completed=\'[\"1\",\"2\"]\' </px-steps>";
-    
-        document.getElementById("STEPS").innerHTML = string;
+      string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
+      if(infoNeeded == true){
+        if(generalLocationCurrent[vm.currentIndices.shipment] == "")
+          string += currentShipment.current_location.latitude + "," + currentShipment.current_location.longitude;
+        else
+          string += generalLocationCurrent[vm.currentIndices.shipment];
+      }        
+      string += "\"},";
+      string += "{\"id\":\"3\", \"label\":\"(TO) ";
+      if(infoNeeded == true){
+        if(generalLocationDestination[vm.currentIndices.shipment] == "")
+          string += currentShipment.destination.latitude + "," + currentShipment.destination.longitude;
+        else
+          string += generalLocationDestination[vm.currentIndices.shipment];
+      }
+      string += "\"}]\' completed=\'[\"1\",\"2\"]\' </px-steps>";
+
+      document.getElementById("STEPS").innerHTML = string;
     }
-    */
     
     function pxMapMarkers() {
       let currentCustomer = vm.customers[vm.currentIndices.customer];
@@ -320,12 +342,19 @@
         removeLine();
         
       clearMarkers();
+
       originMarkersArray = [];
       currentMarkersArray = [];
       destinationMarkersArray = [];
+
       originInfoWindowList = [];
       currentInfoWindowList = [];
       destinationInfoWindowList = [];
+
+      generalLocationOrigin = [];      
+      generalLocationCurrent = [];     
+      generalLocationDestination = [];
+
       let latSum = 0;
       let longSum = 0;
       for (let i = 0; i < currentOrder.shipments.length; i++) {
@@ -399,29 +428,90 @@
       }
     }
     
-    function displayLocation(latitude, longitude) {
-      var request = new XMLHttpRequest();
-      var method = 'GET';
-      var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
-      var async = true;
-    
-      request.open(method, url, async);
-      request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
-          var data = JSON.parse(request.responseText);
-          var address = data.results[0];
-          if (address === undefined)
-            return;
-          if (address.formatted_address === undefined)
-            return;
-          if (address.address_components === undefined)
-            return;
-            // console.log(address.formatted_address)
-          return address.formatted_address;
+function displayLocation(latitude, longitude, type) {
+  var request = new XMLHttpRequest();
+  var method = 'GET';
+  var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
+  var async = false;
+
+  request.open(method, url, async);
+  request.onreadystatechange = function () {
+    if (request.readyState === 4 && request.status === 200) {
+      var data = JSON.parse(request.responseText);
+      console.log(data);
+      if(data.status=="ZERO_RESULTS"){
+        if(type == "origin"){
+          //console.log("ORIGIN: ");
+          generalLocationOrigin.push("");
+          //console.log("NO GOOD!");
         }
-      };
-      request.send();
+        else if(type == "current"){
+          //console.log("CURRENT: ");       
+          generalLocationCurrent.push("");
+          //console.log("NO GOOD!"); 
+        }   
+        else if(type == "destination"){
+          //console.log("DESTINATION: ");   
+          generalLocationDestination.push("");
+          //console.log("NO GOOD!");
+        }
+      }else{
+        var index_address = data.results.length;
+        if(index_address >= 2)
+          var address = data.results[index_address-2];
+        else{
+          if (index_address == 1)
+            var address = data.results[0];
+          if(index_address < 1){
+            console.log("NO BUENO!");
+            return;
+          }
+        }
+        //console.log(address);
+        var nogood = false;
+        if (address.formatted_address === undefined)
+          nogood = true;
+        if(type == "origin"){
+          //console.log("ORIGIN: ");
+          if(nogood == true){
+            //console.log("NO GOOD!");
+            generalLocationOrigin.push("");
+          }
+          else{
+            //console.log(address.formatted_address);
+            generalLocationOrigin.push(address.formatted_address);
+          }
+          //console.log(generalLocationOrigin);
+        }
+        else if(type == "current"){
+          //console.log("CURRENT: ");
+          if(nogood == true){
+            //console.log("NO GOOD!");
+            generalLocationCurrent.push("");
+          }
+          else{
+            //console.log(address.formatted_address);       
+            generalLocationCurrent.push(address.formatted_address);
+          }
+          //console.log(generalLocationCurrent);
+        }    
+        else if(type == "destination"){
+          //console.log("DESTINATION: ");
+          if(nogood == true){
+            //console.log("NO GOOD!");
+            generalLocationDestination.push("");
+          }
+          else{
+            //console.log(address.formatted_address);       
+            generalLocationDestination.push(address.formatted_address);
+          }
+          //console.log(generalLocationDestination);
+        }
+      }
     }
+  };
+  request.send();
+}
     
     
     setInterval(consistantTimer, 50);
@@ -450,9 +540,10 @@
     
     
     function addShipmentMarkers(shipment, index, orderSize) {
-      // generalLocationOrigin      = displayLocation(shipment.origin.latitude, shipment.origin.longitude)
-      // generalLocationCurrent     = displayLocation(shipment.current_location.latitude, shipment.current_location.longitude)
-      // generalLocationDestination = displayLocation(shipment.destination.latitude, shipment.destination.longitude)
+      displayLocation(shipment.origin.latitude, shipment.origin.longitude, "origin");
+      displayLocation(shipment.current_location.latitude, shipment.current_location.longitude, "current");
+      displayLocation(shipment.destination.latitude, shipment.destination.longitude, "destination");
+
       let pinColor;
     
       if (shipment.delivery_state === "Ahead of Time")
@@ -474,7 +565,37 @@
       let origin = { lat: shipment.origin.latitude, lng: shipment.origin.longitude };
       let current = { lat: shipment.current_location.latitude, lng: shipment.current_location.longitude };
       let dest = { lat: shipment.destination.latitude, lng: shipment.destination.longitude };
-    
+      
+      let formattedLocationOrigin;
+      if(generalLocationOrigin[index] == ""){
+          formattedLocationOrigin = '<p><b>Coordinates:</b></br>' +                     
+                              'Latitude: ' + shipment.origin.latitude + "</br>" + 
+                              'Longitude: ' + shipment.origin.longitude + "</br>";
+      }else{
+        formattedLocationOrigin = '<p><b>Location:</b></br>' +
+                                   generalLocationOrigin[index] + '</br>';
+      }
+
+      let formattedLocationCurrent;
+      if(generalLocationCurrent[index] == ""){
+        formattedLocationCurrent= '<p><b>Coordinates:</b></br>' +                     
+                                  'Latitude: ' + shipment.current_location.latitude + "</br>" + 
+                                  'Longitude: ' + shipment.current_location.longitude + "</br>";
+      }else{
+        formattedLocationCurrent = '<p><b>Location:</b></br>' +
+                                   generalLocationCurrent[index] + '</br>';
+      }
+
+      let formattedLocationDestination;
+      if(generalLocationDestination[index] == ""){
+        formattedLocationDestination = '<p><b>Coordinates:</b></br>' +                     
+                                       'Latitude: ' + shipment.destination.latitude + "</br>" + 
+                                       'Longitude: ' + shipment.destination.longitude + "</br>";
+      }else{
+        formattedLocationDestination = '<p><b>Location:</b></br>' +
+                                   generalLocationDestination[index] + '</br>';
+      }
+
       let originContentString = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
@@ -482,10 +603,7 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                  '</h3>' +
                 '<div id="bodyContent">' +
-                '<p><b>Coordinates:</b></br>' +
-                'Latitude: ' + shipment.origin.latitude + "</br>" +
-                'Longitude: ' + shipment.origin.longitude + "</br>" +
-                "</br>" +
+                formattedLocationOrigin + "</br>" +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
                 '</p>' +
@@ -500,9 +618,7 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
-                '<p><b>Coordinates:</b></br>' +
-                'Latitude: ' + shipment.current_location.latitude + "</br>" +
-                'Longitude: ' + shipment.current_location.longitude + "</br>" +
+                formattedLocationCurrent +
                 "</br>" +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
@@ -517,9 +633,7 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
-                '<p><b>Coordinates:</b></br>' +
-                'Latitude: ' + shipment.destination.latitude + '</br>' +
-                'Longitude: ' + shipment.destination.longitude + '</br>' +
+                formattedLocationDestination +
                 '</br>' +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
@@ -527,6 +641,7 @@
                 '</div>' +
                 '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
+
       var compiledOrigin = $compile(originContentString)($scope);
       var compiledCurrent = $compile(currentContentString)($scope);
       var compiledDestination = $compile(destinationContentString)($scope);
