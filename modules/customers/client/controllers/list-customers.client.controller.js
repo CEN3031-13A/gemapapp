@@ -3,72 +3,68 @@
 
   angular
     .module('customers')
-    .controller('CustomersListController', CustomersListController);
+    .controller('CustomersListController', CustomersListController, '$compile', '$scope');
 
-  CustomersListController.$inject = ['CustomersService'];
+  CustomersListController.$inject = ['CustomersService', '$compile', '$scope'];
 
-  function CustomersListController(CustomersService) {
+  function CustomersListController(CustomersService, $compile, $scope) {
     var vm = this;
     vm.currentIndices = {'customer':null, 'order':null, 'shipment':null};
-
     vm.customers = CustomersService.query();
     vm.getItemData = function() {
       var customers = vm.customers;
       var px_tree = document.querySelector('px-tree');
       var selectedShipment = px_tree.selected;
       var selectedPath = px_tree.selectedRoute;
+
       if (selectedPath <= 1)
         return;
     
-      var shipmentID = selectedShipment.id;
-    
-      var customerID = selectedPath[0];
-    
-      var orderID = selectedPath[1];
-    
-      if (selectedPath.length === 2) {
+      let shipmentID = selectedShipment.id;
+      let customerID = selectedPath[0];
+      let orderID = selectedPath[1];
+
+      if (selectedPath.length === 2) 
         shipmentID = -1;
-      }
-    
+
       var found = false;
-      var i;
-      var j;
-      var k;
-      for (let i = 0; i < customers.length; i++) {
-        if (customerID === customers[i]._id) {
-          customer = customers[i];
-          for (let j = 0; j < customers[i].orders.length; j++) {
-            if (orderID === customers[i].orders[j].id) {
-              order = customers[i].orders[j];
-              for (k = 0; k < customers[i].orders[j].shipments.length; k++) {
-                if (shipmentID === customers[i].orders[j].shipments[k].id) {
-                  found = true;
-                  shipment = customers[i].orders[j].shipments[k];
-                  customerIndex = i;
-                  orderIndex = j;
-                  shipmentIndex = k;
-                  vm.currentIndices.customer = i;
-                  vm.currentIndices.order = j;
-                  vm.currentIndices.shipment = k;
-                  break;
+      let i;
+      let j;
+      let k;
+      // try{
+        for (i = 0; i < customers.length; i++) {
+          if (customerID === customers[i]._id) {
+            vm.currentIndices.customer = i;
+            for (j = 0; j < customers[i].orders.length; j++) {              
+              if (orderID === customers[i].orders[j].id) {
+                vm.currentIndices.order = j;
+                for (k = 0; k < customers[i].orders[j].shipments.length; k++) {
+                  if (shipmentID === customers[i].orders[j].shipments[k].id) {
+                    found = true;
+                    vm.currentIndices.shipment = k;
+                    break;
+                  }
                 }
               }
             }
           }
         }
-      }
-    
-      if (!found)
-        pxMapMarkersOrder();
-      else {
-        pxMapMarkers();
-      }
-    
-      // pxSteps();
-      customerInfo();
-      shippingDetails();
-      packageDetails();
-      packageComments();
+        if(orderID != undefined){
+          if (!found)
+            pxMapMarkersOrder();
+          else 
+            pxMapMarkers();
+        
+          // pxSteps();
+          customerInfo();
+          shippingDetails();
+          packageDetails();
+          packageComments();
+        }
+      // }
+      // catch(TypeError){
+
+      // }
     }
     vm.searchCustomers = function() {
       var str = document.getElementById("myInput").value;
@@ -133,13 +129,25 @@
       activeInactiveState = "All";
       pxTreeDisplay(customerList);
     }
-
-    var customer;
-    var order;
-    var shipment;
-    var customerIndex;
-    var orderIndex;
-    var shipmentIndex;
+    vm.toggleRightSideBar = function() {
+      var x = document.getElementById('hide');
+      var y = document.getElementById('MAP_MARKERS');
+      var z = document.getElementById('STEPS');
+      if (x.style.display === 'block') {
+        x.style.display = 'none';
+        document.getElementById('MAP_MARKERS').className = "u-5/6";
+        document.getElementById('MAP_MARKERS').style.right = "0";
+        document.getElementById("STEPS").className = "u-5/6";
+        document.getElementById('STEPS').style.right = "0";
+      } else {
+        x.style.display = 'block';
+        document.getElementById('MAP_MARKERS').className = "u-4/6";
+        document.getElementById('MAP_MARKERS').style.right = "16.6666667%";
+        document.getElementById("STEPS").className = "u-4/6";
+        document.getElementById('STEPS').style.right = "16.6666667%";
+      }
+    }
+    // var customer;
     var customerList     = [];
     var activeCustomerList   = [];
     var inactiveCustomerList = [];
@@ -155,17 +163,7 @@
     var destinationInfoWindowList = [];
     var flightPathList = [];
     var displayedGMapsErrorMsg = false;
-    
-    
-    
-
-    
-
-    
-
-    
-    
-    
+      
     function pxTreeDisplay(customerListSearch) {
       customerListSearch.sort(function (a, b) {
         if (a.name.toUpperCase() < b.name.toUpperCase())
@@ -183,7 +181,7 @@
         string += "\",";
         string += "\"id\":\"";
         string += customerListSearch[i]._id;
-        string += "\",\"isSelectable\": false,\"children\":[";
+        string += "\",\"isSelectable\": true,\"children\":[";
         var strcheck0 = string;
     
         for (let j = 0; j < customerListSearch[i].orders.length; j++) {
@@ -242,7 +240,7 @@
         string += "\",";
         string += "\"id\":\"";
         string += customers[i]._id;
-        string += "\",\"isSelectable\": false,\"children\":[";
+        string += "\",\"isSelectable\": true,\"children\":[";
         var strcheck0 = string;
     
         for (let j = 0; j < customers[i].orders.length; j++) {
@@ -304,14 +302,20 @@
     */
     
     function pxMapMarkers() {
+      let currentCustomer = vm.customers[vm.currentIndices.customer];
+      let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
+      let currentShipment = currentOrder.shipments[vm.currentIndices.shipment];
+
       clearMarkers();
-      setSingleShipmentOnMap(map, shipmentIndex);
+      setSingleShipmentOnMap(map, vm.currentIndices.shipment);
       if (flightPathList != null)
         removeLine();
-      drawLine(shipment.origin, shipment.current_location, shipment.destination, shipment.delivery_state);
+      drawLine(currentShipment.origin, currentShipment.current_location, currentShipment.destination, currentShipment.delivery_state);
     }
     
     function pxMapMarkersOrder() {
+      let currentCustomer = vm.customers[vm.currentIndices.customer];
+      let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
       if (flightPathList != null)
         removeLine();
         
@@ -324,18 +328,18 @@
       destinationInfoWindowList = [];
       let latSum = 0;
       let longSum = 0;
-      for (let i = 0; i < order.shipments.length; i++) {
-        addShipmentMarkers(order.shipments[i], i + 1, order.shipments.length);
-        drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination, order.shipments[i].delivery_state);
-        latSum += order.shipments[i].origin.latitude;
-        latSum += order.shipments[i].current_location.latitude;
-        latSum += order.shipments[i].destination.latitude;
-        longSum += order.shipments[i].origin.longitude;
-        longSum += order.shipments[i].current_location.longitude;
-        longSum += order.shipments[i].destination.longitude;
+      for (let i = 0; i < currentOrder.shipments.length; i++) {
+        addShipmentMarkers(currentOrder.shipments[i], i, currentOrder.shipments.length);
+        drawLine(currentOrder.shipments[i].origin, currentOrder.shipments[i].current_location, currentOrder.shipments[i].destination, currentOrder.shipments[i].delivery_state);
+        latSum += currentOrder.shipments[i].origin.latitude;
+        latSum += currentOrder.shipments[i].current_location.latitude;
+        latSum += currentOrder.shipments[i].destination.latitude;
+        longSum += currentOrder.shipments[i].origin.longitude;
+        longSum += currentOrder.shipments[i].current_location.longitude;
+        longSum += currentOrder.shipments[i].destination.longitude;
       }
-      let latAvg = latSum / (order.shipments.length * 3);
-      let longAvg = longSum / (order.shipments.length * 3);
+      let latAvg = latSum / (currentOrder.shipments.length * 3);
+      let longAvg = longSum / (currentOrder.shipments.length * 3);
       let avgPos = { lat: latAvg, lng: longAvg };
     
       map.panTo(avgPos);
@@ -343,46 +347,55 @@
     
     
     function customerInfo() {
+      let currentCustomer = vm.customers[vm.currentIndices.customer];
       let customerInfoElement = document.getElementById("CUSTOMER_INFO").children;
-      customerInfoElement[1].innerText = customer.name;
-      customerInfoElement[4].innerText = customer.email;
-      customerInfoElement[7].innerText = customer.phone;
-      customerInfoElement[10].innerText = customer.address;
+      customerInfoElement[1].innerText  = currentCustomer.name;
+      customerInfoElement[4].innerText  = currentCustomer.email;
+      customerInfoElement[7].innerText  = currentCustomer.phone;
+      customerInfoElement[10].innerText = currentCustomer.address;
     }
     
     function shippingDetails() {
-      if (shipment !== undefined) {
+      let currentCustomer = vm.customers[vm.currentIndices.customer];
+      let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
+      let currentShipment = currentOrder.shipments[vm.currentIndices.shipment];
+      if (currentShipment !== undefined) {
         let shipmentInfoElement = document.getElementById("SHIPPING_DETAILS").children;
-        shipmentInfoElement[1].innerText = shipment.id;
-        shipmentInfoElement[4].innerText = shipment.carrier;
-        shipmentInfoElement[9].innerText = shipment.current_location.latitude;
-        shipmentInfoElement[12].innerText = shipment.current_location.longitude;
-        shipmentInfoElement[17].innerText = shipment.destination.latitude;
-        shipmentInfoElement[20].innerText = shipment.destination.longitude;
-        shipmentInfoElement[23].innerText = shipment.ship_date;
-        shipmentInfoElement[26].innerText = shipment.expected_date;
-        shipmentInfoElement[29].innerText = shipment.delivery_state;
+        shipmentInfoElement[1].innerText  =  currentShipment.id;
+        shipmentInfoElement[4].innerText  =  currentShipment.carrier;
+        shipmentInfoElement[9].innerText  =  currentShipment.current_location.latitude;
+        shipmentInfoElement[12].innerText = currentShipment.current_location.longitude;
+        shipmentInfoElement[17].innerText = currentShipment.destination.latitude;
+        shipmentInfoElement[20].innerText = currentShipment.destination.longitude;
+        shipmentInfoElement[23].innerText = currentShipment.ship_date;
+        shipmentInfoElement[26].innerText = currentShipment.expected_date;
+        shipmentInfoElement[29].innerText = currentShipment.delivery_state;
       }
     }
     
     function packageDetails() {
-    
-      if (shipment !== undefined) {
+      let currentCustomer = vm.customers[vm.currentIndices.customer];
+      let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
+      let currentShipment = currentOrder.shipments[vm.currentIndices.shipment];
+      if (currentShipment !== undefined) {
         let packageInfoElement = document.getElementById("PACKAGE_DETAILS").children;
-        packageInfoElement[1].innerText = shipment.ship_date;
-        packageInfoElement[4].innerText = shipment.contents;
-        packageInfoElement[7].innerText = customer.about;
+        packageInfoElement[1].innerText = currentShipment.ship_date;
+        packageInfoElement[4].innerText = currentShipment.contents;
+        packageInfoElement[7].innerText = currentCustomer.about;
       }
     }
     
     function packageComments(){
-      if(shipment.comments != undefined){
-        var string =  "<strong>Comments: </strong><br />";
-        for(let i = 0;i < shipment.comments.length; i++){
-          string += "<strong>" + shipment.comments[i].comment_date + "</strong>" + ": ";
-          string += shipment.comments[i].comment + "<br />";
+      let currentShipment = vm.customers[vm.currentIndices.customer].orders[vm.currentIndices.order].shipments[vm.currentIndices.shipment];
+      if (currentShipment !== undefined) {
+        if(currentShipment.comments != undefined){
+          var string =  "<strong>Comments: </strong><br />";
+          for(let i = 0;i < currentShipment.comments.length; i++){
+            string += "<strong>" + currentShipment.comments[i].comment_date + "</strong>" + ": ";
+            string += currentShipment.comments[i].comment + "<br />";
+          }
+          document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
         }
-        document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
       }
     }
     
@@ -414,10 +427,9 @@
     setInterval(consistantTimer, 50);
     
     function consistantTimer() {
-      // console.log(customerList.length)
-      if (customerList.length === 0) {
+      if (customerList.length === 0) 
         pxTree();
-      }
+
       if (map === undefined) {
         var GEHeadquarters = { lat: 42.3522898, lng: -71.0495636 };
         try {
@@ -467,7 +479,7 @@
                 '<div id="siteNotice">' +
                 '</div>' +
                 '<h3 id="firstHeading" class="firstHeading">Consignment Origin ' +
-                '(' + index + ' of ' + orderSize + ')' +
+                '(' + (index + 1) + ' of ' + orderSize + ')' +
                  '</h3>' +
                 '<div id="bodyContent">' +
                 '<p><b>Coordinates:</b></br>' +
@@ -478,14 +490,14 @@
                 shipment.ship_date +
                 '</p>' +
                 '</div>' +
-                '<button id="info" onclick="toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
+                '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
     
       var currentContentString = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
                 '<h3 id="firstHeading" class="firstHeading">Consignment Current Location ' +
-                '(' + index + ' of ' + orderSize + ')' +
+                '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
                 '<p><b>Coordinates:</b></br>' +
@@ -496,13 +508,13 @@
                 shipment.ship_date +
                 '</p>' +
                 '</div>' +
-                '<button id="info" onclick="toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
+                '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
     
       var destinationContentString = '<div id="content">' +
                 '<div id="siteNotice">' + '</div>' +
                 '<h3 id="firstHeading" class="firstHeading">Consignment Destination ' +
-                '(' + index + ' of ' + orderSize + ')' +
+                '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
                 '<p><b>Coordinates:</b></br>' +
@@ -513,12 +525,15 @@
                 shipment.ship_date +
                 '</p>' +
                 '</div>' +
-                '<button id="info" onclick="toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
+                '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
-    
+      var compiledOrigin = $compile(originContentString)($scope);
+      var compiledCurrent = $compile(currentContentString)($scope);
+      var compiledDestination = $compile(destinationContentString)($scope);
+
       let originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
     
-      let currentPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+index+"|"+pinColor);
+      let currentPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+(index + 1)+"|"+pinColor);
     
       let destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
     
@@ -545,31 +560,46 @@
       destinationMarkersArray.push(destinationMarker);
     
       let originInfoWindow = new google.maps.InfoWindow({
-        content: originContentString
+        content: compiledOrigin[0]
       });
       let currentInfoWindow = new google.maps.InfoWindow({
-        content: currentContentString
+        content: compiledCurrent[0]
       });
       let destinationInfoWindow = new google.maps.InfoWindow({
-        content: destinationContentString
+        content: compiledDestination[0]
       });
     
       originInfoWindowList.push(originInfoWindow);
       currentInfoWindowList.push(currentInfoWindow);
       destinationInfoWindowList.push(destinationInfoWindow);
-      originMarkersArray[index - 1].addListener('click', function () {
-        // console.log(originMarkersArray);
-        originInfoWindowList[index - 1].open(map, originMarkersArray[index - 1]);
+
+      originMarkersArray[index].addListener('click', function () {
+        originInfoWindowList[index].open(map, originMarkersArray[index]);
+        vm.currentIndices.shipment = index;
+        customerInfo();
+        shippingDetails();
+        packageDetails();
+        packageComments();
       });
-      currentMarkersArray[index - 1].addListener('click', function () {
-        currentInfoWindowList[index - 1].open(map, currentMarkersArray[index - 1]);
+      currentMarkersArray[index].addListener('click', function () {
+        currentInfoWindowList[index].open(map, currentMarkersArray[index]);
+        vm.currentIndices.shipment = index;
+        customerInfo();
+        shippingDetails();
+        packageDetails();
+        packageComments();
       });
-      destinationMarkersArray[index - 1].addListener('click', function () {
-        destinationInfoWindowList[index - 1].open(map, destinationMarkersArray[index - 1]);
+      destinationMarkersArray[index].addListener('click', function () {
+        destinationInfoWindowList[index].open(map, destinationMarkersArray[index]);
+        vm.currentIndices.shipment = index;
+        customerInfo();
+        shippingDetails();
+        packageDetails();
+        packageComments();
       });
     
-      currentMarkersArray[index - 1].setAnimation(google.maps.Animation.BOUNCE);
-      setTimeout(function () { currentMarkersArray[index - 1].setAnimation(null);}, 750);
+      currentMarkersArray[index].setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(function () { currentMarkersArray[index].setAnimation(null);}, 750);
     
     
     }
