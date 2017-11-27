@@ -28,11 +28,8 @@
 
     // Save Customer
     function save() {
-      // let customer.orders[$location.currentIndices.order].shipments[$location.currentIndices.shipment];
       vm.customer.orders[$location.currentIndices.order].shipments[$location.currentIndices.shipment].comments.push($location.newComment)
 
-
-      console.log(vm.customer)
       // TODO: move create/update logic to service
       if (vm.customer._id) {
 

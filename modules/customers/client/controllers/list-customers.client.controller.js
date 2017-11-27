@@ -501,23 +501,17 @@ function displayLocation(latitude, longitude, type) {
   request.onreadystatechange = function () {
     if (request.readyState === 4 && request.status === 200) {
       var data = JSON.parse(request.responseText);
-      console.log(data);
+
       if(data.status=="ZERO_RESULTS"){
-        if(type == "origin"){
-          //console.log("ORIGIN: ");
+        if(type == "origin")
           generalLocationOrigin.push("");
-          //console.log("NO GOOD!");
-        }
-        else if(type == "current"){
-          //console.log("CURRENT: ");       
+
+        else if(type == "current")
           generalLocationCurrent.push("");
-          //console.log("NO GOOD!"); 
-        }   
-        else if(type == "destination"){
-          //console.log("DESTINATION: ");   
+
+        else if(type == "destination") 
           generalLocationDestination.push("");
-          //console.log("NO GOOD!");
-        }
+
       }else{
         var index_address = data.results.length;
         if(index_address >= 2)
@@ -526,11 +520,11 @@ function displayLocation(latitude, longitude, type) {
           if (index_address == 1)
             var address = data.results[0];
           if(index_address < 1){
-            console.log("NO BUENO!");
+
             return;
           }
         }
-        //console.log(address);
+
         var nogood = false;
         if (address.formatted_address === undefined)
           nogood = true;
