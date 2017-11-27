@@ -4,11 +4,11 @@
   // Customers controller
   angular
     .module('customers')
-    .controller('CustomersController', CustomersController);
+    .controller('CustomersController', CustomersController, '$location');
 
-  CustomersController.$inject = ['$scope', '$state', '$window', 'Authentication', 'customerResolve'];
+  CustomersController.$inject = ['$scope', '$state', '$window', 'Authentication', 'customerResolve', '$location'];
 
-  function CustomersController($scope, $state, $window, Authentication, customer) {
+  function CustomersController($scope, $state, $window, Authentication, customer, $location) {
     var vm = this;
     console.log("YEEEE")
     vm.authentication = Authentication;
@@ -40,9 +40,8 @@
       }
 
       function successCallback(res) {
-        $state.go('customers.view', {
-          customerId: res._id
-        });
+        $location.path('/')
+        // $state.go("customers.list")
       }
 
       function errorCallback(res) {

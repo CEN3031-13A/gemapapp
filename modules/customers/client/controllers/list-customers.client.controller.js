@@ -10,6 +10,7 @@
   function CustomersListController(CustomersService) {
     var vm = this;
     vm.currentIndices = {'customer':null, 'order':null, 'shipment':null};
+
     vm.customers = CustomersService.query();
     console.log(vm.customers)
     vm.currentlySelected = function(){
@@ -62,20 +63,31 @@
 
         }
     }
-    vm.submitComment = function(input){
-      // document.getElementById("NEW_COMMENT").value;
-      // console.log(vm.customers[vm.currentIndices.customer].orders[vm.currentIndices.order].shipments[vm.currentIndices.shipment].comments);
-      //     // Update existing Article
-
-      // console.log(CustomersService)
-      // var customers = vm.customers;
-      // CustomersService.save();
-      // customers.$update(function () {
-      //   $location.path('customers/update');
-      // }, function (errorResponse) {
-      //   $scope.error = errorResponse.data.message;
-      // });
+    setInterval(consistantTimer, 50);
+map = undefined
+  function consistantTimer() {
+  
+  if (customerList.length === 0) {
+    pxTree();
+  }
+  if (map === undefined) {
+    var GEHeadquarters = { lat: 42.3522898, lng: -71.0495636 };
+    try {
+      console.log("map")
+      map = new google.maps.Map(document.getElementById('MAP_MARKERS'), {
+        zoom: 2,
+        center: GEHeadquarters,
+        mapTypeId: 'hybrid'
+      });
     }
+    catch (ReferenceError) {
+      if (displayedGMapsErrorMsg === false) {
+        console.log("Google Maps APIs have not been loaded yet.");
+        displayedGMapsErrorMsg = true;
+      }
+    }
+  }
+}
     
   }
 }());

@@ -417,6 +417,7 @@ function displayLocation(latitude, longitude) {
 setInterval(consistantTimer, 50);
 
 function consistantTimer() {
+  // console.log(customerList.length)
   if (customerList.length === 0) {
     pxTree();
   }
@@ -430,10 +431,10 @@ function consistantTimer() {
       });
     }
     catch (ReferenceError) {
-      if (displayedGMapsErrorMsg === false) {
+      // if (displayedGMapsErrorMsg === false) {
         console.log("Google Maps APIs have not been loaded yet.");
         displayedGMapsErrorMsg = true;
-      }
+      //}
     }
   }
 }
@@ -567,7 +568,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
   currentInfoWindowList.push(currentInfoWindow);
   destinationInfoWindowList.push(destinationInfoWindow);
   originMarkersArray[index - 1].addListener('click', function () {
-    console.log(originMarkersArray);
+    // console.log(originMarkersArray);
     originInfoWindowList[index - 1].open(map, originMarkersArray[index - 1]);
   });
   currentMarkersArray[index - 1].addListener('click', function () {
