@@ -190,6 +190,8 @@ function getItemData() {
       for (j = 0; j < customers[i].orders.length; j++) {
         if (orderID === customers[i].orders[j].id) {
           order = customers[i].orders[j];
+          customerIndex = i;
+          orderIndex = j;
           for (k = 0; k < customers[i].orders[j].shipments.length; k++) {
             if (shipmentID === customers[i].orders[j].shipments[k].id) {
               found = true;
@@ -331,7 +333,7 @@ function pxMapMarkersOrder() {
   let latSum = 0;
   let longSum = 0;
   for (let i = 0; i < order.shipments.length; i++) {
-    addShipmentMarkers(order.shipments[i], i + 1, order.shipments.length);
+    displayLocations(order.shipments[i], i + 1, order.shipments.length);
     drawLine(order.shipments[i].origin, order.shipments[i].current_location, order.shipments[i].destination, order.shipments[i].delivery_state);
     latSum += order.shipments[i].origin.latitude;
     latSum += order.shipments[i].current_location.latitude;
@@ -392,11 +394,11 @@ function packageComments(){
   // }
 }
 
-function displayLocation(latitude, longitude, type) {
+function displayLocation(latitude, longitude, type, callback) {
   var request = new XMLHttpRequest();
   var method = 'GET';
   var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
-  var async = true;
+  var async = false;
 
   request.open(method, url, async);
   request.onreadystatechange = function () {
@@ -445,6 +447,7 @@ function displayLocation(latitude, longitude, type) {
             console.log(address.formatted_address);
             generalLocationOrigin.push(address.formatted_address);
           }
+          console.log(generalLocationOrigin);
         }
         else if(type == "current"){
           console.log("CURRENT: ");
@@ -456,6 +459,7 @@ function displayLocation(latitude, longitude, type) {
             console.log(address.formatted_address);       
             generalLocationCurrent.push(address.formatted_address);
           }
+          console.log(generalLocationCurrent);
         }    
         else if(type == "destination"){
           console.log("DESTINATION: ");
@@ -467,11 +471,13 @@ function displayLocation(latitude, longitude, type) {
             console.log(address.formatted_address);       
             generalLocationDestination.push(address.formatted_address);
           }
+          console.log(generalLocationDestination);
         }
       }
     }
   };
   request.send();
+  callback();
 }
 
 
@@ -509,12 +515,20 @@ function clearOverlays() {
     markersArray.length = 0;
 }
 */
+function displayLocations(shipment, index, orderSize){
+  displayLocation(shipment.origin.latitude, shipment.origin.longitude, "origin", function(){console.log("origin complete!")});
+  displayLocation(shipment.current_location.latitude, shipment.current_location.longitude, "current", function(){console.log("current complete!")});
+  displayLocation(shipment.destination.latitude, shipment.destination.longitude, "destination", function(){addShipmentMarkers(shipment, index, orderSize)});
+}
 
 function addShipmentMarkers(shipment, index, orderSize) {
-  displayLocation(shipment.origin.latitude, shipment.origin.longitude, "origin");
-  displayLocation(shipment.current_location.latitude, shipment.current_location.longitude, "current");
-  displayLocation(shipment.destination.latitude, shipment.destination.longitude, "destination");
-  
+  // displayLocation(shipment.origin.latitude, shipment.origin.longitude, "origin", function(){console.log("origin complete!")});
+  // setTimeout(delay, 1000000000000);
+  // displayLocation(shipment.current_location.latitude, shipment.current_location.longitude, "current", function(){console.log("origin complete!")});
+  // setTimeout(delay, 1000000000000);
+  // displayLocation(shipment.destination.latitude, shipment.destination.longitude, "destination", function(){console.log("origin complete!")});
+  // setTimeout(delay, 1000000000000);
+
   console.log("ARRAY LOCATION: ");
   console.log("orgin "      +generalLocationOrigin[index - 1] );
   console.log("current "    +generalLocationCurrent[index - 1] );
@@ -685,6 +699,10 @@ function addShipmentMarkers(shipment, index, orderSize) {
 
   currentMarkersArray[index - 1].setAnimation(google.maps.Animation.BOUNCE);
   setTimeout(function () { currentMarkersArray[index - 1].setAnimation(null);}, 750);
+}
+
+function delay(){
+  for(i = 0; i<100000; i++);
 }
 
 var inAnimation = false;

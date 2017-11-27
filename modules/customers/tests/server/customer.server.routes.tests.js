@@ -1,12 +1,21 @@
 'use strict';
 
-var should = require('should'),
-  request = require('supertest'),
-  path = require('path'),
-  mongoose = require('mongoose'),
-  User = mongoose.model('User'),
-  Customer = mongoose.model('Customer'),
-  express = require(path.resolve('./config/lib/express'));
+// var should = require('should'),
+//   request = require('supertest'),
+//   path = require('path'),
+//   mongoose = require('mongoose'),
+//   User = mongoose.model('User'),
+//   Customer = mongoose.model('Customer'),
+//   express = require(path.resolve('./config/lib/express'));
+
+var chai = require('chai'),
+    should = require('should'),
+    mongoose = require('mongoose'),
+    mocha = require('mocha'),
+    request = require('supertest'), 
+    express = require('../../../../config/lib/express'),
+    development = require('../../../../config/env/default'),
+    Customer =  require('../../server/models/customer.server.model');
 
 /**
  * Globals

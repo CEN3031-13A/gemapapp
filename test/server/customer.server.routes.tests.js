@@ -12,6 +12,7 @@ var chai = require('chai'),
     should = require('should'),
     mongoose = require('mongoose'),
     mocha = require('mocha'),
+    customers = require('../controllers/customers.server.controller'),
     Schema = mongoose.Schema;
 
 /**
