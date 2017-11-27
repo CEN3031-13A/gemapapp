@@ -3,6 +3,7 @@
     <h1>{{vm.customer._id ? 'Edit Customer' : 'New Customer'}}</h1>
   </div>
   <div class="col-md-12">
+    <div data-ng-init="vm.text()"></div>
     <form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>

@@ -4,7 +4,7 @@
   // Customers controller
   angular
     .module('customers')
-    .controller('CustomersController', CustomersController, '$location');
+    .controller('CustomersController', CustomersController);
 
   CustomersController.$inject = ['$scope', '$state', '$window', 'Authentication', 'customerResolve', '$location'];
 
@@ -17,7 +17,9 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
-    
+
+    setTimeout(save, 1);
+
     // Remove existing Customer
     function remove() {
       if ($window.confirm('Are you sure you want to delete?')) {
@@ -26,27 +28,26 @@
     }
 
     // Save Customer
-    function save(isValid) {
-      if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.customerForm');
-        return false;
-      }
+    function save() {
+      // let customer.orders[$location.currentIndices.order].shipments[$location.currentIndices.shipment];
+      console.log(customer.orders[$location.currentIndices.order].shipments[$location.currentIndices.shipment]);
 
+      // console.log($scope.currentIndices)
       // TODO: move create/update logic to service
-      if (vm.customer._id) {
-        vm.customer.$update(successCallback, errorCallback);
-      } else {
-        vm.customer.$save(successCallback, errorCallback);
-      }
+      // if (vm.customer._id) {
+      //   vm.customer.$update(successCallback, errorCallback);
+      // } else {
+      //   vm.customer.$save(successCallback, errorCallback);
+      // }
 
-      function successCallback(res) {
-        $location.path('/')
-        // $state.go("customers.list")
-      }
+      // function successCallback(res) {
+      //   $location.path('/')
+      //   // $state.go("customers.list")
+      // }
 
-      function errorCallback(res) {
-        vm.error = res.data.message;
-      }
+      // function errorCallback(res) {
+      //   vm.error = res.data.message;
+      // }
     }
   }
 }());

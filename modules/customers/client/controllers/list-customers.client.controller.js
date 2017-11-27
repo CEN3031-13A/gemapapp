@@ -3,20 +3,21 @@
 
   angular
     .module('customers')
-    .controller('CustomersListController', CustomersListController, '$compile', '$scope');
+    .controller('CustomersListController', CustomersListController);
 
-  CustomersListController.$inject = ['CustomersService', '$compile', '$scope'];
+  CustomersListController.$inject = ['CustomersService', '$compile', '$scope', '$location'];
 
-  function CustomersListController(CustomersService, $compile, $scope) {
+  function CustomersListController(CustomersService, $compile, $scope, $location) {
     var vm = this;
     vm.currentIndices = {'customer':null, 'order':null, 'shipment':null};
+    $location.currentIndices
     vm.customers = CustomersService.query();
     vm.getItemData = function() {
       var customers = vm.customers;
       var px_tree = document.querySelector('px-tree');
       var selectedShipment = px_tree.selected;
       var selectedPath = px_tree.selectedRoute;
-
+      $location.testMe 
       if (selectedPath <= 1)
         return;
     
@@ -145,6 +146,11 @@
         document.getElementById('MAP_MARKERS').style.right = "16.6666667%";
         document.getElementById("STEPS").className = "u-4/6";
         document.getElementById('STEPS').style.right = "16.6666667%";
+      }
+    }
+    vm.newAddComment = function(){
+      if(vm.newComment != undefined){
+        console.log(vm.newComment);
       }
     }
     // var customer;
@@ -446,6 +452,8 @@
           }
         }
       }
+      if($location.currentIndices != vm.currentIndices)
+        $location.currentIndices = vm.currentIndices;
     }
     
     
