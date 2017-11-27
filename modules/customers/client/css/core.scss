@@ -24,17 +24,15 @@ $inuit-enable-btn--full : true;
 @import "../../../../public/lib/px-buttons-design/_objects.buttons.scss";
 
 // Components
-
-body {
-  height: 100vh;
-}
+// We should be safe from about zoom level 80% - 110%
 
 
-#LEFT_SIDEBAR{
+#leftMenu{
   background: $gray15;
   border-right: 1px solid black;
   height: calc(100vh - 30px);
-  overflow: auto;
+  left: 0;
+  overflow-y: auto;
   position: absolute;
   top: 30px;
 }
@@ -46,7 +44,7 @@ body {
 
 #STEPS{
   height: 60px;
-  padding-top: .5vh; 
+  padding-top: .5vh;
   position: absolute;
   right: 0;
   top: 30px;
@@ -55,48 +53,26 @@ body {
 #MAP_MARKERS{
   border-top: 1px solid black;
   height: calc(100vh - 90px);
-  right: 0;
   position: absolute;
+  right: 0;
   top: 90px;
 }
 
-.rightSidebar{
+.detailedInfo{
   border-left: 1px solid black;
   display: none;
   height: calc(100vh - 30px);
   overflow: auto;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 30px;
 }
 
-#info{
+#markerInfo{
   display: block;
   margin-left: 47.5%;
 }
 
-//---------------------------------------Placeholder text center-----------------------------------------
-::-webkit-input-placeholder {
-   color: gray !important;
-   text-align: center;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-   color: gray !important;  
-   text-align: center;
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-   color: gray !important;  
-   text-align: center;
-}
-
-:-ms-input-placeholder {  
-   color: gray !important; 
-   text-align: center;
-}
-
-//---------------------------------------remove the scrollbar for overall webpage-----------------------------------------
 body::-webkit-scrollbar { 
     display: none; 
 }

@@ -39,9 +39,9 @@ function myFunction() {
   } else {
     x.style.display = 'block';
     document.getElementById('MAP_MARKERS').className = "u-4/6";
-    document.getElementById('MAP_MARKERS').style.right = "16.6666667%";
+    document.getElementById('MAP_MARKERS').style.right = "calc(100vw/6";
     document.getElementById("STEPS").className = "u-4/6";
-    document.getElementById('STEPS').style.right = "16.6666667%";
+    document.getElementById('STEPS').style.right = "calc(100vw/6";
   }
 }
 
@@ -487,7 +487,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
             shipment.ship_date +
             '</p>' +
             '</div>' +
-            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
+            '<button id="markerInfo" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   var currentContentString = '<div id="content">' +
@@ -505,7 +505,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
             shipment.ship_date +
             '</p>' +
             '</div>' +
-            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
+            '<button id="markerInfo" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   var destinationContentString = '<div id="content">' +
@@ -522,7 +522,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
             shipment.ship_date +
             '</p>' +
             '</div>' +
-            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
+            '<button id="markerInfo" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   let originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
