@@ -1,14 +1,13 @@
 <section>
-  <div class="page-header">
+ <!--  <div class="page-header">
     <h1>{{vm.customer._id ? 'Edit Customer' : 'New Customer'}}</h1>
   </div>
   <div class="col-md-12">
-    <div data-ng-init="vm.text()"></div>
     <form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
           <label class="control-label" for="name">Name</label>
-          <input name="name" type="text" ng-model="vm.customer.name" id="name" class="form-control" placeholder="Name" required>
+          <input name="name" type="text"  id="name" class="form-control" placeholder="Name" required>
           <div ng-messages="vm.form.customerForm.name.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Customer name is required.</p>
           </div>
@@ -21,5 +20,5 @@
         </div>
       </fieldset>
     </form>
-  </div>
+  </div> -->
 </section>

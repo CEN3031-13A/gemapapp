@@ -12,6 +12,7 @@
     vm.currentIndices = {'customer':null, 'order':null, 'shipment':null};
     $location.currentIndices
     vm.customers = CustomersService.query();
+
     vm.getItemData = function() {
       var customers = vm.customers;
       var px_tree = document.querySelector('px-tree');
@@ -150,7 +151,63 @@
     }
     vm.newAddComment = function(){
       if(vm.newComment != undefined){
-        console.log(vm.newComment);
+        let commentDate = "";
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        month++;
+        if(month < 10)
+          month = '0' + month;
+
+        let day = date.getDay();
+        if(day < 10)
+          day = '0' + day;
+
+        let hour = date.getHours();
+        if( hour < 10)
+          hour = '0' +  hour;
+
+        let minute = date.getMinutes();
+        if( minute < 10)
+          minute = '0' +  minute;
+
+        let second = date.getSeconds();
+        if( second < 10)
+          second = '0' +  second;
+
+        let timezone = date.getTimezoneOffset();
+        Math.floor(timezone/60)
+
+        commentDate += year;
+        commentDate += '-';
+        commentDate += month;
+        commentDate += '-';
+        commentDate += day;
+        commentDate += 'T';
+        commentDate += hour;
+        commentDate += ':';
+        commentDate += minute;
+        commentDate += ':';
+        commentDate += second;
+        commentDate += ' ';
+        if(timezone >= 0)
+          commentDate += '+';
+        else
+          commentDate += '-';
+        if(Math.floor(timezone/60) < 10)
+          commentDate += '0';
+        commentDate += Math.floor(timezone/60);
+        commentDate += ':';
+        if(timezone%60 < 10)
+          commentDate += '0';
+        commentDate += timezone%60;
+
+       $location.newComment = {
+        'comment_date': commentDate,
+        'comment' : vm.newComment
+       };
+
+
       }
     }
     // var customer;

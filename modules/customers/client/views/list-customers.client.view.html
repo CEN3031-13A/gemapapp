@@ -109,7 +109,7 @@
              <fieldset>
                 <div class="form-group" show-errors>
                   <label class="control-label" for="new_comment">Add a new comment:</label>
-                  <input name="new_comment" type="text" ng-model="vm.newComment" id="new_comment" class="form-control" placeholder="Type something..." required ng-keyup="vm.newAddComment()">
+                  <input name="new_comment" type="text" ng-model="vm.newComment" id="new_comment" class="form-control" placeholder="Type something..." required ng-change="vm.newAddComment()">
                   <div ng-messages="vm.form.customerForm.name.$error" role="alert">
                     <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
                   </div>

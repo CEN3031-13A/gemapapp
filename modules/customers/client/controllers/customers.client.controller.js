@@ -10,7 +10,6 @@
 
   function CustomersController($scope, $state, $window, Authentication, customer, $location) {
     var vm = this;
-    console.log("YEEEE")
     vm.authentication = Authentication;
     vm.customer = customer;
     vm.error = null;
@@ -30,24 +29,25 @@
     // Save Customer
     function save() {
       // let customer.orders[$location.currentIndices.order].shipments[$location.currentIndices.shipment];
-      console.log(customer.orders[$location.currentIndices.order].shipments[$location.currentIndices.shipment]);
+      vm.customer.orders[$location.currentIndices.order].shipments[$location.currentIndices.shipment].comments.push($location.newComment)
 
-      // console.log($scope.currentIndices)
+
+      console.log(vm.customer)
       // TODO: move create/update logic to service
-      // if (vm.customer._id) {
-      //   vm.customer.$update(successCallback, errorCallback);
-      // } else {
-      //   vm.customer.$save(successCallback, errorCallback);
-      // }
+      if (vm.customer._id) {
 
-      // function successCallback(res) {
-      //   $location.path('/')
-      //   // $state.go("customers.list")
-      // }
+        vm.customer.$update(successCallback, errorCallback);
+      } else {
+        vm.customer.$save(successCallback, errorCallback);
+      }
 
-      // function errorCallback(res) {
-      //   vm.error = res.data.message;
-      // }
+      function successCallback(res) {
+        $location.path('/')
+      }
+
+      function errorCallback(res) {
+        vm.error = res.data.message;
+      }
     }
   }
 }());
