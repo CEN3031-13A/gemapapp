@@ -47,6 +47,9 @@
                   customerIndex = i;
                   orderIndex = j;
                   shipmentIndex = k;
+                  vm.currentIndices.customer = i;
+                  vm.currentIndices.order = j;
+                  vm.currentIndices.shipment = k;
                   break;
                 }
               }
