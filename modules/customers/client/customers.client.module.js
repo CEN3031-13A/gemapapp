@@ -30,14 +30,18 @@ function myFunction() {
   var x = document.getElementById('hide');
   var y = document.getElementById('MAP_MARKERS');
   var z = document.getElementById('STEPS');
-  if (x.style.display === 'none') {
-    x.style.display = 'block';
-    y.style.width = '63.5%';
-    z.style.width = '63vw';
-  } else {
+  if (x.style.display === 'block') {
     x.style.display = 'none';
-    y.style.width = '83.5%';
-    z.style.width = '83vw';
+    document.getElementById('MAP_MARKERS').className = "u-5/6";
+    document.getElementById('MAP_MARKERS').style.right = "0";
+    document.getElementById("STEPS").className = "u-5/6";
+    document.getElementById('STEPS').style.right = "0";
+  } else {
+    x.style.display = 'block';
+    document.getElementById('MAP_MARKERS').className = "u-4/6";
+    document.getElementById('MAP_MARKERS').style.right = "16.6666667%";
+    document.getElementById("STEPS").className = "u-4/6";
+    document.getElementById('STEPS').style.right = "16.6666667%";
   }
 }
 
@@ -483,6 +487,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
             shipment.ship_date +
             '</p>' +
             '</div>' +
+            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   var currentContentString = '<div id="content">' +
@@ -500,6 +505,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
             shipment.ship_date +
             '</p>' +
             '</div>' +
+            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   var destinationContentString = '<div id="content">' +
@@ -516,6 +522,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
             shipment.ship_date +
             '</p>' +
             '</div>' +
+            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   let originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");

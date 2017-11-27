@@ -1,9 +1,9 @@
-<div id="BRANDING_BAR">
+<div class="u-1/1">
     <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
 
-<div id="LEFT_SIDEBAR">
-    <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
+<div class="u-1/6" id="LEFT_SIDEBAR">
+    <input style="background: white;" class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
     <div class="btn-group">
         <button for="id1" class="btn btn--full" onclick="displayActive()">Active</button>
         <button for="id2" class="btn btn--full" onclick="displayInactive()">Inactive</button>
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<div id="STEPS" class="steps">
+<div id="STEPS" class="u-5/6 steps">
     <px-steps
     items='[
     {
@@ -47,12 +47,12 @@
     </px-steps>
 </div>
 
-<div id="MAP_MARKERS">
+<div class="u-5/6" id="MAP_MARKERS">
     <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
     </google-map>
 </div>
 
-  <div class="rightSidebar" id="hide">  
+<div class="rightSidebar u-1/6" id="hide">  
     <div id="demo3" class="flex flex--col">
     <div class="page-header">
     <h1>Customers</h1>
@@ -144,7 +144,7 @@
 <link rel="import" href="../../../../../lib/px-tree/px-tree.html"/>
 
 <!--Google Maps Scripts and Links-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="../../../../../lib/webcomponentsjs/webcomponents.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="import" href="../../../../../lib/google-map/google-map-elements.html" />
