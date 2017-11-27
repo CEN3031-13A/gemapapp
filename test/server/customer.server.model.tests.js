@@ -5,11 +5,11 @@
  */
 var chai = require('chai'),
     should = require('should'),
-    mongoose = require('mongoose'),     
+    mongoose = require('mongoose'),
     mocha = require('mocha'),
-    path = require('path'),
-    config = require('../config/config'),
-    Customer = mongoose.model('../../modules/customers/server/models/customer.server.model');
+    Schema = mongoose.Schema;
+    //Customer = mongoose.model('../../modules/customers/server/models/customer.server.model');
+
 
   //config = require('../../../../config'),
   //model = require('../../server/models/model'),

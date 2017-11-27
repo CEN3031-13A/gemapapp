@@ -22,8 +22,6 @@ module.exports = function (app) {
     .put(customers.update)
     .delete(customers.delete);
 
-    
-
   // Finish by binding the Customer middleware
   app.param('customerId', customers.customerByID);
 };

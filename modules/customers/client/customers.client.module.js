@@ -10,38 +10,37 @@ var shipment;
 var customerIndex;
 var orderIndex;
 var shipmentIndex;
-var customerList 		 = [];
-var activeCustomerList 	 = [];
+var customerList     = [];
+var activeCustomerList   = [];
 var inactiveCustomerList = [];
 var activeInactiveState = '';
 var displayaddress;
 var map;
 var mapsReady = false;
-var originMarkersArray 	= [];
+var originMarkersArray  = [];
 var currentMarkersArray = [];
 var destinationMarkersArray = [];
-var originInfoWindowList 	  = [];
-var currentInfoWindowList 	  = [];
+var originInfoWindowList    = [];
+var currentInfoWindowList     = [];
 var destinationInfoWindowList = [];
 var flightPathList = [];
 var displayedGMapsErrorMsg = false;
+var generalLocationOrigin = [];      
+var generalLocationCurrent = [];     
+var generalLocationDestination = []; 
 
 function myFunction() {
   var x = document.getElementById('hide');
   var y = document.getElementById('MAP_MARKERS');
   var z = document.getElementById('STEPS');
-  if (x.style.display === 'block') {
-    x.style.display = 'none';
-    document.getElementById('MAP_MARKERS').className = "u-5/6";
-    document.getElementById('MAP_MARKERS').style.right = "0";
-    document.getElementById("STEPS").className = "u-5/6";
-    document.getElementById('STEPS').style.right = "0";
-  } else {
+  if (x.style.display === 'none') {
     x.style.display = 'block';
-    document.getElementById('MAP_MARKERS').className = "u-4/6";
-    document.getElementById('MAP_MARKERS').style.right = "16.6666667%";
-    document.getElementById("STEPS").className = "u-4/6";
-    document.getElementById('STEPS').style.right = "16.6666667%";
+    y.style.width = '63.5%';
+    z.style.width = '63vw';
+  } else {
+    x.style.display = 'none';
+    y.style.width = '83.5%';
+    z.style.width = '83vw';
   }
 }
 
@@ -185,10 +184,10 @@ function getItemData() {
   var i;
   var j;
   var k;
-  for (let i = 0; i < customers.length; i++) {
+  for (i = 0; i < customers.length; i++) {
     if (customerID === customers[i]._id) {
       customer = customers[i];
-      for (let j = 0; j < customers[i].orders.length; j++) {
+      for (j = 0; j < customers[i].orders.length; j++) {
         if (orderID === customers[i].orders[j].id) {
           order = customers[i].orders[j];
           for (k = 0; k < customers[i].orders[j].shipments.length; k++) {
@@ -206,13 +205,16 @@ function getItemData() {
     }
   }
 
-  if (!found)
+  if (!found){
     pxMapMarkersOrder();
+    pxSteps(false);
+  }
   else {
     pxMapMarkers();
+    pxSteps(true);
   }
 
-  // pxSteps();
+  pxSteps();
   customerInfo();
   shippingDetails();
   packageDetails();
@@ -279,32 +281,29 @@ function pxTree() {
 
 }
 
-/*
-function pxSteps() {
-  var string = "<px-steps ";
-  string += "items=\'[";
-  string += "{\"id\":\"1\", \"label\":\"(ORIGIN) ";
-    // string += shipment.origin.latitude;
-    // string += ", ";
-    // string += shipment.origin.latitude;
-  string += orig;
-  string += "\"},";
+
+function pxSteps(infoNeeded) {
+    var string = "<px-steps ";
+    string += "items=\'[";
+    string += "{\"id\":\"1\", \"label\":\"(ORIGIN) ";
+    if(infoNeeded){
+      string += generalLocationOrigin[shipmentIndex];
+    }
+    string += "\"},";
     string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
-    // string += shipment.current_location.latitude;
-    // string += ", ";
-    // string += shipment.current_location.latitude;
-    string += current;
+    if(infoNeeded){
+      string += generalLocationCurrent[shipmentIndex];
+    }
     string += "\"},";
     string += "{\"id\":\"3\", \"label\":\"(TO) ";
-    // string += shipment.destination.latitude;
-    // string += ", ";
-    // string += shipment.destination.latitude;
-    string += dest
+    if(infoNeeded){
+      string += generalLocationDestination[shipmentIndex];
+    }
     string += "\"}]\' completed=\'[\"1\",\"2\"]\' </px-steps>";
 
     document.getElementById("STEPS").innerHTML = string;
 }
-*/
+
 
 function pxMapMarkers() {
   clearMarkers();
@@ -325,6 +324,10 @@ function pxMapMarkersOrder() {
   originInfoWindowList = [];
   currentInfoWindowList = [];
   destinationInfoWindowList = [];
+  generalLocationOrigin = [];      
+  generalLocationCurrent = [];     
+  generalLocationDestination = []; 
+
   let latSum = 0;
   let longSum = 0;
   for (let i = 0; i < order.shipments.length; i++) {
@@ -379,17 +382,17 @@ function packageDetails() {
 }
 
 function packageComments(){
-	if(shipment.comments != undefined){
-		var string =  "<strong>Comments: </strong><br />";
-		for(i=0;i < shipment.comments.length; i++){
-			string += "<strong>" + shipment.comments[i].comment_date + "</strong>" + ": ";
-			string += shipment.comments[i].comment + "<br />";
-		}
-		document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
-	}
+  // if(shipment.comments != undefined){
+  //   var string =  "<strong>Comments: </strong><br />";
+  //   for(i=0;i < shipment.comments.length; i++){
+  //     string += "<strong>" + shipment.comments[i].comment_date + "</strong>" + ": ";
+  //     string += shipment.comments[i].comment + "<br />";
+  //   }
+  //   document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
+  // }
 }
 
-function displayLocation(latitude, longitude) {
+function displayLocation(latitude, longitude, type) {
   var request = new XMLHttpRequest();
   var method = 'GET';
   var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
@@ -399,15 +402,73 @@ function displayLocation(latitude, longitude) {
   request.onreadystatechange = function () {
     if (request.readyState === 4 && request.status === 200) {
       var data = JSON.parse(request.responseText);
-      var address = data.results[0];
-      if (address === undefined)
-        return;
-      if (address.formatted_address === undefined)
-        return;
-      if (address.address_components === undefined)
-        return;
-        // console.log(address.formatted_address)
-      return address.formatted_address;
+      console.log(data);
+      if(data.status=="ZERO_RESULTS"){
+        if(type == "origin"){
+          console.log("ORIGIN: ");
+          generalLocationOrigin.push("");
+          console.log("NO GOOD!");
+        }
+        else if(type == "current"){
+          console.log("CURRENT: ");       
+          generalLocationCurrent.push("");
+          console.log("NO GOOD!"); 
+        }   
+        else if(type == "destination"){
+          console.log("DESTINATION: ");   
+          generalLocationDestination.push("");
+          console.log("NO GOOD!");
+        }
+      }else{
+        var index_address = data.results.length;
+        if(index_address >= 2)
+          var address = data.results[index_address-2];
+        else{
+          if (index_address == 1)
+            var address = data.results[0];
+          if(index_address < 1){
+            console.log("NO BUENO!");
+            return;
+          }
+        }
+        //console.log(address);
+        var nogood = false;
+        if (address.formatted_address === undefined)
+          nogood = true;
+        if(type == "origin"){
+          console.log("ORIGIN: ");
+          if(nogood == true){
+            console.log("NO GOOD!");
+            generalLocationOrigin.push("");
+          }
+          else{
+            console.log(address.formatted_address);
+            generalLocationOrigin.push(address.formatted_address);
+          }
+        }
+        else if(type == "current"){
+          console.log("CURRENT: ");
+          if(nogood == true){
+            console.log("NO GOOD!");
+            generalLocationCurrent.push("");
+          }
+          else{
+            console.log(address.formatted_address);       
+            generalLocationCurrent.push(address.formatted_address);
+          }
+        }    
+        else if(type == "destination"){
+          console.log("DESTINATION: ");
+          if(nogood == true){
+            console.log("NO GOOD!");
+            generalLocationDestination.push("");
+          }
+          else{
+            console.log(address.formatted_address);       
+            generalLocationDestination.push(address.formatted_address);
+          }
+        }
+      }
     }
   };
   request.send();
@@ -436,6 +497,9 @@ function consistantTimer() {
       }
     }
   }
+  // console.log("orgin "      +       generalLocationOrigin.length     );   
+  // console.log("current "    +    generalLocationCurrent.length    );     
+  // console.log("destination "+ generalLocationDestination.length); 
 }
 
 /*
@@ -447,9 +511,25 @@ function clearOverlays() {
 */
 
 function addShipmentMarkers(shipment, index, orderSize) {
-  // generalLocationOrigin      = displayLocation(shipment.origin.latitude, shipment.origin.longitude)
-  // generalLocationCurrent     = displayLocation(shipment.current_location.latitude, shipment.current_location.longitude)
-  // generalLocationDestination = displayLocation(shipment.destination.latitude, shipment.destination.longitude)
+  displayLocation(shipment.origin.latitude, shipment.origin.longitude, "origin");
+  displayLocation(shipment.current_location.latitude, shipment.current_location.longitude, "current");
+  displayLocation(shipment.destination.latitude, shipment.destination.longitude, "destination");
+  
+  console.log("ARRAY LOCATION: ");
+  console.log("orgin "      +generalLocationOrigin[index - 1] );
+  console.log("current "    +generalLocationCurrent[index - 1] );
+  console.log("destination "+generalLocationDestination[index - 1] ); 
+
+  console.log("ARRAY LENGTHS: ");
+  console.log("orgin length "      +       generalLocationOrigin.length     );   
+  console.log("current length "    +    generalLocationCurrent.length    );     
+  console.log("destination length "+ generalLocationDestination.length);
+  
+  console.log("WHOLE FREAKING ARRAY: ");
+  console.log("orgin "      +generalLocationOrigin );
+  console.log("current "    +generalLocationCurrent );
+  console.log("destination "+generalLocationDestination );
+
   let pinColor;
 
   if (shipment.delivery_state === "Ahead of Time")
@@ -468,9 +548,44 @@ function addShipmentMarkers(shipment, index, orderSize) {
     pinColor = "999999";
   }
 
+  
   let origin = { lat: shipment.origin.latitude, lng: shipment.origin.longitude };
   let current = { lat: shipment.current_location.latitude, lng: shipment.current_location.longitude };
   let dest = { lat: shipment.destination.latitude, lng: shipment.destination.longitude };
+
+  let formattedLocationOrigin;
+  // console.log("orgin "      +generalLocationOrigin );
+  // console.log("current "    +generalLocationCurrent );
+  // console.log("destination "+generalLocationDestination );
+  // console.log("orgin "      +generalLocationOrigin[index - 1] );
+  // console.log("current "    +generalLocationCurrent[index - 1] );
+  // console.log("destination "+generalLocationDestination[index - 1] );
+  if(generalLocationOrigin[index - 1] == ""){
+    formattedLocationOrigin = '<p><b>Coordinates:</b></br>' +                     
+                              'Latitude: ' + shipment.origin.latitude + "</br>" + 
+                              'Longitude: ' + shipment.origin.longitude + "</br>";
+  }else{
+    formattedLocationOrigin = '<p><b>Location:</b></br>' +
+                               generalLocationOrigin[index - 1] + '</br>';
+  }
+  let formattedLocationCurrent;
+  if(generalLocationCurrent[index - 1] == ""){
+    formattedLocationCurrent= '<p><b>Coordinates:</b></br>' +                     
+                              'Latitude: ' + shipment.current_location.latitude + "</br>" + 
+                              'Longitude: ' + shipment.current_location.longitude + "</br>";
+  }else{
+    formattedLocationCurrent = '<p><b>Location:</b></br>' +
+                               generalLocationCurrent[index - 1] + '</br>';
+  }
+  let formattedLocationDestination;
+  if(generalLocationDestination[index - 1] == ""){
+    formattedLocationDestination = '<p><b>Coordinates:</b></br>' +                     
+                                   'Latitude: ' + shipment.destination.latitude + "</br>" + 
+                                   'Longitude: ' + shipment.destination.longitude + "</br>";
+  }else{
+    formattedLocationDestination = '<p><b>Location:</b></br>' +
+                               generalLocationDestination[index - 1] + '</br>';
+  }
 
   let originContentString = '<div id="content">' +
             '<div id="siteNotice">' +
@@ -479,15 +594,12 @@ function addShipmentMarkers(shipment, index, orderSize) {
             '(' + index + ' of ' + orderSize + ')' +
              '</h3>' +
             '<div id="bodyContent">' +
-            '<p><b>Coordinates:</b></br>' +
-            'Latitude: ' + shipment.origin.latitude + "</br>" +
-            'Longitude: ' + shipment.origin.longitude + "</br>" +
+            formattedLocationOrigin +
             "</br>" +
             '<b>Date: </b></br>' +
             shipment.ship_date +
             '</p>' +
             '</div>' +
-            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   var currentContentString = '<div id="content">' +
@@ -497,15 +609,12 @@ function addShipmentMarkers(shipment, index, orderSize) {
             '(' + index + ' of ' + orderSize + ')' +
             '</h3>' +
             '<div id="bodyContent">' +
-            '<p><b>Coordinates:</b></br>' +
-            'Latitude: ' + shipment.current_location.latitude + "</br>" +
-            'Longitude: ' + shipment.current_location.longitude + "</br>" +
+            formattedLocationCurrent +
             "</br>" +
             '<b>Date: </b></br>' +
             shipment.ship_date +
             '</p>' +
             '</div>' +
-            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   var destinationContentString = '<div id="content">' +
@@ -514,15 +623,12 @@ function addShipmentMarkers(shipment, index, orderSize) {
             '(' + index + ' of ' + orderSize + ')' +
             '</h3>' +
             '<div id="bodyContent">' +
-            '<p><b>Coordinates:</b></br>' +
-            'Latitude: ' + shipment.destination.latitude + '</br>' +
-            'Longitude: ' + shipment.destination.longitude + '</br>' +
+            formattedLocationDestination +
             '</br>' +
             '<b>Date: </b></br>' +
             shipment.ship_date +
             '</p>' +
             '</div>' +
-            '<button id="info" onclick="myFunction()"><i class="material-icons">info</i></button></div>' +
             '</div>';
 
   let originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
@@ -567,7 +673,7 @@ function addShipmentMarkers(shipment, index, orderSize) {
   currentInfoWindowList.push(currentInfoWindow);
   destinationInfoWindowList.push(destinationInfoWindow);
   originMarkersArray[index - 1].addListener('click', function () {
-    console.log(originMarkersArray);
+    //console.log(originMarkersArray);
     originInfoWindowList[index - 1].open(map, originMarkersArray[index - 1]);
   });
   currentMarkersArray[index - 1].addListener('click', function () {
@@ -579,9 +685,8 @@ function addShipmentMarkers(shipment, index, orderSize) {
 
   currentMarkersArray[index - 1].setAnimation(google.maps.Animation.BOUNCE);
   setTimeout(function () { currentMarkersArray[index - 1].setAnimation(null);}, 750);
-
-
 }
+
 var inAnimation = false;
 function setSingleShipmentOnMap(map, index) {
   originMarkersArray[index].setMap(map);
