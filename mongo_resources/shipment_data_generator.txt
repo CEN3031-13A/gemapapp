@@ -17,13 +17,6 @@
       {
         id: '{{objectId()}}',
         index: '{{index()}}',
-        comments: [
-          '{{repeat(1, 5)}}',
-          {
-            comment_date: '{{date()}}',
-            comment: '{{lorem(13, "words")}}'
-          }
-        ],
         shipments: [
           '{{repeat(3,10)}}',
           {
@@ -32,6 +25,13 @@
             carrier: '{{random("UPS", "FedEx")}}',
             delivery_state: '{{random("Ahead of Time", "On Time", "Likely to be On Time", "Likely to be Behind Schedule", "Behind Schedule", "Late")}}',
             late_penalties: '{{lorem(20, "words")}}',
+	    comments: [
+            	'{{repeat(1, 5)}}',
+          	{
+            		comment_date: '{{integer(1,12}}/{{integer(1,28}}/{{integer(1990,2017}} {{integer(0,23}}:{{integer(0,59}}',
+            		comment: '{{lorem(13, "words")}}'
+            	}
+            ],
             origin: {
 				latitude: '{{floating(-50.000001, 80)}}',
 				longitude: '{{floating(0.000001, 180)}}'

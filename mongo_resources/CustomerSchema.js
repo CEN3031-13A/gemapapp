@@ -18,16 +18,16 @@ var customerSchema = new Schema({
 	orders: [{
 		id: String,
 		index: Number,
-		comments: [{
-			comment_date: String,
-			comment: String
-		}],
 		shipments: [{
 			id: String,
 			tracking_number: String,
 			carrier: String,
 			delivery_state: String,
 			late_penalties: String,
+			comments: [{
+				comment_date: String,
+				comment: String
+			}],
 			origin: {
 				latitude: Number,
 				longitude: Number
