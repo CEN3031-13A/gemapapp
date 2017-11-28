@@ -104,36 +104,38 @@
           status="">
           <div id="PACKAGE_COMMENTS">
             <strong>Comments: </strong><br />
-          </div>
-          <form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
+          </div>            
+        </px-accordion>
+
+        <px-accordion icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Add New Comment"
+          status="" opened>
+        <form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
              <fieldset>
                 <div class="form-group" show-errors>
-                  <label class="control-label" for="new_comment">Add a new comment:</label>
-				  <textarea name="new_comment" ng-model="vm.newComment" id="new_comment" class="form-control" required ng-change="vm.newAddComment()"></textarea>
+                  <label class="control-label" for="new_comment"></label>
+                  <textarea name="new_comment" ng-model="vm.newComment" id="new_comment" class="form-control" required ng-change="vm.newAddComment()"></textarea>
                   <div ng-messages="vm.form.customerForm.name.$error" role="alert">
                     <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
                   </div>
                 </div>
                 <div class="form-group">
-                      <a 
-       ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
-       class="list-group-item">
-				
-				  <div ng-show="vm.newComment">
-                    <button type="submit" class="btn btn-default">Add Comment</button>
-				  </div>
-                </a>
+                  <a  ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
+                      class="list-group-item">
+                    <div ng-show="vm.newComment">
+                      <button type="submit" class="btn btn-default">Add Comment</button>
+                    </div>
+                  </a>
                 </div>
                 <div ng-show="vm.error" class="text-danger">
                   <strong ng-bind="vm.error"></strong>
                 </div>
-              </fieldset>
+            </fieldset>
           </form> 
-		  <div ng-show="vm.newComment==undefined">
-                    <button type="button" class="btn btn-disabled" disabled>Add Comment</button>
-				  </div>
-            
-        </px-accordion>
+          <div ng-show="vm.newComment==undefined">
+            <button type="button" class="btn btn-disabled" disabled>Add Comment</button>
+          </div>
+          </px-accordion>
 
   </div>
     </div>
