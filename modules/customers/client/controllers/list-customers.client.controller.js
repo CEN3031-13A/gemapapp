@@ -60,7 +60,8 @@
             pxMapMarkers();
             pxSteps(true);
           }
-        
+          
+          closeAllInfoWindows();
           customerInfo();
           shippingDetails();
           packageDetails();
@@ -768,6 +769,7 @@ function displayLocation(latitude, longitude, type) {
       destinationInfoWindowList.push(destinationInfoWindow);
 
       originMarkersArray[index].addListener('click', function () {
+        closeAllInfoWindows();
         originInfoWindowList[index].open(map, originMarkersArray[index]);
         vm.currentIndices.shipment = index;
         customerInfo();
@@ -776,6 +778,7 @@ function displayLocation(latitude, longitude, type) {
         packageComments();
       });
       currentMarkersArray[index].addListener('click', function () {
+        closeAllInfoWindows();
         currentInfoWindowList[index].open(map, currentMarkersArray[index]);
         vm.currentIndices.shipment = index;
         customerInfo();
@@ -784,6 +787,7 @@ function displayLocation(latitude, longitude, type) {
         packageComments();
       });
       destinationMarkersArray[index].addListener('click', function () {
+        closeAllInfoWindows();
         destinationInfoWindowList[index].open(map, destinationMarkersArray[index]);
         vm.currentIndices.shipment = index;
         customerInfo();
@@ -906,5 +910,22 @@ function displayLocation(latitude, longitude, type) {
     document.getElementById('STEPS').style.width = "83.3333333333%";
     document.getElementById('hide').style.width = "0";
 
+    function closeAllInfoWindows() {
+      if(originInfoWindowList != undefined){
+        for (var i=0;i<originInfoWindowList.length;i++) {
+            originInfoWindowList[i].close();
+        }
+      }
+      if(currentInfoWindowList != undefined){
+        for (var i=0;i<currentInfoWindowList.length;i++) {
+            currentInfoWindowList[i].close();
+        }
+      }
+      if(destinationInfoWindowList != undefined){
+        for (var i=0;i<destinationInfoWindowList.length;i++) {
+            destinationInfoWindowList[i].close();
+        }
+      }
+    }
   }
 }());
