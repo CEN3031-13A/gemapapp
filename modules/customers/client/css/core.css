@@ -1864,18 +1864,16 @@ button.btn {
 .btn--full {
   width: 100%; }
 
-body {
-  height: 100vh; }
-
-#LEFT_SIDEBAR {
+#leftMenu {
   background: #2c404c;
   border-right: 1px solid black;
   height: calc(100vh - 30px);
-  overflow: auto;
+  left: 0;
+  overflow-y: auto;
   position: absolute;
   top: 30px; }
 
-#PREDIX_TREE {
+#pxtree {
   color: white;
   font-family: "GE Inspira Sans",sans-serif; }
 
@@ -1889,44 +1887,25 @@ body {
 #MAP_MARKERS {
   border-top: 1px solid black;
   height: calc(100vh - 90px);
-  right: 0;
   position: absolute;
+  right: 0;
   top: 90px; }
 
-.rightSidebar {
+.detailedInfo {
   border-left: 1px solid black;
   display: none;
   height: calc(100vh - 30px);
   overflow: auto;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 30px; }
 
-#info {
+#markerInfo {
   display: block;
   margin-left: 47.5%; }
 
-::-webkit-input-placeholder {
-  color: gray !important;
-  text-align: center; }
-
-:-moz-placeholder {
-  /* Firefox 18- */
-  color: gray !important;
-  text-align: center; }
-
-::-moz-placeholder {
-  /* Firefox 19+ */
-  color: gray !important;
-  text-align: center; }
-
-:-ms-input-placeholder {
-  color: gray !important;
-  text-align: center; }
-
 body::-webkit-scrollbar {
   display: none; }
-
 
 /**
  * Margin and padding helper classes with breakpoint prefixes. Use these to tweak layout on a micro

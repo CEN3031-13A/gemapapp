@@ -1,18 +1,22 @@
 <div class="u-1/1">
-    <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+  <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
 
-<div class="u-1/6" id="LEFT_SIDEBAR">
-    <input style="background: white;" class="text-input" id="myInput" ng-keyup="vm.searchCustomers()" type="text" placeholder="Search customer">
-    <div class="btn-group">
-        <button for="id1" class="btn btn--full" ng-click="vm.displayActive()">Active</button>
-        <button for="id2" class="btn btn--full" ng-click="vm.displayInactive()">Inactive</button>
-        <button for="id3" class="btn btn--full" ng-click="vm.displayAll()">All</button>
-    </div>
+<div class="u-1/6" id="leftMenu">
+  <input style="background:white;" class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
+  <div class="btn-group" style="width: 100%; height: 30px;">
+    <input id="id1" name="btn-group" style="width: 33.33%; height: 100%;" onclick="displayActive()"  type="radio">
+    <label for="id1" style="width: 33.33%; height: 100%;" class="btn">Active</label>
+    <input id="id2" name="btn-group" style="width: 33.33%; height: 100%;" onclick="displayInactive()"  type="radio">
+    <label for="id2" style="width: 33.33%; height: 100%;" class="btn">Inactive</label>
+    <input id="id3" name="btn-group" style="width: 33.33%; height: 100%;" onclick="displayAll()"  type="radio">
+    <label for="id3" style="width: 33.33%; height: 100%;" class="btn">All</label>
+  </div>
+  
     <div id="SOURCE" style="display:none;">
         {{vm.customers}}
     </div>
-    <div id="PREDIX_TREE">
+    <div id="pxtree">
         <px-tree id="TEST11"
           keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
           items='[
@@ -43,19 +47,42 @@
       "label":"(TO)"
     }
     ]'
-    completed='[]'>
-    </px-steps>
+    multi-activate onclick="getItemData()">
+  </px-tree>
+</div>
+</div>
+
+<div class="u-5/6" id="STEPS" class="steps">
+  <px-steps
+  items='[
+  {
+    "id":"1",
+    "label":"(FROM)"
+  },
+  {
+    "id":"2",
+    "label":"(CURRENT)"
+  },
+  {
+    "id":"3",
+    "label":"(TO)"
+  }
+  ]'
+  completed='[]'>
+</px-steps>
 </div>
 
 <div class="u-5/6" id="MAP_MARKERS">
-    <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-    </google-map>
+  <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+  </google-map>
 </div>
 
-<div class="rightSidebar u-1/6" id="hide">  
-    <div id="demo3" class="flex flex--col">
-  <div class="list-group">
-
+<div class="u-1/6 detailedInfo" id="hide">  
+  <div id="demo3" class="flex flex--col">
+    <div class="page-header">
+      <h1>Detailed Information</h1>
+    </div>
+    <div class="list-group">
 <px-accordion
         icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
         header-value="Customer Information"
@@ -87,17 +114,17 @@
           </div>
         </px-accordion>
 
-        <px-accordion
-          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-          header-value="Package Details"
-          status="">
-          <div id="PACKAGE_DETAILS">
-            <strong>Order Placed (Id): </strong><span></span><br />
-            <strong>Shipment Contents: </strong><span></span><br />
-            <strong>Description: </strong><span></span><br />
-          </div>
-        </px-accordion>
-
+      <px-accordion
+      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+      header-value="Customer Information"
+      status="">
+      <div id="CUSTOMER_INFO">
+        <strong>Name: </strong><span></span><br />
+        <strong>Email: </strong><span></span><br />
+        <strong>Phone: </strong><span></span><br />
+        <strong>Address: </strong><span></span><br />
+      </div>
+    </px-accordion>
         <px-accordion
           icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
           header-value="Package Comments"
@@ -137,10 +164,51 @@
           </div>
           </px-accordion>
 
+  <px-accordion
+  icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+  header-value="Package Details"
+  status="">
+  <div id="PACKAGE_DETAILS">
+    <strong>Order Placed (Id): </strong><span></span><br />
+    <strong>Shipment Contents: </strong><span></span><br />
+    <strong>Description: </strong><span></span><br />
   </div>
+</px-accordion>
+
+<px-accordion
+icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+header-value="Package Comments"
+status="">
+<div id="PACKAGE_COMMENTS">
+  <strong>Comments: </strong><br />
+</div>
+<form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
+ <fieldset>
+  <div class="form-group" show-errors>
+    <label class="control-label" for="new_comment">Add a new comment:</label>
+    <input name="new_comment" type="text" ng-model="vm.newComment" id="new_comment" class="form-control" placeholder="Type something..." required>
+    <div ng-messages="vm.form.customerForm.name.$error" role="alert">
+      <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
     </div>
   </div>
+  <div class="form-group">
+    <a 
+    ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
+    class="list-group-item">
+    <button type="submit" class="btn btn-default">Add Comment</button>
+  </a>
+</div>
+<div ng-show="vm.error" class="text-danger">
+  <strong ng-bind="vm.error"></strong>
+</div>
+</fieldset>
+</form> 
 
+</px-accordion>
+
+</div>
+</div>
+</div>
 
 <!--Predix Import Links-->
 <link rel="import" href="../../../../../lib/px-branding-bar/px-branding-bar.html"/>
