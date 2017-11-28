@@ -17,7 +17,7 @@ module.exports = function (app) {
     .put(customers.update)
     .delete(customers.delete);
 
-  app.route('/customers/:customerId/api/customers/:customerId').all(customersPolicy.isAllowed)
+  app.route('/map/:customerId/api/customers/:customerId').all(customersPolicy.isAllowed)
     .get(customers.read)
     .put(customers.update)
     .delete(customers.delete);

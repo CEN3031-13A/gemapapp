@@ -13,17 +13,38 @@
     <label for="id3" style="width: 33.33%; height: 100%;" class="btn">All</label>
   </div>
   
-  <div id="SOURCE" style="display:none;">
-    {{vm.customers}}
-  </div>
-  <div id="pxtree">
-    <px-tree id="TEST11"
-    keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
+    <div id="SOURCE" style="display:none;">
+        {{vm.customers}}
+    </div>
+    <div id="pxtree">
+        <px-tree id="TEST11"
+          keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
+          items='[
+          {
+            "label":"No Customers Selected",
+            "id":"branch-0-3",
+            "isSelectable": true
+          }
+          ]'
+          ng-click="vm.getItemData()" >
+        </px-tree>
+    </div>
+</div>
+
+<div id="STEPS" class="u-5/6 steps">
+    <px-steps
     items='[
     {
-      "label":"No Customers Selected",
-      "id":"branch-0-3",
-      "isSelectable": true
+      "id":"1",
+      "label":"(ORIGIN)"
+    },
+    {
+      "id":"2",
+      "label":"(CURRENT)"
+    },
+    {
+      "id":"3",
+      "label":"(TO)"
     }
     ]'
     multi-activate onclick="getItemData()">
@@ -62,6 +83,36 @@
       <h1>Detailed Information</h1>
     </div>
     <div class="list-group">
+<px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Customer Information"
+        status="">
+          <div id="CUSTOMER_INFO">
+            <strong>Name: </strong><span></span><br />
+            <strong>Email: </strong><span></span><br />
+            <strong>Phone: </strong><span></span><br />
+            <strong>Address: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Shipping Details"
+          status="">
+          <div id="SHIPPING_DETAILS">
+            <strong>Tracking Number: </strong><span></span><br />
+            <strong>Carrier: </strong><span></span><br />
+            <strong>Destination: </strong><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude:</text><span></span><br />
+            <strong>Current Location: </strong><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude: </text><span></span><br />
+            <strong>Shipped: </strong><span></span><br />
+            <strong>Expected Arrival: </strong><span></span><br />
+            <strong>Status: </strong><span></span><br />
+          </div>
+        </px-accordion>
 
       <px-accordion
       icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
@@ -74,25 +125,44 @@
         <strong>Address: </strong><span></span><br />
       </div>
     </px-accordion>
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Package Comments"
+          status="">
+          <div id="PACKAGE_COMMENTS">
+            <strong>Comments: </strong><br />
+          </div>            
+        </px-accordion>
 
-    <px-accordion
-    icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-    header-value="Shipping Details"
-    status="">
-    <div id="SHIPPING_DETAILS">
-      <strong>Tracking Number: </strong><span></span><br />
-      <strong>Carrier: </strong><span></span><br />
-      <strong>Destination: </strong><br />
-      <text>Latitude: </text><span></span><br />
-      <text>Longitude:</text><span></span><br />
-      <strong>Current Location: </strong><br />
-      <text>Latitude: </text><span></span><br />
-      <text>Longitude: </text><span></span><br />
-      <strong>Shipped: </strong><span></span><br />
-      <strong>Expected Arrival: </strong><span></span><br />
-      <strong>Status: </strong><span></span><br />
-    </div>
-  </px-accordion>
+        <px-accordion icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Add New Comment"
+          status="" opened>
+        <form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
+             <fieldset>
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="new_comment"></label>
+                  <textarea name="new_comment" ng-model="vm.newComment" id="new_comment" class="form-control" required ng-change="vm.newAddComment()"></textarea>
+                  <div ng-messages="vm.form.customerForm.name.$error" role="alert">
+                    <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <a  ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
+                      class="list-group-item">
+                    <div ng-show="vm.newComment">
+                      <button type="submit" class="btn btn-default">Add Comment</button>
+                    </div>
+                  </a>
+                </div>
+                <div ng-show="vm.error" class="text-danger">
+                  <strong ng-bind="vm.error"></strong>
+                </div>
+            </fieldset>
+          </form> 
+          <div ng-show="vm.newComment==undefined">
+            <button type="button" class="btn btn-disabled" disabled>Add Comment</button>
+          </div>
+          </px-accordion>
 
   <px-accordion
   icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'

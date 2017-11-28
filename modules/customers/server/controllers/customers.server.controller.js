@@ -33,7 +33,6 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
   // convert mongoose document to JSON
-  console.log("3 YEET");
   var customer = req.customer ? req.customer.toJSON() : {};
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
@@ -47,7 +46,6 @@ exports.read = function(req, res) {
  * Update a Customer
  */
 exports.update = function(req, res) {
-  console.log("4 YEET");
   var customer = req.customer;
   
   customer = _.extend(customer, req.body);
@@ -67,7 +65,7 @@ exports.update = function(req, res) {
  * Delete an Customer
  */
 exports.delete = function(req, res) {
-  console.log("5 YEET");
+
   var customer = req.customer;
 
   customer.remove(function(err) {
@@ -84,8 +82,7 @@ exports.delete = function(req, res) {
 /**
  * List of Customers
  */
- var count = 0;
-exports.list = function(req, res) {console.log("6 YEET");
+exports.list = function(req, res) {
   
 
   Customer.find().sort('-created').populate('user', 'displayName').exec(function(err, customers) {
