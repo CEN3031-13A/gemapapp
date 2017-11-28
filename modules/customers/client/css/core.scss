@@ -46,7 +46,7 @@ $inuit-enable-btn--large : true;
 
 #STEPS{
   height: 60px;
-  padding-top: .5vh;
+  padding-top: 1vh;
   position: absolute;
   right: 0;
   top: 30px;
@@ -61,7 +61,6 @@ $inuit-enable-btn--large : true;
 }
 
 .detailedInfo{
-  // background: $gray15;
   border-left: 1px solid black;
   display: none;
   height: calc(100vh - 30px);
@@ -83,6 +82,30 @@ $inuit-enable-btn--large : true;
 
 body::-webkit-scrollbar { 
     display: none; 
+}
+
+.detailedInfo px-accordion{
+  font-family: "GE Inspira Sans",sans-serif;
+}
+
+::-webkit-input-placeholder {
+   color: $neutral-gray10 !important;
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: $neutral-gray10 !important;  
+   text-align: center;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $neutral-gray10 !important;  
+   text-align: center;
+}
+
+:-ms-input-placeholder {  
+   color: $neutral-gray10 !important; 
+   text-align: center;
 }
 
 // Trumps

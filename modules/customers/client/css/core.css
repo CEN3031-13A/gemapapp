@@ -1882,7 +1882,7 @@ button.btn {
 
 #STEPS {
   height: 60px;
-  padding-top: .5vh;
+  padding-top: 1vh;
   position: absolute;
   right: 0;
   top: 30px; }
@@ -1913,6 +1913,27 @@ button.btn {
 
 body::-webkit-scrollbar {
   display: none; }
+
+.detailedInfo px-accordion {
+  font-family: "GE Inspira Sans",sans-serif; }
+
+::-webkit-input-placeholder {
+  color: #292929 !important;
+  text-align: center; }
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #292929 !important;
+  text-align: center; }
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #292929 !important;
+  text-align: center; }
+
+:-ms-input-placeholder {
+  color: #292929 !important;
+  text-align: center; }
 
 /**
  * Margin and padding helper classes with breakpoint prefixes. Use these to tweak layout on a micro
