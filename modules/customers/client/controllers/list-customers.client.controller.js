@@ -506,10 +506,12 @@
       let currentShipment = vm.customers[vm.currentIndices.customer].orders[vm.currentIndices.order].shipments[vm.currentIndices.shipment];
       if (currentShipment !== undefined) {
         if(currentShipment.comments != undefined){
-          var string =  "<strong>Comments: </strong><br />";
+          var string =  "";
           for(let i = 0;i < currentShipment.comments.length; i++){
-            string += "<strong>" + currentShipment.comments[i].comment_date + "</strong>" + ": ";
-            string += currentShipment.comments[i].comment + "<br />";
+			string += '<px-accordion disabled=true style=font-weight:normal header-value="';
+			string += currentShipment.comments[i].comment_date;
+			string += '"></px-accordion><span style=font-weight:normal>'
+            string += currentShipment.comments[i].comment + '</span><br />';
           }
           document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
         }
