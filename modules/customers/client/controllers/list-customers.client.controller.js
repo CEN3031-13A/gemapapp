@@ -91,6 +91,7 @@
     *   Description:  
     */
     vm.searchCustomers = function() {
+      // console.log(vm.searchText)
       var customerListSearch = [];
       if (activeInactiveState === 'Active') {
         if (vm.searchText === "") {
