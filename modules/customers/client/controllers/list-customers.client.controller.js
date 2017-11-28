@@ -442,9 +442,12 @@
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let customerInfoElement = document.getElementById("CUSTOMER_INFO").children;
       customerInfoElement[1].innerText  = currentCustomer.name;
-      customerInfoElement[4].innerText  = currentCustomer.email;
-      customerInfoElement[7].innerText  = currentCustomer.phone;
-      customerInfoElement[10].innerText = currentCustomer.address;
+      customerInfoElement[4].innerText  = currentCustomer.age;
+	  customerInfoElement[7].innerText  = currentCustomer.email;
+      customerInfoElement[10].innerText  = currentCustomer.phone;
+      customerInfoElement[13].innerText = currentCustomer.address;
+	  customerInfoElement[16].innerText = currentCustomer.registered;
+	  customerInfoElement[19].innerText = currentCustomer.about;
     }
     
     function shippingDetails() {
@@ -453,15 +456,17 @@
       let currentShipment = currentOrder.shipments[vm.currentIndices.shipment];
       if (currentShipment !== undefined) {
         let shipmentInfoElement = document.getElementById("SHIPPING_DETAILS").children;
-        shipmentInfoElement[1].innerText  =  currentShipment.id;
+        shipmentInfoElement[1].innerText  =  currentShipment.tracking_number;
         shipmentInfoElement[4].innerText  =  currentShipment.carrier;
-        shipmentInfoElement[9].innerText  =  currentShipment.current_location.latitude;
-        shipmentInfoElement[12].innerText = currentShipment.current_location.longitude;
-        shipmentInfoElement[17].innerText = currentShipment.destination.latitude;
-        shipmentInfoElement[20].innerText = currentShipment.destination.longitude;
-        shipmentInfoElement[23].innerText = currentShipment.ship_date;
-        shipmentInfoElement[26].innerText = currentShipment.expected_date;
-        shipmentInfoElement[29].innerText = currentShipment.delivery_state;
+        shipmentInfoElement[7].innerText  =  currentShipment.delivery_state;
+        shipmentInfoElement[10].innerText  =  currentShipment.late_penalties;
+		shipmentInfoElement[15].innerText  =  currentShipment.current_location.latitude;
+        shipmentInfoElement[18].innerText = currentShipment.current_location.longitude;
+        shipmentInfoElement[23].innerText = currentShipment.destination.latitude;
+        shipmentInfoElement[26].innerText = currentShipment.destination.longitude;
+        shipmentInfoElement[29].innerText = currentShipment.ship_date;
+        shipmentInfoElement[32].innerText = currentShipment.expected_date;
+        shipmentInfoElement[35].innerText = currentShipment.delivery_state;
       }
     }
     
@@ -472,8 +477,12 @@
       if (currentShipment !== undefined) {
         let packageInfoElement = document.getElementById("PACKAGE_DETAILS").children;
         packageInfoElement[1].innerText = currentShipment.ship_date;
-        packageInfoElement[4].innerText = currentShipment.contents;
-        packageInfoElement[7].innerText = currentCustomer.about;
+		let contents = "";
+		for(let i = 0; i < currentShipment.contents.length; i++){
+			contents += currentShipment.contents[i];
+			contents += ", ";
+		}
+		packageInfoElement[4].innerText = contents.substring(0,contents.length-2);
       }
     }
     
