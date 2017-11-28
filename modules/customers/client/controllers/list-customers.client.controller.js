@@ -444,10 +444,10 @@
       customerInfoElement[1].innerText  = currentCustomer.name;
       customerInfoElement[4].innerText  = currentCustomer.age;
 	  customerInfoElement[7].innerText  = currentCustomer.email;
-      customerInfoElement[7].innerText  = currentCustomer.phone;
-      customerInfoElement[10].innerText = currentCustomer.address;
-	  customerInfoElement[10].innerText = currentCustomer.registered;
-	  customerInfoElement[10].innerText = currentCustomer.about;
+      customerInfoElement[10].innerText  = currentCustomer.phone;
+      customerInfoElement[13].innerText = currentCustomer.address;
+	  customerInfoElement[16].innerText = currentCustomer.registered;
+	  customerInfoElement[19].innerText = currentCustomer.about;
     }
     
     function shippingDetails() {
