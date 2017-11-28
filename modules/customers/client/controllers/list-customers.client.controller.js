@@ -14,13 +14,18 @@
     vm.customers = CustomersService.query();
 
     vm.getItemData = function() {
+      closeAllInfoWindows();
       var customers = vm.customers;
       var px_tree = document.querySelector('px-tree');
       var selectedShipment = px_tree.selected;
       var selectedPath = px_tree.selectedRoute;
       $location.testMe 
-      if (selectedPath <= 1)
+      if (selectedPath.length <= 1){
+        clearMarkers();
+        if (flightPathList != null)
+          removeLine();
         return;
+      }
     
       let shipmentID = selectedShipment.id;
       let customerID = selectedPath[0];
@@ -61,7 +66,6 @@
             pxSteps(true);
           }
           
-          closeAllInfoWindows();
           customerInfo();
           shippingDetails();
           packageDetails();
