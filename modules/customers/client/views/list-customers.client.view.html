@@ -109,7 +109,7 @@
              <fieldset>
                 <div class="form-group" show-errors>
                   <label class="control-label" for="new_comment">Add a new comment:</label>
-                  <input name="new_comment" type="text" ng-model="vm.newComment" id="new_comment" class="form-control" placeholder="Type something..." required ng-change="vm.newAddComment()">
+				  <textarea name="new_comment" ng-model="vm.newComment" id="new_comment" class="form-control" required ng-change="vm.newAddComment()"></textarea>
                   <div ng-messages="vm.form.customerForm.name.$error" role="alert">
                     <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
                   </div>
@@ -118,7 +118,10 @@
                       <a 
        ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
        class="list-group-item">
-                  <button type="submit" class="btn btn-default">Add Comment</button>
+				
+				  <div ng-show="vm.newComment">
+                    <button type="submit" class="btn btn-default">Add Comment</button>
+				  </div>
                 </a>
                 </div>
                 <div ng-show="vm.error" class="text-danger">
@@ -126,6 +129,9 @@
                 </div>
               </fieldset>
           </form> 
+		  <div ng-show="vm.newComment==undefined">
+                    <button type="button" class="btn btn-disabled" disabled>Add Comment</button>
+				  </div>
             
         </px-accordion>
 

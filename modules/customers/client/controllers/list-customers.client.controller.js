@@ -606,7 +606,7 @@ function displayLocation(latitude, longitude, type) {
       let pinColor;
     
       if (shipment.delivery_state === "Ahead of Time")
-        pinColor = "10C6FF";
+        pinColor = "00C300";
       else if (shipment.delivery_state === "On Time")
         pinColor = "00C300";
       else if (shipment.delivery_state === "Likely to be On Time")
@@ -812,7 +812,7 @@ function displayLocation(latitude, longitude, type) {
       var lineColor;
       switch (state) {
         case 'Ahead of Time':
-          lineColor = '#10C6FF';
+          lineColor = '#00C300';
           break;
         case 'On Time':
           lineColor = '#00C300';
