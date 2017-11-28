@@ -72,37 +72,36 @@
       // }
     }
     vm.searchCustomers = function() {
-      var str = document.getElementById("myInput").value;
       var customerListSearch = [];
       if (activeInactiveState === 'Active') {
-        if (str === "") {
+        if (vm.searchText === "") {
           pxTreeDisplay(activeCustomerList);
           return;
         }
         for (let i = 0; i < activeCustomerList.length; i++) {
-          let regularExpression = new RegExp(str, 'i');
+          let regularExpression = new RegExp(vm.searchText, 'i');
           if (activeCustomerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(activeCustomerList[i]);
         }
         pxTreeDisplay(customerListSearch);
       } else if (activeInactiveState === 'Inactive') {
-        if (str === "") {
+        if (vm.searchText === "") {
           pxTreeDisplay(inactiveCustomerList);
           return;
         }
         for (let i = 0; i < inactiveCustomerList.length; i++) {
-          let regularExpression = new RegExp(str, 'i');
+          let regularExpression = new RegExp(vm.searchText, 'i');
           if (inactiveCustomerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(inactiveCustomerList[i]);
         }
         pxTreeDisplay(customerListSearch);
       } else {
-        if (str === "") {
+        if (vm.searchText === "") {
           pxTreeDisplay(customerList);
           return;
         }
         for (let i = 0; i < customerList.length; i++) {
-          let regularExpression = new RegExp(str, 'i');
+          let regularExpression = new RegExp(vm.searchText, 'i');
           if (customerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(customerList[i]);
         }
@@ -138,20 +137,27 @@
       var x = document.getElementById('hide');
       var y = document.getElementById('MAP_MARKERS');
       var z = document.getElementById('STEPS');
-      if (x.style.display === 'block') {
-        x.style.display = 'none';
-        document.getElementById('MAP_MARKERS').className = "u-5/6";
-        document.getElementById('MAP_MARKERS').style.right = "0";
-        document.getElementById("STEPS").className = "u-5/6";
-        document.getElementById('STEPS').style.right = "0";
+      if (rightSideBarIsDisplayed === true) {
+        if(rightSideBarTimerOut == undefined && rightSideBarTimerIn == undefined){
+          // x.style.display = 'none';
+          document.getElementById('MAP_MARKERS').style.right = "0";
+          document.getElementById('STEPS').style.right = "0";
+          rightSideBarTimerIn = setInterval(rightSideBarIn, 1);
+          rightSideBarIsDisplayed = false;
+        }
       } else {
-        x.style.display = 'block';
-        document.getElementById('MAP_MARKERS').className = "u-4/6";
-        document.getElementById('MAP_MARKERS').style.right = "16.6666667%";
-        document.getElementById("STEPS").className = "u-4/6";
-        document.getElementById('STEPS').style.right = "16.6666667%";
+        if(rightSideBarTimerOut == undefined && rightSideBarTimerIn == undefined){
+          // x.style.display = 'block';
+          document.getElementById('MAP_MARKERS').style.left = "16.6666667%";
+          document.getElementById('STEPS').style.left = "16.6666667%";
+          rightSideBarTimerOut = setInterval(rightSideBarOut, 1);
+          rightSideBarIsDisplayed = true;
+        }
       }
     }
+
+
+
     vm.newAddComment = function(){
       if(vm.newComment != undefined){
         let commentDate = "";
@@ -213,7 +219,6 @@
 
       }
     }
-    // var customer;
     var customerList     = [];
     var activeCustomerList   = [];
     var inactiveCustomerList = [];
@@ -238,6 +243,12 @@
     var generalLocationOrigin = [];      
     var generalLocationCurrent = [];     
     var generalLocationDestination = []; 
+
+    var rightSideBarIsDisplayed = false
+    var rightSideBarTimerIn;
+    var inVal = 0;
+    var rightSideBarTimerOut;
+    var outVal = 0;
       
     function pxTreeDisplay(customerListSearch) {
       customerListSearch.sort(function (a, b) {
@@ -857,9 +868,43 @@ function displayLocation(latitude, longitude, type) {
         flightPathList[i].setMap(null);
     }
     
+    function rightSideBarOut(){
+      outVal += 0.035;
+      let val = (50.0/3.0)*Math.sin(outVal + Math.PI/2.0)+(66+(2.0/3.0));
+      let val1= 83.3333333333 - val;
+      document.getElementById('MAP_MARKERS').style.width = val+"%";
+      document.getElementById('STEPS').style.width = val+"%";
+      document.getElementById('hide').style.width = val1+"%";
+      if(val <= 66.9){
+        outVal =0;
+        document.getElementById('MAP_MARKERS').style.width = "66.666666667%";
+        document.getElementById('STEPS').style.width = "66.666666667%";
+        document.getElementById('hide').style.width = "16.6666666667%";
+        clearInterval(rightSideBarTimerOut);
+        rightSideBarTimerOut = undefined;
+      }
+    }
 
+    function rightSideBarIn(){
+      inVal += 0.035;
+      let val = (50.0/3.0)*Math.sin(inVal )+(66+(2.0/3.0));
+      let val1 = 83.3333333333 - val;
+      document.getElementById('MAP_MARKERS').style.width = val+"%";
+      document.getElementById('STEPS').style.width = val+"%";
+      document.getElementById('hide').style.width = val1+"%";
+      if(val >= 83.1){
+        inVal =0;
+        document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
+        document.getElementById('STEPS').style.width = "83.3333333333%";
+        document.getElementById('hide').style.width = "0%";
+        clearInterval(rightSideBarTimerIn);
+        rightSideBarTimerIn = undefined;
+      }
+    }
 
-
+    document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
+    document.getElementById('STEPS').style.width = "83.3333333333%";
+    document.getElementById('hide').style.width = "0";
 
   }
 }());
