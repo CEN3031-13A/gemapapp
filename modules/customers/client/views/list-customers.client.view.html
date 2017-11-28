@@ -24,8 +24,8 @@
     }
     ]'
     ng-click="vm.getItemData()" >
-  </px-tree>
-</div>
+    </px-tree>
+  </div>
 </div>
 
 
@@ -46,7 +46,7 @@
   }
   ]'
   completed='[]'>
-</px-steps>
+  </px-steps>
 </div>
 
 <div id="MAP_MARKERS">
@@ -59,99 +59,117 @@
    <!--  <div class="page-header" style="height: 60px;">
       <h2 style="text-decoration: underline; text-align: center;">Detailed&nbsp;Information</h2>
     </div> -->
-  <px-accordion disabled=true header-value="Detailed&nbsp;Information" opened=true style=font-weight:bold>
-    <div class="list-group">
-      <px-accordion
-      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-      header-value="Customer Information"
-      status="">
-      <div id="CUSTOMER_INFO">
-        <px-accordion disabled=true style=font-weight:normal header-value="Name:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Age:"></px-accordion><span style=font-weight:normal></span><br />
-        <px-accordion disabled=true style=font-weight:normal header-value="Email:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Phone:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Address:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Date Registered:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="About:"></px-accordion><span style=font-weight:normal></span><br />
+    <px-accordion header-value="Detailed&nbsp;Information" opened=true style="font-weight:bold;">
+      <div class="list-group">
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Customer&nbsp;Information"
+        status="">
+          <div id="CUSTOMER_INFO">
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Name:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Age:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Email:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Phone:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Address:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Date Registered:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="About:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Shipping Details"
+        status="">
+          <div id="SHIPPING_DETAILS">
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Tracking Number:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Carrier:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Delivery Status:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Penalties if Late:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Current Location:"></px-accordion>
+              <text></text>
+              <text style="font-weight:normal;">Latitude: </text>
+                <span style="font-weight:normal;"></span><br />
+              <text style="font-weight:normal;">Longitude: </text>
+                <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Destination:"></px-accordion>
+              <text></text>
+              <text style="font-weight:normal;">Latitude: </text>
+                <span style="font-weight:normal;"></span><br />
+              <text style="font-weight:normal;">Longitude: </text>
+                <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Shipped:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Expected Arrival:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Status:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Package Details"
+        status="">
+          <div id="PACKAGE_DETAILS">
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Order Placed (Id):"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Shipment Contents:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Package Comments"
+        status="">
+          <div id="PACKAGE_COMMENTS">
+            <strong>Comments: </strong><span style="font-weight:normal;"></span><br />
+          </div>            
+        </px-accordion>
+
+        <px-accordion icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Add New Comment"
+        status="" opened=true>
+          <form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
+           <fieldset>
+            <div class="form-group" show-errors>
+              <label class="control-label" for="new_comment"></label>
+              <textarea name="new_comment" ng-model="vm.newComment" id="new_comment" class="form-control" required ng-change="vm.newAddComment()"></textarea>
+              <div ng-messages="vm.form.customerForm.name.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <a  ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
+              class="list-group-item">
+                <div id="submitbutton" ng-show="vm.newComment">
+                  <button type="submit">Add Comment</button>         
+                </div>
+              </a>
+            </div>
+            <div ng-show="vm.error" class="text-danger">
+              <strong ng-bind="vm.error"></strong>
+            </div>
+           </fieldset>
+          </form> 
+          <div id="submitbutton" ng-show="vm.newComment==undefined">
+            <button disabled>Add Comment</button>  
+          </div>
+        </px-accordion>
       </div>
     </px-accordion>
-
-    <px-accordion
-    icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-    header-value="Shipping Details"
-    status="">
-    <div id="SHIPPING_DETAILS">
-    <px-accordion disabled=true style=font-weight:normal header-value="Tracking Number:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Carrier:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Delivery Status:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Penalties if Late:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Current Location:"></px-accordion><text></text>
-    <text style=font-weight:normal>Latitude: </text><span style=font-weight:normal></span><br />
-      <text style=font-weight:normal>Longitude: </text><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Destination:"></px-accordion><text></text>
-    <text style=font-weight:normal>Latitude: </text><span style=font-weight:normal></span><br />
-      <text style=font-weight:normal>Longitude: </text><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Shipped:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Expected Arrival:"></px-accordion><span style=font-weight:normal></span><br />
-    <px-accordion disabled=true style=font-weight:normal header-value="Status:"></px-accordion><span style=font-weight:normal></span><br />
-    </div>
-  </px-accordion>
-
-  <px-accordion
-  icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-  header-value="Package Details"
-  status="">
-  <div id="PACKAGE_DETAILS">
-    <px-accordion disabled=true style=font-weight:normal header-value="Order Placed (Id):"></px-accordion><span style=font-weight:normal></span><br />
-  <px-accordion disabled=true style=font-weight:normal header-value="Shipment Contents:"></px-accordion><span style=font-weight:normal></span><br />
   </div>
-</px-accordion>
-
-<px-accordion
-icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-header-value="Package Comments"
-status="">
-<div id="PACKAGE_COMMENTS">
-  <strong>Comments: </strong><span style=font-weight:normal></span><br />
-</div>            
-</px-accordion>
-
-<px-accordion icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-header-value="Add New Comment"
-status="" opened=true>
-<form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
- <fieldset>
-  <div class="form-group" show-errors>
-    <label class="control-label" for="new_comment"></label>
-    <textarea name="new_comment" ng-model="vm.newComment" id="new_comment" class="form-control" required ng-change="vm.newAddComment()"></textarea>
-    <div ng-messages="vm.form.customerForm.name.$error" role="alert">
-      <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
-    </div>
-  </div>
-  <div class="form-group">
-    <a  ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
-    class="list-group-item">
-    <div id="submitbutton" ng-show="vm.newComment">
-      <button type="submit">Add Comment</button>
-      
-    </div>
-  </a>
-</div>
-<div ng-show="vm.error" class="text-danger">
-  <strong ng-bind="vm.error"></strong>
-</div>
-</fieldset>
-</form> 
-<div id="submitbutton" ng-show="vm.newComment==undefined">
-  <button disabled>Add Comment</button>
-  
-</div>
-</px-accordion>
-</px-accordion>
-
-
-</div>
-</div>
 </div>
 
 <!--Predix Import Links-->
