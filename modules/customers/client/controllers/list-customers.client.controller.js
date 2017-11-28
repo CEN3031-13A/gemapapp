@@ -667,7 +667,7 @@ function displayLocation(latitude, longitude, type) {
                 shipment.ship_date +
                 '</p>' +
                 '</div>' +
-                '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
+                '<button id="markerInfo" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
     
       var currentContentString = '<div id="content">' +
@@ -683,7 +683,7 @@ function displayLocation(latitude, longitude, type) {
                 shipment.ship_date +
                 '</p>' +
                 '</div>' +
-                '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
+                '<button id="markerInfo" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
     
       var destinationContentString = '<div id="content">' +
@@ -698,7 +698,7 @@ function displayLocation(latitude, longitude, type) {
                 shipment.ship_date +
                 '</p>' +
                 '</div>' +
-                '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
+                '<button id="markerInfo" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
 
       var compiledOrigin = $compile(originContentString)($scope);

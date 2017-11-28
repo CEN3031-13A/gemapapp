@@ -22,6 +22,7 @@ $inuit-enable-layout--full : true;
 @import "../../../../public/lib/px-layout-design/_objects.layout.scss";
 @import "../../../../public/lib/px-button-group-design/_objects.button-group.scss";
 $inuit-enable-btn--full : true;
+$inuit-enable-btn--large : true;
 @import "../../../../public/lib/px-buttons-design/_objects.buttons.scss";
 
 // Components
@@ -73,6 +74,11 @@ $inuit-enable-btn--full : true;
 #markerInfo{
   display: block;
   margin-left: 47.5%;
+}
+
+#submitbutton{
+  display: block;
+  margin-left: 30%;
 }
 
 body::-webkit-scrollbar { 
