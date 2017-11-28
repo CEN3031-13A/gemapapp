@@ -15,6 +15,7 @@
 
 // Meta
 
+
 // Objects
 $inuit-enable-layout--flush : true;
 $inuit-enable-layout--full : true;
@@ -37,7 +38,7 @@ $inuit-enable-btn--full : true;
   top: 30px;
 }
 
-#PREDIX_TREE{
+#pxtree{
   color: white;
   font-family: "GE Inspira Sans",sans-serif;
 }
@@ -59,6 +60,7 @@ $inuit-enable-btn--full : true;
 }
 
 .detailedInfo{
+  // background: $gray15;
   border-left: 1px solid black;
   display: none;
   height: calc(100vh - 30px);

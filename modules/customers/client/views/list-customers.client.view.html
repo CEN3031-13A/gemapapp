@@ -4,15 +4,19 @@
 
 <div class="u-1/6" id="leftMenu">
   <input style="background:white;" class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
-  <div class="btn-group">
-    <button for="id1" class="btn btn--full" onclick="displayActive()">Active</button>
-    <button for="id2" class="btn btn--full" onclick="displayInactive()">Inactive</button>
-    <button for="id3" class="btn btn--full" onclick="displayAll()">All</button>
+  <div class="btn-group" style="width: 100%; height: 30px;">
+    <input id="id1" name="btn-group" style="width: 33.33%; height: 100%;" onclick="displayActive()"  type="radio">
+    <label for="id1" style="width: 33.33%; height: 100%;" class="btn">Active</label>
+    <input id="id2" name="btn-group" style="width: 33.33%; height: 100%;" onclick="displayInactive()"  type="radio">
+    <label for="id2" style="width: 33.33%; height: 100%;" class="btn">Inactive</label>
+    <input id="id3" name="btn-group" style="width: 33.33%; height: 100%;" onclick="displayAll()"  type="radio">
+    <label for="id3" style="width: 33.33%; height: 100%;" class="btn">All</label>
   </div>
+  
   <div id="SOURCE" style="display:none;">
     {{vm.customers}}
   </div>
-  <div id="PREDIX_TREE">
+  <div id="pxtree">
     <px-tree id="TEST11"
     keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
     items='[
