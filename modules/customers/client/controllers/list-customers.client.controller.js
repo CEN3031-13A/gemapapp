@@ -1032,16 +1032,16 @@
     */
     function rightSideBarOut(){
       outVal += 0.035;
-      let val = (50.0/3.0)*Math.sin(outVal + Math.PI/2.0)+(66+(2.0/3.0));
+      let val = (21.333)*Math.sin(outVal + Math.PI/2.0)+(62);
       let val1= 83.3333333333 - val;
       document.getElementById('MAP_MARKERS').style.width = val+"%";
       document.getElementById('STEPS').style.width = val+"%";
       document.getElementById('hide').style.width = val1+"%";
-      if(val <= 66.9){
+      if(val <= 61.4){
         outVal =0;
-        document.getElementById('MAP_MARKERS').style.width = "66.666666667%";
-        document.getElementById('STEPS').style.width = "66.666666667%";
-        document.getElementById('hide').style.width = "16.6666666667%";
+        document.getElementById('MAP_MARKERS').style.width = "62%";
+        document.getElementById('STEPS').style.width = "62%";
+        document.getElementById('hide').style.width = "21.333%";
         clearInterval(rightSideBarTimerOut);
         rightSideBarTimerOut = undefined;
       }
@@ -1052,7 +1052,7 @@
     */
     function rightSideBarIn(){
       inVal += 0.035;
-      let val = (50.0/3.0)*Math.sin(inVal )+(66+(2.0/3.0));
+      let val = (21.333)*Math.sin(inVal )+(62);
       let val1 = 83.3333333333 - val;
       document.getElementById('MAP_MARKERS').style.width = val+"%";
       document.getElementById('STEPS').style.width = val+"%";
