@@ -17,6 +17,13 @@ module.exports = function (app) {
     .put(customers.update)
     .delete(customers.delete);
 
+  app.route('/map/:customerId/api/customers/:customerId').all(customersPolicy.isAllowed)
+    .get(customers.read)
+    .put(customers.update)
+    .delete(customers.delete);
+
+    
+
   // Finish by binding the Customer middleware
   app.param('customerId', customers.customerByID);
 };

@@ -22,6 +22,12 @@ var customerSchema = new Schema({
 			id: String,
 			tracking_number: String,
 			carrier: String,
+			delivery_state: String,
+			late_penalties: String,
+			comments: [{
+				comment_date: String,
+				comment: String
+			}],
 			origin: {
 				latitude: Number,
 				longitude: Number

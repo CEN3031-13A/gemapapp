@@ -1,26 +1,76 @@
 <section>
-  <div class="page-header">
-    <h1 ng-bind="vm.customer.name"></h1>
-  </div>
-  <div class="pull-right"
-       ng-show="vm.customer.isCurrentUserOwner">
-    <a class="btn btn-primary"
-       ui-sref="customers.edit({ customerId: vm.customer._id })">
-      <i class="glyphicon glyphicon-edit"></i>
-    </a>
-    <a class="btn btn-primary" ng-click="vm.remove()">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
-  </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.customer.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.customer.user"
-            ng-bind="vm.customer.user.displayName"></span>
-      <span ng-if="!vm.customer.user">Deleted User</span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="vm.customer.content"></p>
+  <div class="rightSidebar" id="hide">  
+    <div id="demo3" class="flex flex--col">
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Customer Information"
+        status="">
+          <div id="CUSTOMER_INFO">
+            <strong>Name: </strong><span></span><br />
+            <strong>Email: </strong><span></span><br />
+            <strong>Phone: </strong><span></span><br />
+            <strong>Address: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Shipping Details"
+          status="">
+          <div id="SHIPPING_DETAILS">
+            <strong>Tracking Number: </strong><span></span><br />
+            <strong>Carrier: </strong><span></span><br />
+            <strong>Destination: </strong><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude:</text><span></span><br />
+            <strong>Current Location: </strong><br />
+                  <text>Latitude: </text><span></span><br />
+                  <text>Longitude: </text><span></span><br />
+            <strong>Shipped: </strong><span></span><br />
+            <strong>Expected Arrival: </strong><span></span><br />
+            <strong>Status: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Package Details"
+          status="">
+          <div id="PACKAGE_DETAILS">
+            <strong>Order Placed (Id): </strong><span></span><br />
+            <strong>Shipment Contents: </strong><span></span><br />
+            <strong>Description: </strong><span></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+          icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+          header-value="Package Comments"
+          status="">
+          <div id="PACKAGE_COMMENTS">
+            <strong>Comments: </strong><br />
+          </div>
+          <form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
+             <fieldset>
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="new_comment">Add a new comment:</label>
+                  <input name="new_comment" type="text" ng-model="vm.newComment" id="new_comment" class="form-control" placeholder="Type something..." required>
+                  <div ng-messages="vm.form.customerForm.name.$error" role="alert">
+                    <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-default">Add Comment</button>
+                </div>
+                <div ng-show="vm.error" class="text-danger">
+                  <strong ng-bind="vm.error"></strong>
+                </div>
+              </fieldset>
+          </form> 
+            
+        </px-accordion>
+
+
+      </div>
+    </div>
 </section>

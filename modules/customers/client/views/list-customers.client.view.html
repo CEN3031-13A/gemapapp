@@ -1,134 +1,175 @@
-<px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+<div class="u-1/1">
+  <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
+</div>
 
-<div class="layout">
-    <div class="layout__item">
-      <div id="tree">
-        <!-- implement the search bar -->
-        <input class="text-input" id="myInput" onkeyup="searchCustomers()" type="text" placeholder="Search customer">
-        <!-- implement the buttons Active, Inactive, All -->
-        <div class="btn-group" >
-          <button for="id1" class="btn" onclick="displayActive()">Active</button>
-          <button for="id2" class="btn" onclick="displayInactive()">Inactive</button>
-          <button for="id2" class="btn" onclick="displayAll()">All</button>
-        </div>
-      </div>
-        <!-- implement customer listings using predix tree -->
-        <div id="SOURCE" style="display:none;">
-          {{vm.customers}}
-        </div>
-    </div>
-    <div class="layout__item">
-      <div class="steps" id="STEPS">
-        <px-steps
-          items='[
-          {
-            "id":"1",
-            "label":"(FROM)"
-          },
-          {
-            "id":"2",
-            "label":"(CURRENT)"
-          },
-          {
-            "id":"3",
-            "label":"(TO)"
-          }
-          ]'
-          completed='[]'>
-        </px-steps>
-      </div>
-    </div>
-    <div class="layout__item">
-                      <div class="rightSidebar" id="hide">  
-                  <div class="sidebarBlock">
-                    <px-accordion
-                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                      header-value="Customer Information"
-                      status="">
-                        <div id="CUSTOMER_INFO">
-                          <strong>Name: </strong><br />
-                          <strong>Email: </strong><br />
-                          <strong>Phone: </strong><br />
-                          <strong>Address: </strong><br />
-                        </div>
-                    </px-accordion>
-                  </div>
-                  <div class="sidebarBlock">
-                    <px-accordion
-                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                      header-value="Shipping Details"
-                      status="">
-                      <div id="SHIPPING_DETAILS">
-                        <strong>Tracking Number: </strong><br />
-                        <strong>Carrier: </strong><br />
-                        <strong>Destination: </strong><br />
-                              <c>Latitude: </text><br />
-                              <text>Longitude:</text><br />
-                        <strong>Current Location: </strong><br />
-                              <text>Latitude: </text><br />
-                              <text>Longitude: </text><br />
-                        <strong>Shipped: </strong><br />
-                        <strong>Expected Arrival: </strong><br />
-                        <strong>Status: </strong><br />
-                    </div>
-                    </px-accordion>
-
-                  </div>
-                  <div class="sidebarBlock">
-                    <px-accordion
-                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                      header-value="Package Details"
-                      status="">
-                      <div id="PACKAGE_COMMENTS">
-                        <strong>Order Placed (Id): </strong><br />
-                        <strong>Shipment Contents: </strong><br />
-                        <strong>Description: </strong><br />
-                      </div>
-                    </px-accordion>
-
-                  </div>
-                  <div class="sidebarBlock">
-                    <px-accordion
-                      icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
-                      header-value="Package Comments"
-                      status="" 
-                      disabled show-action>
-                    </px-accordion>
-                    <form>
-                      <div class="sidebarBlock">
-                          <input placeholder="Type something..." class="text-input input--regular" type="text">
-                      </div>
-                      <div class="sidebarBlock">
-                          <input class="btn btn--primary" type="reset" value="Submit">
-                      </div>
-                    </form>
-                  </div>
-                </div>
+<div class="u-1/6" id="leftMenu">
+  <input style="background: white;" class="text-input" id="myInput" ng-keyup="vm.searchCustomers()" ng-model="vm.searchText" type="text" placeholder="Search Customers">
+  <div class="btn-group" style="width: 100%; height: 30px;">
+    <input id="id1" name="btn-group" style="width: 33.33%; height: 100%;" ng-click="vm.displayActive()"  type="radio">
+    <label for="id1" style="width: 33.33%; height: 100%;" class="btn">Active</label>
+    <input id="id2" name="btn-group" style="width: 33.33%; height: 100%;" ng-click="vm.displayInactive()" mg-model="vm.searchText"  type="radio">
+    <label for="id2" style="width: 33.33%; height: 100%;" class="btn">Inactive</label>
+    <input id="id3" name="btn-group" style="width: 33.33%; height: 100%;" ng-click="vm.displayAll()"  type="radio">
+    <label for="id3" style="width: 33.33%; height: 100%;" class="btn">All</label>
+  </div>
+  
+  <div id="pxtree">
+    <px-tree id="TEST11"
+    keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
+    items='[
+    {
+      "label":"No Customers Selected",
+      "id":"branch-0-3",
+      "isSelectable": true
+    }
+    ]'
+    ng-click="vm.getItemData()" >
+    </px-tree>
   </div>
 </div>
 
-<div class="layout">
-    <div class="layout__item">
-                <div id="TREE">
-            <px-tree
-          keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
-           items='[
-           {
-            "label":"No Customers Selected",
-            "id":"branch-0-3",
-            "isSelectable": false
-           }
-           ]'
-          multi-activate>
-          </px-tree>
-        </div>
-    </div>
-    <div class="layout__item">
-      <div class="map" id="MAP_MARKERS">
-        <google-map zoom="2" fit-to-markers api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
-        </google-map>
+
+<div id="STEPS" class="steps">
+  <px-steps
+  items='[
+  {
+    "id":"1",
+    "label":"(FROM)"
+  },
+  {
+    "id":"2",
+    "label":"(CURRENT)"
+  },
+  {
+    "id":"3",
+    "label":"(TO)"
+  }
+  ]'
+  completed='[]'>
+  </px-steps>
+</div>
+
+<div id="MAP_MARKERS">
+  <google-map api-key="AIzaSyDIwsEgFNLvamPKR96RMJzlwTuxBHh3xj0">
+  </google-map>
+</div>
+
+<div class="detailedInfo" id="hide">  
+  <div id="demo3" class="flex flex--col">
+   <!--  <div class="page-header" style="height: 60px;">
+      <h2 style="text-decoration: underline; text-align: center;">Detailed&nbsp;Information</h2>
+    </div> -->
+    <px-accordion opened=true header-value="Detailed&nbsp;Information" style="font-weight:bold;">
+      <div class="list-group">
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Customer&nbsp;Information"
+        status="">
+          <div id="CUSTOMER_INFO">
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Name:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Age:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Email:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Phone:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Address:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Date&nbsp;Registered:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="About:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Shipping&nbsp;Details"
+        status="">
+          <div id="SHIPPING_DETAILS">
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Tracking&nbsp;Number:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Carrier:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Delivery&nbsp;Status:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Penalties&nbsp;if&nbsp;Late:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Current&nbsp;Location:"></px-accordion>
+              <text></text>
+              <text style="font-weight:normal;">Latitude:</text>
+                <span style="font-weight:normal;"></span><br />
+              <text style="font-weight:normal;">Longitude:</text>
+                <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Destination:"></px-accordion>
+              <text></text>
+              <text style="font-weight:normal;">Latitude:</text>
+                <span style="font-weight:normal;"></span><br />
+              <text style="font-weight:normal;">Longitude:</text>
+                <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Shipped:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Expected&nbsp;Arrival:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Status:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Package&nbsp;Details"
+        status="">
+          <div id="PACKAGE_DETAILS">
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Order&nbsp;Placed&nbsp;(Id):"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+            <px-accordion disabled=true style="font-weight:normal;" header-value="Shipment&nbsp;Contents:"></px-accordion>
+              <span style="font-weight:normal;"></span><br />
+          </div>
+        </px-accordion>
+
+        <px-accordion
+        icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Package&nbsp;Comments"
+        status="">
+          <div id="PACKAGE_COMMENTS">
+            <strong>Comments: </strong><span style="font-weight:normal;"></span><br />
+          </div>            
+        </px-accordion>
+
+        <px-accordion icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
+        header-value="Add&nbsp;New&nbsp;Comment"
+        status="" opened=true>
+          <form name="vm.form.customerForm" class="form-horizontal" ng-submit="vm.save(vm.form.customerForm.$valid)" novalidate>
+           <fieldset>
+            <div class="form-group" show-errors>
+              <label class="control-label" for="new_comment"></label>
+              <textarea name="new_comment" ng-model="vm.newComment" id="new_comment" class="form-control" required ng-change="vm.newAddComment()" style="font-weight:normal;"></textarea>
+              <div ng-messages="vm.form.customerForm.name.$error" role="alert">
+                <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <a  ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
+              class="list-group-item">
+                <div id="submitbutton" ng-show="vm.newComment">
+                  <button type="submit">Add&nbsp;Comment</button>         
+                </div>
+              </a>
+            </div>
+            <div ng-show="vm.error" class="text-danger">
+              <strong ng-bind="vm.error"></strong>
+            </div>
+           </fieldset>
+          </form> 
+          <div id="submitbutton" ng-show="vm.newComment==undefined">
+            <button disabled>Add&nbsp;Comment</button>  
+          </div>
+        </px-accordion>
       </div>
-    </div>
+    </px-accordion>
+  </div>
 </div>
 
 <!--Predix Import Links-->
@@ -138,7 +179,9 @@
 <link rel="import" href="../../../../../lib/px-tree/px-tree.html"/>
 
 <!--Google Maps Scripts and Links-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="../../../../../lib/webcomponentsjs/webcomponents.js"></script>
-<link rel="import" href="../../../../../lib/google-map/google-map.html" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="import" href="../../../../../lib/google-map/google-map-elements.html" />
+<script src="http://maps.googleapis.com/maps/api/js"></script> 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtX6UVj6lstPls2orNPnfW5GJ0_7eJ6fo"></script>

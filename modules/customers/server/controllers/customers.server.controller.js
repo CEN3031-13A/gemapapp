@@ -12,11 +12,12 @@ var path = require('path'),
 /**
  * Create a Customer
  */
-exports.create = function (req, res) {
+exports.create = function(req, res) {
+
   var customer = new Customer(req.body);
   customer.user = req.user;
 
-  customer.save(function (err) {
+  customer.save(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -30,7 +31,7 @@ exports.create = function (req, res) {
 /**
  * Show the current Customer
  */
-exports.read = function (req, res) {
+exports.read = function(req, res) {
   // convert mongoose document to JSON
   var customer = req.customer ? req.customer.toJSON() : {};
 
@@ -44,12 +45,12 @@ exports.read = function (req, res) {
 /**
  * Update a Customer
  */
-exports.update = function (req, res) {
+exports.update = function(req, res) {
   var customer = req.customer;
-
+  
   customer = _.extend(customer, req.body);
 
-  customer.save(function (err) {
+  customer.save(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -63,10 +64,11 @@ exports.update = function (req, res) {
 /**
  * Delete an Customer
  */
-exports.delete = function (req, res) {
+exports.delete = function(req, res) {
+
   var customer = req.customer;
 
-  customer.remove(function (err) {
+  customer.remove(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -80,8 +82,10 @@ exports.delete = function (req, res) {
 /**
  * List of Customers
  */
-exports.list = function (req, res) {
-  Customer.find().sort('-created').populate('user', 'displayName').exec(function (err, customers) {
+exports.list = function(req, res) {
+  
+
+  Customer.find().sort('-created').populate('user', 'displayName').exec(function(err, customers) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -95,8 +99,7 @@ exports.list = function (req, res) {
 /**
  * Customer middleware
  */
-exports.customerByID = function (req, res, next, id) {
-
+exports.customerByID = function(req, res, next, id) {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'Customer is invalid'

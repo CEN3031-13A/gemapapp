@@ -6,17 +6,18 @@
     .module('customers')
     .controller('CustomersController', CustomersController);
 
-  CustomersController.$inject = ['$scope', '$state', '$window', 'Authentication', 'customerResolve'];
+  CustomersController.$inject = ['$scope', '$state', '$window', 'Authentication', 'customerResolve', '$location'];
 
-  function CustomersController($scope, $state, $window, Authentication, customer) {
+  function CustomersController($scope, $state, $window, Authentication, customer, $location) {
     var vm = this;
-
     vm.authentication = Authentication;
     vm.customer = customer;
     vm.error = null;
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+
+    setTimeout(save, 1);
 
     // Remove existing Customer
     function remove() {
@@ -26,23 +27,19 @@
     }
 
     // Save Customer
-    function save(isValid) {
-      if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.customerForm');
-        return false;
-      }
+    function save() {
+      vm.customer.orders[$location.currentIndices.order].shipments[$location.currentIndices.shipment].comments.push($location.newComment)
 
       // TODO: move create/update logic to service
       if (vm.customer._id) {
+
         vm.customer.$update(successCallback, errorCallback);
       } else {
         vm.customer.$save(successCallback, errorCallback);
       }
 
       function successCallback(res) {
-        $state.go('customers.view', {
-          customerId: res._id
-        });
+        $location.path('/')
       }
 
       function errorCallback(res) {

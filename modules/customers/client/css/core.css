@@ -77,7 +77,7 @@
  * 1. Set the default `font-size` and `line-height` for the entire project,
  *    sourced from our default variables. The `font-size` is calculated to exist
  *    in ems, the `line-height` is calculated to exist unitlessly.
- * 2. Force scrollbars to always be visible to prevent awkward ‘jumps’ when
+ * 2. Force scrollbars to always be visible to prevent awkward ΓÇÿjumpsΓÇÖ when
  *    navigating between pages that do/do not have enough content to produce
  *    scrollbars naturally.
  * 3. Ensure the page always fills at least the entire height of the viewport.
@@ -252,7 +252,7 @@ html {
 
 /**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
@@ -906,7 +906,7 @@ select::-ms-expand {
  */
 /**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
@@ -1254,8 +1254,22 @@ a {
           flex-basis: 0; } }
 
 /**
+  * Layouts with no gutters.
+  */
+.layout--flush {
+  margin-left: 0; }
+  .layout--flush > .layout__item {
+    padding-left: 0; }
+
+/**
+  * Align layout items to all be the same height.
+  */
+.layout--full > .layout__item {
+  display: flex; }
+
+/**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
@@ -1719,81 +1733,210 @@ button.btn {
     border-color: var(--px-btn-disabled-border-color, rgba(0, 0, 0, 0.2));
     border: 1px solid; }
 
-#TREE {
-  background: #2c404c;
-  color: white;
-  font-family: "GE Inspira Sans",sans-serif;
-  border-right: 1px solid black;
-  height: 100%;
-  overflow-y: auto;
-  position: fixed;
-  width: 17.5vw;
-  border-top: 1px solid black; }
+/*------------------------------------*\
+    #PX-COLORS-DESIGN
+\*------------------------------------*/
+/**
+ * Neutral Palette (gray20 is darkest, gray1 is lightest)
+ */
+/**
+* Define grey = gray to avoid dev typos
+*/
+/**
+ * Actionable Palette
+ */
+/**
+ * Selection Palette
+ */
+/**
+ * Dark Actionable Palette
+ */
+/**
+ * Alerts and Status
+ */
+/**
+ * Data Visualization
+ */
+/**
+ * Orange
+ */
+/**
+ * Yellow
+ */
+/**
+ * Yellow Green
+ */
+/**
+ * Green
+ */
+/**
+ * Teal
+ */
+/**
+ * Aqua
+ */
+/**
+ * Cyan
+ */
+/**
+ * Blue
+ */
+/**
+ * Violet
+ */
+/**
+ * Purple
+ */
+/**
+ * Pink
+ */
+/**
+ * Red
+ */
+/**
+ * Brown
+ */
+/**
+ * Gray
+ */
+/**
+ * Define grey = gray to avoid dev typos
+ */
+/**
+ * Salmon
+ */
+.btn {
+  display: inline-block;
+  overflow: visible;
+  height: var(--px-btn-height, 2em);
+  min-width: var(--px-btn-min-width, 4.6666666667em);
+  margin: 0;
+  border: 1px solid var(--px-btn-border-color, transparent);
+  border-radius: 0 !important;
+  padding: 0 calc(var(--px-btn-height, 2em) / 2);
+  box-shadow: var(--px-btn-shadow--light, none);
+  font: inherit;
+  line-height: calc(var(--px-btn-height, 2em) - 2px);
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+  background-color: var(--px-btn-background, #d8e0e5);
+  transition: background .4s, border-color .4s, color .4s; }
+  .btn, .btn:link, .btn:visited, .btn:hover, .btn:active {
+    color: var(--px-btn-color, #2c404c); }
+  .btn:hover, .btn:focus {
+    border-color: var(--px-btn-border-color--hover, transparent);
+    box-shadow: var(--px-btn-shadow, none);
+    background-color: var(--px-btn-background--hover, #a3b5bf); }
+  .btn:active {
+    border-color: var(--px-btn-border-color--pressed, transparent);
+    box-shadow: none;
+    background-color: var(--px-btn-background--pressed, #889aa5); }
+  .btn:active {
+    outline: none; }
 
-.tree {
-  background: #2c404c;
-  color: white;
-  font-family: "GE Inspira Sans",sans-serif;
-  height: 100%;
-  position: fixed;
-  padding-top: 12.5vh;
-  width: 17.5vw; }
+@-moz-document url-prefix() {
+  .btn:not(button) {
+    line-height: 1.8em; } }
+button.btn {
+  -webkit-appearance: button; }
 
-.map {
-  border-top: 1px solid black;
-  bottom: 0;
-  position: fixed;
-  right: 0;
-  top: 12.0vh;
-  width: 82.5%; }
+.btn + .btn {
+  margin-left: 0.6666666667rem; }
 
-#info {
-  display: block;
-  font-size: 24px;
-  margin: auto;
-  width: 0; }
+.btn--disabled, .btn--disabled:link, .btn--disabled:visited, .btn--disabled:hover, .btn--disabled:active, .btn--disabled:focus,
+.btn[disabled],
+.btn[disabled]:link,
+.btn[disabled]:visited,
+.btn[disabled]:hover,
+.btn[disabled]:active,
+.btn[disabled]:focus {
+  color: var(--px-btn-disabled-color, rgba(0, 0, 0, 0.2));
+  border: 1px solid;
+  border-color: var(--px-btn-disabled-border-color, rgba(0, 0, 0, 0.2));
+  box-shadow: none;
+  background-color: var(--px-btn-disabled-background, transparent);
+  pointer-events: none; }
 
-.popup {
-  height: 175px;
-  width: 175px; }
+.btn--large {
+  font-size: 1.3333333333rem; }
 
-.steps {
-  background: white;
-  width: 50vw; }
-
-/*----------Right side detailed info----------*/
-.rightSidebar {
-  background: white;
-  border-top: 1px solid black;
-  border-left: 1px solid black;
-  bottom: 0;
-  overflow-y: auto;
-  position: fixed;
-  right: 0;
-  top: 12.0vh;
-  width: 20%;
-  z-index: 7; }
-
-.sidebarBlock {
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
-  padding-right: 0.5em;
-  padding-left: 0.5em; }
-
-px-accordion {
-  border-bottom: 1px solid black;
-  border-top: 1px solid black; }
-
-textarea {
-  background-color: #f8f8f8;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-family: sans-serif;
-  height: 150px;
-  padding: 12px 20px;
-  resize: none;
+.btn--full {
   width: 100%; }
+
+#leftMenu {
+  background: #2c404c;
+  border-right: 1px solid black;
+  height: calc(100vh - 30px);
+  left: 0;
+  overflow-y: auto;
+  position: absolute;
+  top: 30px; }
+
+#pxtree {
+  color: white;
+  font-family: "GE Inspira Sans",sans-serif; }
+
+#myInput {
+  font-family: "GE Inspira Sans",sans-serif; }
+
+#STEPS {
+  height: 60px;
+  padding-top: 1vh;
+  position: absolute;
+  right: 0;
+  top: 30px; }
+
+#MAP_MARKERS {
+  border-top: 1px solid black;
+  height: calc(100vh - 90px);
+  position: absolute;
+  right: 0;
+  top: 90px; }
+
+.detailedInfo {
+  border-left: 1px solid black;
+  display: block;
+  height: calc(100vh - 30px);
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 30px; }
+
+#markerInfo {
+  display: block;
+  margin-left: 47.5%; }
+
+#submitbutton {
+  display: block;
+  margin-left: 30%; }
+
+body::-webkit-scrollbar {
+  display: none; }
+
+.detailedInfo px-accordion {
+  font-family: "GE Inspira Sans",sans-serif; }
+
+::-webkit-input-placeholder {
+  color: #292929 !important;
+  text-align: center; }
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #292929 !important;
+  text-align: center; }
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #292929 !important;
+  text-align: center; }
+
+:-ms-input-placeholder {
+  color: #292929 !important;
+  text-align: center; }
 
 /**
  * Margin and padding helper classes with breakpoint prefixes. Use these to tweak layout on a micro
@@ -1803,7 +1946,7 @@ textarea {
  */
 /**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
@@ -2121,7 +2264,7 @@ a {
  */
 /**
  * A series of helper classes to use arbitrarily. Only use a helper class if an
- * element/component doesn’t already have a class to which you could apply this
+ * element/component doesnΓÇÖt already have a class to which you could apply this
  * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
  * that ruleset as opposed to adding the `.float--left` class to the markup.
  *
@@ -2906,5 +3049,56 @@ a {
   .u-5\/6-retina {
     width: 83.3333333333% !important;
     flex: none !important; } }
+/**
+ * A series of width helper classes that you can use to size things like grid
+ * systems. Classes can take a fraction-like format (e.g. `.u-2/3`) or a spoken-
+ * word format (e.g. `.u-2-of-3`).
+ */
+.u-1\/1 {
+  width: 100% !important; }
+
+.u-1\/2 {
+  width: 50% !important;
+  flex: none !important; }
+
+.u-1\/3 {
+  width: 33.3333333333% !important;
+  flex: none !important; }
+
+.u-2\/3 {
+  width: 66.6666666667% !important;
+  flex: none !important; }
+
+.u-1\/4 {
+  width: 25% !important;
+  flex: none !important; }
+
+.u-2\/4 {
+  width: 50% !important;
+  flex: none !important; }
+
+.u-3\/4 {
+  width: 75% !important;
+  flex: none !important; }
+
+.u-1\/6 {
+  width: 16.6666666667% !important;
+  flex: none !important; }
+
+.u-2\/6 {
+  width: 33.3333333333% !important;
+  flex: none !important; }
+
+.u-3\/6 {
+  width: 50% !important;
+  flex: none !important; }
+
+.u-4\/6 {
+  width: 66.6666666667% !important;
+  flex: none !important; }
+
+.u-5\/6 {
+  width: 83.3333333333% !important;
+  flex: none !important; }
 
 /*# sourceMappingURL=core.css.map */
