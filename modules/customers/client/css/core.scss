@@ -1,0 +1,114 @@
+// Settings
+@import "../../../../public/lib/px-colors-design/_settings.colors.scss";
+
+// Tools
+
+// Generic
+@import "../../../../public/lib/px-normalize-design/_generic.normalize.scss";
+@import "../../../../public/lib/px-box-sizing-design/_generic.box-sizing.scss";
+@import "../../../../public/lib/px-helpers-design/_generic.helpers.scss";
+
+// Base
+@import "../../../../public/lib/px-flexbox-design/_base.flexbox.scss";
+@import "../../../../public/lib/px-viewport-design/_base.viewport.scss";
+@import "../../../../public/lib/px-forms-design/_base.forms.scss";
+
+// Meta
+
+
+// Objects
+$inuit-enable-layout--flush : true;
+$inuit-enable-layout--full : true;
+@import "../../../../public/lib/px-layout-design/_objects.layout.scss";
+@import "../../../../public/lib/px-button-group-design/_objects.button-group.scss";
+$inuit-enable-btn--full : true;
+$inuit-enable-btn--large : true;
+@import "../../../../public/lib/px-buttons-design/_objects.buttons.scss";
+
+// Components
+// We should be safe from about zoom level 80% - 110%
+
+
+#leftMenu{
+  background: $gray15;
+  border-right: 1px solid black;
+  height: calc(100vh - 30px);
+  left: 0;
+  overflow-y: auto;
+  position: absolute;
+  top: 30px;
+}
+
+#pxtree{
+  color: white;
+  font-family: "GE Inspira Sans",sans-serif;
+}
+
+#STEPS{
+  height: 60px;
+  padding-top: 1vh;
+  position: absolute;
+  right: 0;
+  top: 30px;
+}
+
+#MAP_MARKERS{
+  border-top: 1px solid black;
+  height: calc(100vh - 90px);
+  position: absolute;
+  right: 0;
+  top: 90px;
+}
+
+.detailedInfo{
+  border-left: 1px solid black;
+  display: none;
+  height: calc(100vh - 30px);
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 30px;
+}
+
+#markerInfo{
+  display: block;
+  margin-left: 47.5%;
+}
+
+#submitbutton{
+  display: block;
+  margin-left: 30%;
+}
+
+body::-webkit-scrollbar { 
+    display: none; 
+}
+
+.detailedInfo px-accordion{
+  font-family: "GE Inspira Sans",sans-serif;
+}
+
+::-webkit-input-placeholder {
+   color: $neutral-gray10 !important;
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: $neutral-gray10 !important;  
+   text-align: center;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $neutral-gray10 !important;  
+   text-align: center;
+}
+
+:-ms-input-placeholder {  
+   color: $neutral-gray10 !important; 
+   text-align: center;
+}
+
+// Trumps
+@import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
+@import "../../../../public/lib/px-widths-responsive-design/_trumps.widths-responsive.scss";
+@import "../../../../public/lib/px-widths-design/_trumps.widths.scss";
