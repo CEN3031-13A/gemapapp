@@ -11,10 +11,8 @@
     "url": "https://github.com/meanjs/mean.git"
   },
   "engines": {
-    // "node": ">=6.10.0",
-    // "npm": ">=3.10.8"
-    "node": "8.1.x",
-    "npm": "2.1.x"
+    "node": ">=6.10.0",
+    "npm": ">=3.10.8"
   },
   "scripts": {
     "update": "npm update && npm prune && npm run bower",
@@ -29,9 +27,9 @@
     "test": "gulp test",
     "test:server": "gulp test:server",
     "test:server:watch": "gulp test:server:watch",
-    // "test:client": "gulp test:client",
-    // "test:e2e": "gulp test:e2e",
-    // "test:coverage": "gulp test:coverage",
+    "test:client": "gulp test:client",
+    "test:e2e": "gulp test:e2e",
+    "test:coverage": "gulp test:coverage",
     "postinstall": "npm run bower",
     "generate-ssl-certs": "scripts/generate-ssl-certs.sh",
     "seed": "gulp seed",
