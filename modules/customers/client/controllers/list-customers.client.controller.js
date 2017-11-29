@@ -904,6 +904,7 @@
         closeAllInfoWindows();
         originInfoWindowList[index].open(map, originMarkersArray[index]);
         vm.currentIndices.shipment = index;
+        displayRelativeShipmentLocation(true);
         customerInfo();
         shippingDetails();
         packageDetails();
@@ -913,6 +914,7 @@
         closeAllInfoWindows();
         currentInfoWindowList[index].open(map, currentMarkersArray[index]);
         vm.currentIndices.shipment = index;
+        displayRelativeShipmentLocation(true);
         customerInfo();
         shippingDetails();
         packageDetails();
@@ -922,6 +924,7 @@
         closeAllInfoWindows();
         destinationInfoWindowList[index].open(map, destinationMarkersArray[index]);
         vm.currentIndices.shipment = index;
+        displayRelativeShipmentLocation(true);
         customerInfo();
         shippingDetails();
         packageDetails();
