@@ -82,7 +82,6 @@ exports.delete = function(req, res) {
 /**
  * List of Customers
  */
- var count = 0;
 exports.list = function(req, res) {
   
 

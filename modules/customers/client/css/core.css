@@ -1861,27 +1861,31 @@ button.btn {
   background-color: var(--px-btn-disabled-background, transparent);
   pointer-events: none; }
 
+.btn--large {
+  font-size: 1.3333333333rem; }
+
 .btn--full {
   width: 100%; }
 
-body {
-  height: 100vh; }
-
-#LEFT_SIDEBAR {
+#leftMenu {
   background: #2c404c;
   border-right: 1px solid black;
   height: calc(100vh - 30px);
-  overflow: auto;
+  left: 0;
+  overflow-y: auto;
   position: absolute;
   top: 30px; }
 
-#PREDIX_TREE {
+#pxtree {
   color: white;
+  font-family: "GE Inspira Sans",sans-serif; }
+
+#myInput {
   font-family: "GE Inspira Sans",sans-serif; }
 
 #STEPS {
   height: 60px;
-  padding-top: .5vh;
+  padding-top: 1vh;
   position: absolute;
   right: 0;
   top: 30px; }
@@ -1889,44 +1893,50 @@ body {
 #MAP_MARKERS {
   border-top: 1px solid black;
   height: calc(100vh - 90px);
-  right: 0;
   position: absolute;
+  right: 0;
   top: 90px; }
 
-.rightSidebar {
+.detailedInfo {
   border-left: 1px solid black;
-  display: none;
+  display: block;
   height: calc(100vh - 30px);
   overflow: auto;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 30px; }
 
-#info {
+#markerInfo {
   display: block;
   margin-left: 47.5%; }
 
-::-webkit-input-placeholder {
-  color: gray !important;
-  text-align: center; }
-
-:-moz-placeholder {
-  /* Firefox 18- */
-  color: gray !important;
-  text-align: center; }
-
-::-moz-placeholder {
-  /* Firefox 19+ */
-  color: gray !important;
-  text-align: center; }
-
-:-ms-input-placeholder {
-  color: gray !important;
-  text-align: center; }
+#submitbutton {
+  display: block;
+  margin-left: 30%; }
 
 body::-webkit-scrollbar {
   display: none; }
 
+.detailedInfo px-accordion {
+  font-family: "GE Inspira Sans",sans-serif; }
+
+::-webkit-input-placeholder {
+  color: #292929 !important;
+  text-align: center; }
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #292929 !important;
+  text-align: center; }
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #292929 !important;
+  text-align: center; }
+
+:-ms-input-placeholder {
+  color: #292929 !important;
+  text-align: center; }
 
 /**
  * Margin and padding helper classes with breakpoint prefixes. Use these to tweak layout on a micro

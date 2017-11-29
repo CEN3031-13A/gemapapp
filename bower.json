@@ -29,7 +29,8 @@
     "px-spinner": "^2.1.0"
   },
   "resolutions": {
-    "webcomponentsjs": "^0.7.0"
+    "webcomponentsjs": "^0.7.0",
+    "px-app-helpers": "^1.3.3"
   },
   "overrides": {
     "bootstrap": {

@@ -3,4 +3,3 @@
 
   app.registerModule('customers');
 }(ApplicationConfiguration));
-

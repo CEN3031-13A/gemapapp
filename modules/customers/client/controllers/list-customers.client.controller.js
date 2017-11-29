@@ -3,22 +3,48 @@
 
   angular
     .module('customers')
-    .controller('CustomersListController', CustomersListController, '$compile', '$scope');
+    .controller('CustomersListController', CustomersListController);
 
-  CustomersListController.$inject = ['CustomersService', '$compile', '$scope'];
+  CustomersListController.$inject = ['CustomersService', '$compile', '$scope', '$location'];
 
-  function CustomersListController(CustomersService, $compile, $scope) {
+  function CustomersListController(CustomersService, $compile, $scope, $location) {
     var vm = this;
+    // Stores the current customer's, order's, and shipment's current index.
     vm.currentIndices = {'customer':null, 'order':null, 'shipment':null};
+    // Used to transfer the indices over to the other customer client controller.
+    $location.currentIndices;
+    // Pulls the customer list from the DB.
     vm.customers = CustomersService.query();
+
+
+    // Used to animate the right sidebar.
+    document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
+    document.getElementById('STEPS').style.width = "83.3333333333%";
+    document.getElementById('hide').style.width = "0";
+
+    /*  Function: getItemData()
+    *   Description:  Gets selected item from customer tree in the view
+    *                 Determines if selected item is a shipment or order
+    *                 Tracks the hierarchy of the path to the selected item.
+    */
     vm.getItemData = function() {
+      closeAllInfoWindows();
       var customers = vm.customers;
+      //Selects treee component from the view
+      //Predix px-tree api is used to obtain selected items and hierarchy
       var px_tree = document.querySelector('px-tree');
       var selectedShipment = px_tree.selected;
       var selectedPath = px_tree.selectedRoute;
 
-      if (selectedPath <= 1)
+      $location.testMe 
+
+      //If a customer is selected clear markers and lines
+      if (selectedPath.length <= 1){
+        clearMarkers();
+        if (flightPathList != null)
+          removeLine();
         return;
+      }
     
       let shipmentID = selectedShipment.id;
       let customerID = selectedPath[0];
@@ -31,7 +57,7 @@
       let i;
       let j;
       let k;
-      // try{
+      //Loops through array of customers to find selected item id
         for (i = 0; i < customers.length; i++) {
           if (customerID === customers[i]._id) {
             vm.currentIndices.customer = i;
@@ -49,61 +75,74 @@
             }
           }
         }
+
         if(orderID != undefined){
-          if (!found)
-            pxMapMarkersOrder();
-          else 
-            pxMapMarkers();
-        
-          // pxSteps();
+          //Set the markers for an entire order
+          if (!found){
+            displayShipmentMapElementsOrder();
+            displayRelativeShipmentLocation(false);
+          }
+          //Set the markers for one shipment
+          else{ 
+            displayShipmentMapElements();
+            displayRelativeShipmentLocation(true);
+          }
+          console.log("HELP")
           customerInfo();
           shippingDetails();
           packageDetails();
           packageComments();
         }
-      // }
-      // catch(TypeError){
-
-      // }
     }
+
+    /*  Function: searchCustomers()
+    *   Description:  Uses a regular expression to search through the sort
+    *                 through the active, inactive, and complete customers
+    *                 lists and display them in the left tree.
+    */
     vm.searchCustomers = function() {
-      var str = document.getElementById("myInput").value;
+      // console.log(vm.searchText)
       var customerListSearch = [];
       if (activeInactiveState === 'Active') {
-        if (str === "") {
-          pxTreeDisplay(activeCustomerList);
+        if (vm.searchText === "") {
+          displayCustomerTree(activeCustomerList);
           return;
         }
         for (let i = 0; i < activeCustomerList.length; i++) {
-          let regularExpression = new RegExp(str, 'i');
+          let regularExpression = new RegExp(vm.searchText, 'i');
           if (activeCustomerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(activeCustomerList[i]);
         }
-        pxTreeDisplay(customerListSearch);
+        displayCustomerTree(customerListSearch);
       } else if (activeInactiveState === 'Inactive') {
-        if (str === "") {
-          pxTreeDisplay(inactiveCustomerList);
+        if (vm.searchText === "") {
+          displayCustomerTree(inactiveCustomerList);
           return;
         }
         for (let i = 0; i < inactiveCustomerList.length; i++) {
-          let regularExpression = new RegExp(str, 'i');
+          let regularExpression = new RegExp(vm.searchText, 'i');
           if (inactiveCustomerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(inactiveCustomerList[i]);
         }
-        pxTreeDisplay(customerListSearch);
+        displayCustomerTree(customerListSearch);
       } else {
-        if (str === "") {
-          pxTreeDisplay(customerList);
+        if (vm.searchText === "") {
+          displayCustomerTree(customerList);
           return;
         }
         for (let i = 0; i < customerList.length; i++) {
-          let regularExpression = new RegExp(str, 'i');
+          let regularExpression = new RegExp(vm.searchText, 'i');
           if (customerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(customerList[i]);
         }
-        pxTreeDisplay(customerListSearch);
+        displayCustomerTree(customerListSearch);
       }
     }
+
+    /*  Function: displayActive()
+    *   Description: Creates a list of the active cutstomers
+    *                Calls function to display list.
+    */
     vm.displayActive = function() {
       document.getElementById("myInput").value = "";
       activeInactiveState = "Active";
@@ -112,8 +151,13 @@
         if (customerList[i].isActive === true)
           activeCustomerList.push(customerList[i]);
       }
-      pxTreeDisplay(activeCustomerList);
+      displayCustomerTree(activeCustomerList);
     }
+
+    /*  Function: displayInactive()
+    *   Description:  Creates a list of the inactive customers
+    *                 Calls function to display list.
+    */
     vm.displayInactive = function() {
       document.getElementById("myInput").value = "";
       activeInactiveState = "Inactive";
@@ -122,49 +166,153 @@
         if (customerList[i].isActive === false)
           inactiveCustomerList.push(customerList[i]);
       }
-      pxTreeDisplay(inactiveCustomerList);
+      displayCustomerTree(inactiveCustomerList);
     }
+
+    /*  Function: displayAll()
+    *   Description:  Displays all customers
+    */
     vm.displayAll = function() {
       document.getElementById("myInput").value = "";
       activeInactiveState = "All";
-      pxTreeDisplay(customerList);
+      displayCustomerTree(customerList);
     }
+
+    /*  Function: toggleRightSidebar()
+    *   Description:  Toggles the right sidebar and resizes components on the app.
+    */
     vm.toggleRightSideBar = function() {
       var x = document.getElementById('hide');
       var y = document.getElementById('MAP_MARKERS');
       var z = document.getElementById('STEPS');
-      if (x.style.display === 'block') {
-        x.style.display = 'none';
-        document.getElementById('MAP_MARKERS').className = "u-5/6";
-        document.getElementById('MAP_MARKERS').style.right = "0";
-        document.getElementById("STEPS").className = "u-5/6";
-        document.getElementById('STEPS').style.right = "0";
+      if (rightSideBarIsDisplayed === true) {
+        if(rightSideBarTimerOut == undefined && rightSideBarTimerIn == undefined){
+          // x.style.display = 'none';
+          document.getElementById('MAP_MARKERS').style.right = "0";
+          document.getElementById('STEPS').style.right = "0";
+          rightSideBarTimerIn = setInterval(rightSideBarIn, 1);
+          rightSideBarIsDisplayed = false;
+        }
       } else {
-        x.style.display = 'block';
-        document.getElementById('MAP_MARKERS').className = "u-4/6";
-        document.getElementById('MAP_MARKERS').style.right = "16.6666667%";
-        document.getElementById("STEPS").className = "u-4/6";
-        document.getElementById('STEPS').style.right = "16.6666667%";
+        if(rightSideBarTimerOut == undefined && rightSideBarTimerIn == undefined){
+          // x.style.display = 'block';
+          document.getElementById('MAP_MARKERS').style.left = "16.6666667%";
+          document.getElementById('STEPS').style.left = "16.6666667%";
+          rightSideBarTimerOut = setInterval(rightSideBarOut, 1);
+          rightSideBarIsDisplayed = true;
+        }
       }
     }
-    // var customer;
+
+
+    /*  Function: newAddComment()
+    *   Description:  Adds new comment and formats the time it was made.
+    */
+    vm.newAddComment = function(){
+      if(vm.newComment != undefined){
+        let commentDate = "";
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        month++;
+        if(month < 10)
+          month = '0' + month;
+
+        let day = date.getDay();
+        if(day < 10)
+          day = '0' + day;
+
+        let hour = date.getHours();
+        if( hour < 10)
+          hour = '0' +  hour;
+
+        let minute = date.getMinutes();
+        if( minute < 10)
+          minute = '0' +  minute;
+
+        let second = date.getSeconds();
+        if( second < 10)
+          second = '0' +  second;
+
+        let timezone = date.getTimezoneOffset();
+        Math.floor(timezone/60)
+
+        commentDate += year;
+        commentDate += '-';
+        commentDate += month;
+        commentDate += '-';
+        commentDate += day;
+        commentDate += 'T';
+        commentDate += hour;
+        commentDate += ':';
+        commentDate += minute;
+        commentDate += ':';
+        commentDate += second;
+        commentDate += ' ';
+        if(timezone >= 0)
+          commentDate += '+';
+        else
+          commentDate += '-';
+        if(Math.floor(timezone/60) < 10)
+          commentDate += '0';
+        commentDate += Math.floor(timezone/60);
+        commentDate += ':';
+        if(timezone%60 < 10)
+          commentDate += '0';
+        commentDate += timezone%60;
+
+       $location.newComment = {
+        'comment_date': commentDate,
+        'comment' : vm.newComment
+       };
+
+
+      }
+    }
+
+    /* Global variables */
     var customerList     = [];
     var activeCustomerList   = [];
     var inactiveCustomerList = [];
+
     var activeInactiveState = '';
     var displayaddress;
     var map;
     var mapsReady = false;
+
     var originMarkersArray  = [];
     var currentMarkersArray = [];
     var destinationMarkersArray = [];
+
     var originInfoWindowList    = [];
     var currentInfoWindowList     = [];
     var destinationInfoWindowList = [];
+
+    var inAnimation = false;
+    var currentInfoWindow;
+
     var flightPathList = [];
+
     var displayedGMapsErrorMsg = false;
+
+    var generalLocationOrigin = [];      
+    var generalLocationCurrent = [];     
+    var generalLocationDestination = []; 
+
+    var rightSideBarIsDisplayed = false
+    var rightSideBarTimerIn;
+    var inVal = 0;
+    var rightSideBarTimerOut;
+    var outVal = 0;
       
-    function pxTreeDisplay(customerListSearch) {
+
+    /*  Function: displayCustomerTree()
+    *   Input: List of customers
+    *   Description:  Formats list of customers alphabetically
+    *                 Rewrites px-tree and injects it into Predix component.
+    */
+    function displayCustomerTree(customerListSearch) {
+      //Sort customer list alphabetically
       customerListSearch.sort(function (a, b) {
         if (a.name.toUpperCase() < b.name.toUpperCase())
           return -1;
@@ -172,8 +320,10 @@
           return 1;
         return 0;
       });
+
       var treeElement = document.getElementById("TEST11");
-    
+
+      //Rewrite string to inject into Predix px-tree component
       let string = "[";
       for (let i = 0; i < customerListSearch.length; i++) {
         string += "{\"label\":\"";
@@ -210,19 +360,18 @@
       }
       string = string.substring(0, string.length - 1);
       string += "]";
-    
+      
+      //Inject Predix component with concatenated string
       treeElement.attributes.items.value = string;
     }
     
-    
-    
-    function loading() {
-      var spinner = document.querySelector('px-spinner');
-      spinner.finished = true;
-    }
-    
-    function pxTree() {
+    /*  Function: constructCustomerTree()
+    *   Description:  Constructs the tree layout for the quireied customer
+    *                 data.
+    */
+    function constructCustomerTree() {
       var customers = vm.customers;
+      //Sort customer list alphabetically
       customers.sort(function (a, b) {
         if (a.name.toUpperCase() < b.name.toUpperCase())
           return -1;
@@ -230,8 +379,10 @@
           return 1;
         return 0;
       });
+
       var treeElement = document.getElementById("TEST11");
-    
+      
+      //Rewrite string to inject into Predix px-tree component
       let string = "[";
       for (let i = 0; i < customers.length; i++) {
         customerList.push(customers[i]);
@@ -269,63 +420,134 @@
       }
       string = string.substring(0, string.length - 1);
       string += "]";
-    
+      
+      //Inject Predix component with concatenated string
       treeElement.attributes.items.value = string;
     
     }
     
-    /*
-    function pxSteps() {
+    /*  Function: displayRelativeShipmentLocation()
+    *   Input: Boolean -- true is a shipment is currently chosen, false if an order is chosen
+    *   Description:  Rewrite html for Predix px-steps component
+    *                 If an order is chosen no content is shown in the component
+    *                 If a shipment is chosen the location is shown
+    *                     --if location of shipment is undefined the longitude and latitude are displayed. 
+    */
+    function displayRelativeShipmentLocation(infoNeeded) {
+      //Set variables for the current customer and order selected
+      let currentCustomer = vm.customers[vm.currentIndices.customer];
+      let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
+      let currentShipment;
+
+      //InfoNeeded indicates that a shipment has been selected and info needs to be displayed
+      //Therefore the currentShipment is defined
+      if(infoNeeded == true)
+         currentShipment = currentOrder.shipments[vm.currentIndices.shipment];
+
       var string = "<px-steps ";
       string += "items=\'[";
       string += "{\"id\":\"1\", \"label\":\"(ORIGIN) ";
-        // string += shipment.origin.latitude;
-        // string += ", ";
-        // string += shipment.origin.latitude;
-      string += orig;
+
+      //If a shipment is selected display needed information in the component
+      if(infoNeeded == true){
+        //If location is undefined display the longitude and latitude
+        if(generalLocationOrigin[vm.currentIndices.shipment] == "")
+          string += currentShipment.origin.latitude + "," + currentShipment.origin.longitude;
+        //Display location
+        else
+          string += generalLocationOrigin[vm.currentIndices.shipment];
+      }
+
       string += "\"},";
-        string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
-        // string += shipment.current_location.latitude;
-        // string += ", ";
-        // string += shipment.current_location.latitude;
-        string += current;
-        string += "\"},";
-        string += "{\"id\":\"3\", \"label\":\"(TO) ";
-        // string += shipment.destination.latitude;
-        // string += ", ";
-        // string += shipment.destination.latitude;
-        string += dest
-        string += "\"}]\' completed=\'[\"1\",\"2\"]\' </px-steps>";
-    
-        document.getElementById("STEPS").innerHTML = string;
+      string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
+
+      //If a shipment is selected display needed information in the component
+      if(infoNeeded == true){
+        //If location is undefined display the longitude and latitude
+        if(generalLocationCurrent[vm.currentIndices.shipment] == "")
+          string += currentShipment.current_location.latitude + "," + currentShipment.current_location.longitude;
+        //Display location
+        else
+          string += generalLocationCurrent[vm.currentIndices.shipment];
+      } 
+
+      string += "\"},";
+      string += "{\"id\":\"3\", \"label\":\"(TO) ";
+
+      //If a shipment is selected display needed information in the component
+      if(infoNeeded == true){
+        //If location is undefined display the longitude and latitude
+        if(generalLocationDestination[vm.currentIndices.shipment] == "")
+          string += currentShipment.destination.latitude + "," + currentShipment.destination.longitude;
+        //Display location
+        else
+          string += generalLocationDestination[vm.currentIndices.shipment];
+      }
+
+      string += "\"}]\' completed=\'[\"1\",\"2\"";
+
+      //If the current location is at the destination then mark the desination location
+      if(infoNeeded){
+        if(currentShipment.current_location.latitude == currentShipment.destination.latitude){
+          if(currentShipment.current_location.longitude == currentShipment.destination.longitude){
+            string += ",\"3\"";
+          }
+        }
+      }
+
+      string += "]\'+</px-steps>";
+
+
+      document.getElementById("STEPS").innerHTML = string;
     }
-    */
     
-    function pxMapMarkers() {
+    /*  Function: displayShipmentMapElements()
+    *   Description: Places markers and draws lines on map for a specific shipment.
+    */
+    function displayShipmentMapElements() {
+      //Variables for the currently selected customer, order and shipment
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
       let currentShipment = currentOrder.shipments[vm.currentIndices.shipment];
 
-      clearMarkers();
-      setSingleShipmentOnMap(map, vm.currentIndices.shipment);
+      clearMarkers(); //Clears markers currently on the map
+      setSingleShipmentOnMap(map, vm.currentIndices.shipment);  //Places markers on the amp
+
       if (flightPathList != null)
         removeLine();
+
+      //Draws lines between markers
       drawLine(currentShipment.origin, currentShipment.current_location, currentShipment.destination, currentShipment.delivery_state);
     }
     
-    function pxMapMarkersOrder() {
+    /*  Function: displayShipmentMapElementsOrder()
+    *   Description:  Places markers and draws lines on map for every shipment in an order.
+    */
+    function displayShipmentMapElementsOrder() {
+      //Variables for the currently selected customer, order
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
       if (flightPathList != null)
         removeLine();
         
-      clearMarkers();
+      clearMarkers(); //Clears markers already on the map
+
+      //Clears arrays for origin, current and destination markers
       originMarkersArray = [];
       currentMarkersArray = [];
       destinationMarkersArray = [];
+
+      //Clears arrays for origin, current and destination info window lists
       originInfoWindowList = [];
       currentInfoWindowList = [];
       destinationInfoWindowList = [];
+
+      //Clears arrays for origin, current and destination general locations
+      generalLocationOrigin = [];      
+      generalLocationCurrent = [];     
+      generalLocationDestination = [];
+
+      //Finds average point of location to zoom on the map
       let latSum = 0;
       let longSum = 0;
       for (let i = 0; i < currentOrder.shipments.length; i++) {
@@ -341,38 +563,52 @@
       let latAvg = latSum / (currentOrder.shipments.length * 3);
       let longAvg = longSum / (currentOrder.shipments.length * 3);
       let avgPos = { lat: latAvg, lng: longAvg };
-    
+      
+      //Zooms to average location on the map
       map.panTo(avgPos);
     }
     
-    
+    /*  Function: customerInfo()
+    *   Description: Injects data from the database into right sidebar.
+    */
     function customerInfo() {
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let customerInfoElement = document.getElementById("CUSTOMER_INFO").children;
       customerInfoElement[1].innerText  = currentCustomer.name;
-      customerInfoElement[4].innerText  = currentCustomer.email;
-      customerInfoElement[7].innerText  = currentCustomer.phone;
-      customerInfoElement[10].innerText = currentCustomer.address;
+      customerInfoElement[4].innerText  = currentCustomer.age;
+      customerInfoElement[7].innerText  = currentCustomer.email;
+      customerInfoElement[10].innerText  = currentCustomer.phone;
+      customerInfoElement[13].innerText = currentCustomer.address;
+      customerInfoElement[16].innerText = currentCustomer.registered;
+      customerInfoElement[19].innerText = currentCustomer.about;
     }
     
+    /*  Function: shippingDetails()
+    *   Description: Injects data from the database into right sidebar
+    */
     function shippingDetails() {
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
       let currentShipment = currentOrder.shipments[vm.currentIndices.shipment];
       if (currentShipment !== undefined) {
         let shipmentInfoElement = document.getElementById("SHIPPING_DETAILS").children;
-        shipmentInfoElement[1].innerText  =  currentShipment.id;
+        shipmentInfoElement[1].innerText  =  currentShipment.tracking_number;
         shipmentInfoElement[4].innerText  =  currentShipment.carrier;
-        shipmentInfoElement[9].innerText  =  currentShipment.current_location.latitude;
-        shipmentInfoElement[12].innerText = currentShipment.current_location.longitude;
-        shipmentInfoElement[17].innerText = currentShipment.destination.latitude;
-        shipmentInfoElement[20].innerText = currentShipment.destination.longitude;
-        shipmentInfoElement[23].innerText = currentShipment.ship_date;
-        shipmentInfoElement[26].innerText = currentShipment.expected_date;
-        shipmentInfoElement[29].innerText = currentShipment.delivery_state;
+        shipmentInfoElement[7].innerText  =  currentShipment.delivery_state;
+        shipmentInfoElement[10].innerText  =  currentShipment.late_penalties;
+        shipmentInfoElement[15].innerText  =  currentShipment.current_location.latitude;
+        shipmentInfoElement[18].innerText = currentShipment.current_location.longitude;
+        shipmentInfoElement[23].innerText = currentShipment.destination.latitude;
+        shipmentInfoElement[26].innerText = currentShipment.destination.longitude;
+        shipmentInfoElement[29].innerText = currentShipment.ship_date;
+        shipmentInfoElement[32].innerText = currentShipment.expected_date;
+        shipmentInfoElement[35].innerText = currentShipment.delivery_state;
       }
     }
     
+    /*  Function: packageDetails()
+    *   Description: Injects data from the database into right sidebar.
+    */
     function packageDetails() {
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
@@ -380,55 +616,117 @@
       if (currentShipment !== undefined) {
         let packageInfoElement = document.getElementById("PACKAGE_DETAILS").children;
         packageInfoElement[1].innerText = currentShipment.ship_date;
-        packageInfoElement[4].innerText = currentShipment.contents;
-        packageInfoElement[7].innerText = currentCustomer.about;
+        let contents = "";
+        for(let i = 0; i < currentShipment.contents.length; i++){
+          contents += currentShipment.contents[i];
+          contents += ", ";
+        }
+        packageInfoElement[4].innerText = contents.substring(0,contents.length-2);
       }
     }
     
+    /*  Function: packageComments()
+    *   Description: Injects data from the database into right sidebar
+    */
     function packageComments(){
       let currentShipment = vm.customers[vm.currentIndices.customer].orders[vm.currentIndices.order].shipments[vm.currentIndices.shipment];
       if (currentShipment !== undefined) {
         if(currentShipment.comments != undefined){
-          var string =  "<strong>Comments: </strong><br />";
+          var string =  "";
           for(let i = 0;i < currentShipment.comments.length; i++){
-            string += "<strong>" + currentShipment.comments[i].comment_date + "</strong>" + ": ";
-            string += currentShipment.comments[i].comment + "<br />";
+      string += '<px-accordion disabled=true style=font-weight:normal header-value="';
+      string += currentShipment.comments[i].comment_date;
+      string += '"></px-accordion><span style=font-weight:normal>'
+            string += currentShipment.comments[i].comment + '</span><br />';
           }
           document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
         }
       }
     }
     
-    function displayLocation(latitude, longitude) {
+    /*  Function: displayLocation()
+    *   Input: latitude, longitude -- location coordinates
+    *          type -- specifies whether the location is an origin,current or destination position
+    *   Description: Injects data from the database into right sidebar
+    */
+    function displayLocation(latitude, longitude, type) {
+      //Initialize HTTP request
       var request = new XMLHttpRequest();
       var method = 'GET';
       var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
-      var async = true;
-    
+      var async = false; //Should be synchronous
+
       request.open(method, url, async);
       request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
+          //Parse data received from request
           var data = JSON.parse(request.responseText);
-          var address = data.results[0];
-          if (address === undefined)
-            return;
-          if (address.formatted_address === undefined)
-            return;
-          if (address.address_components === undefined)
-            return;
-            // console.log(address.formatted_address)
-          return address.formatted_address;
+
+          //If the location is undefined push an empty string into the array
+          if(data.status=="ZERO_RESULTS"){
+            if(type == "origin")
+              generalLocationOrigin.push("");
+
+            else if(type == "current")
+              generalLocationCurrent.push("");
+
+            else if(type == "destination") 
+              generalLocationDestination.push("");
+
+          }
+          //Otherwise retrieve the location of the area and country
+          else{
+            var index_address = data.results.length;
+            if(index_address >= 2)
+              var address = data.results[index_address-2];
+            else{
+              if (index_address == 1)
+                var address = data.results[0];
+              if(index_address < 1){
+                return;
+              }
+            }
+
+            var undefinedAddress = false;
+            if (address.formatted_address === undefined)
+              undefinedAddress = true;
+            //If the address is undefined push an empty string otherwise pusht the formatted address
+            if(type == "origin")
+            {
+              if(undefinedAddress == true)
+                generalLocationOrigin.push("");
+              else
+                generalLocationOrigin.push(address.formatted_address); 
+            }
+            else if(type == "current")
+            {
+              if(undefinedAddress == true)
+                generalLocationCurrent.push("");      
+              else       
+                generalLocationCurrent.push(address.formatted_address);
+            }   
+            else if(type == "destination")
+            {
+              if(undefinedAddress == true)
+                generalLocationDestination.push("");
+              else      
+                generalLocationDestination.push(address.formatted_address);
+            }
+          }
         }
       };
       request.send();
     }
     
-    
     setInterval(consistantTimer, 50);
     
+    /*  Function: consistantTimer() 
+    *   Description:  Used to initialize the data throughout
+    *                 the web app and wait for Google Maps to load
+    */
     function consistantTimer() {
       if (customerList.length === 0) 
-        pxTree();
+        constructCustomerTree();
 
       if (map === undefined) {
         var GEHeadquarters = { lat: 42.3522898, lng: -71.0495636 };
@@ -446,17 +744,22 @@
           }
         }
       }
+      if($location.currentIndices != vm.currentIndices)
+        $location.currentIndices = vm.currentIndices;
     }
     
-    
+    /*  Function: addShipmentMarker()
+    *   Description:  Adds a Google Maps marker for a given shipment.
+    */
     function addShipmentMarkers(shipment, index, orderSize) {
-      // generalLocationOrigin      = displayLocation(shipment.origin.latitude, shipment.origin.longitude)
-      // generalLocationCurrent     = displayLocation(shipment.current_location.latitude, shipment.current_location.longitude)
-      // generalLocationDestination = displayLocation(shipment.destination.latitude, shipment.destination.longitude)
+      displayLocation(shipment.origin.latitude, shipment.origin.longitude, "origin");
+      displayLocation(shipment.current_location.latitude, shipment.current_location.longitude, "current");
+      displayLocation(shipment.destination.latitude, shipment.destination.longitude, "destination");
+
       let pinColor;
     
       if (shipment.delivery_state === "Ahead of Time")
-        pinColor = "10C6FF";
+        pinColor = "00C300";
       else if (shipment.delivery_state === "On Time")
         pinColor = "00C300";
       else if (shipment.delivery_state === "Likely to be On Time")
@@ -474,7 +777,37 @@
       let origin = { lat: shipment.origin.latitude, lng: shipment.origin.longitude };
       let current = { lat: shipment.current_location.latitude, lng: shipment.current_location.longitude };
       let dest = { lat: shipment.destination.latitude, lng: shipment.destination.longitude };
-    
+      
+      let formattedLocationOrigin;
+      if(generalLocationOrigin[index] == ""){
+          formattedLocationOrigin = '<p><b>Coordinates:</b></br>' +                     
+                              'Latitude: ' + shipment.origin.latitude + "</br>" + 
+                              'Longitude: ' + shipment.origin.longitude + "</br>";
+      }else{
+        formattedLocationOrigin = '<p><b>Location:</b></br>' +
+                                   generalLocationOrigin[index] + '</br>';
+      }
+
+      let formattedLocationCurrent;
+      if(generalLocationCurrent[index] == ""){
+        formattedLocationCurrent= '<p><b>Coordinates:</b></br>' +                     
+                                  'Latitude: ' + shipment.current_location.latitude + "</br>" + 
+                                  'Longitude: ' + shipment.current_location.longitude + "</br>";
+      }else{
+        formattedLocationCurrent = '<p><b>Location:</b></br>' +
+                                   generalLocationCurrent[index] + '</br>';
+      }
+
+      let formattedLocationDestination;
+      if(generalLocationDestination[index] == ""){
+        formattedLocationDestination = '<p><b>Coordinates:</b></br>' +                     
+                                       'Latitude: ' + shipment.destination.latitude + "</br>" + 
+                                       'Longitude: ' + shipment.destination.longitude + "</br>";
+      }else{
+        formattedLocationDestination = '<p><b>Location:</b></br>' +
+                                   generalLocationDestination[index] + '</br>';
+      }
+
       let originContentString = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
@@ -482,15 +815,12 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                  '</h3>' +
                 '<div id="bodyContent">' +
-                '<p><b>Coordinates:</b></br>' +
-                'Latitude: ' + shipment.origin.latitude + "</br>" +
-                'Longitude: ' + shipment.origin.longitude + "</br>" +
-                "</br>" +
+                formattedLocationOrigin + "</br>" +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
                 '</p>' +
                 '</div>' +
-                '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
+                '<button id="markerInfo" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
     
       var currentContentString = '<div id="content">' +
@@ -500,15 +830,13 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
-                '<p><b>Coordinates:</b></br>' +
-                'Latitude: ' + shipment.current_location.latitude + "</br>" +
-                'Longitude: ' + shipment.current_location.longitude + "</br>" +
+                formattedLocationCurrent +
                 "</br>" +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
                 '</p>' +
                 '</div>' +
-                '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
+                '<button id="markerInfo" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
     
       var destinationContentString = '<div id="content">' +
@@ -517,16 +845,15 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
-                '<p><b>Coordinates:</b></br>' +
-                'Latitude: ' + shipment.destination.latitude + '</br>' +
-                'Longitude: ' + shipment.destination.longitude + '</br>' +
+                formattedLocationDestination +
                 '</br>' +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
                 '</p>' +
                 '</div>' +
-                '<button id="info" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
+                '<button id="markerInfo" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
+
       var compiledOrigin = $compile(originContentString)($scope);
       var compiledCurrent = $compile(currentContentString)($scope);
       var compiledDestination = $compile(destinationContentString)($scope);
@@ -574,24 +901,30 @@
       destinationInfoWindowList.push(destinationInfoWindow);
 
       originMarkersArray[index].addListener('click', function () {
+        closeAllInfoWindows();
         originInfoWindowList[index].open(map, originMarkersArray[index]);
         vm.currentIndices.shipment = index;
+        displayRelativeShipmentLocation(true);
         customerInfo();
         shippingDetails();
         packageDetails();
         packageComments();
       });
       currentMarkersArray[index].addListener('click', function () {
+        closeAllInfoWindows();
         currentInfoWindowList[index].open(map, currentMarkersArray[index]);
         vm.currentIndices.shipment = index;
+        displayRelativeShipmentLocation(true);
         customerInfo();
         shippingDetails();
         packageDetails();
         packageComments();
       });
       destinationMarkersArray[index].addListener('click', function () {
+        closeAllInfoWindows();
         destinationInfoWindowList[index].open(map, destinationMarkersArray[index]);
         vm.currentIndices.shipment = index;
+        displayRelativeShipmentLocation(true);
         customerInfo();
         shippingDetails();
         packageDetails();
@@ -600,10 +933,14 @@
     
       currentMarkersArray[index].setAnimation(google.maps.Animation.BOUNCE);
       setTimeout(function () { currentMarkersArray[index].setAnimation(null);}, 750);
-    
-    
     }
-    var inAnimation = false;
+
+    /*  Function: setSingleShipmentOnMap()
+    *   Inputs:  map -- The Google Maps opbject
+    *            index -- Index of the current shipment 
+    *   Description:  Draws a line and adds markers for a given shipment 
+    *                 in the current order.
+    */
     function setSingleShipmentOnMap(map, index) {
       originMarkersArray[index].setMap(map);
       currentMarkersArray[index].setMap(map);
@@ -613,6 +950,10 @@
       setTimeout(function () { currentMarkersArray[index].setAnimation(null); }, 750);
     }
     
+    /*  Function: setMapOnAll()
+    *   Inputs:  map -- The Google Maps opbject
+    *   Description:  Used to set all markers to a given value.
+    */
     function setMapOnAll(map) {
       for (let i = 0; i < originMarkersArray.length; i++) {
         originMarkersArray[i].setMap(map);
@@ -625,10 +966,19 @@
       }
     }
     
+    /*  Function: clearMarkers()
+    *   Description:  Used to clear all markers from the map.
+    */
     function clearMarkers() {
       setMapOnAll(null);
     }
     
+    /*  Function: drawLine()
+    *   Inputs:  origin, current, destination -- passed location objects for the current shipment.
+    *            state -- delivery state of the shipment
+    *   Description:  Draws lines between the three passed locations and colors
+    *                 the line depending on the state. 
+    */
     function drawLine(origin, current, destination, state) {
       let lineCoordinates = [
         { lat: origin.latitude, lng: origin.longitude },
@@ -638,7 +988,7 @@
       var lineColor;
       switch (state) {
         case 'Ahead of Time':
-          lineColor = '#10C6FF';
+          lineColor = '#00C300';
           break;
         case 'On Time':
           lineColor = '#00C300';
@@ -669,14 +1019,73 @@
       flightPathList[flightPathList.length - 1].setMap(map);
     }
     
+    /*  Function: removeLine()
+    *   Description:  Removes a line from the map.
+    */
     function removeLine() {
       for (let i = 0; i < flightPathList.length; i++)
         flightPathList[i].setMap(null);
     }
-    
 
+    /*  Function: rightSideBarOut()
+    *   Description:  Animates the right sidebar entering the view.
+    */
+    function rightSideBarOut(){
+      outVal += 0.035;
+      let val = (21.333)*Math.sin(outVal + Math.PI/2.0)+(62);
+      let val1= 83.3333333333 - val;
+      document.getElementById('MAP_MARKERS').style.width = val+"%";
+      document.getElementById('STEPS').style.width = val+"%";
+      document.getElementById('hide').style.width = val1+"%";
+      if(val <= 61.4){
+        outVal =0;
+        document.getElementById('MAP_MARKERS').style.width = "62%";
+        document.getElementById('STEPS').style.width = "62%";
+        document.getElementById('hide').style.width = "21.333%";
+        clearInterval(rightSideBarTimerOut);
+        rightSideBarTimerOut = undefined;
+      }
+    }
 
+    /*  Function: rightSideBarIn()
+    *   Description:  Animates the right sidebar leaving the view.
+    */
+    function rightSideBarIn(){
+      inVal += 0.035;
+      let val = (21.333)*Math.sin(inVal )+(62);
+      let val1 = 83.3333333333 - val;
+      document.getElementById('MAP_MARKERS').style.width = val+"%";
+      document.getElementById('STEPS').style.width = val+"%";
+      document.getElementById('hide').style.width = val1+"%";
+      if(val >= 83.1){
+        inVal =0;
+        document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
+        document.getElementById('STEPS').style.width = "83.3333333333%";
+        document.getElementById('hide').style.width = "0%";
+        clearInterval(rightSideBarTimerIn);
+        rightSideBarTimerIn = undefined;
+      }
+    }
 
-
+    /*  Function: closeAllInfoWindows()
+    *   Description:  Closes all marker info windows.
+    */
+    function closeAllInfoWindows() {
+      if(originInfoWindowList != undefined){
+        for (var i=0;i<originInfoWindowList.length;i++) {
+            originInfoWindowList[i].close();
+        }
+      }
+      if(currentInfoWindowList != undefined){
+        for (var i=0;i<currentInfoWindowList.length;i++) {
+            currentInfoWindowList[i].close();
+        }
+      }
+      if(destinationInfoWindowList != undefined){
+        for (var i=0;i<destinationInfoWindowList.length;i++) {
+            destinationInfoWindowList[i].close();
+        }
+      }
+    }
   }
 }());
