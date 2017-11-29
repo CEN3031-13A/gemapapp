@@ -9,19 +9,27 @@
 
   function CustomersListController(CustomersService, $compile, $scope, $location) {
     var vm = this;
+    // Stores the current customer's, order's, and shipment's current index.
     vm.currentIndices = {'customer':null, 'order':null, 'shipment':null};
-    $location.currentIndices
+    // Used to transfer the indices over to the other customer client controller.
+    $location.currentIndices;
+    // Pulls the customer list from the DB.
     vm.customers = CustomersService.query();
+
+
+    // Used to animate the right sidebar.
+    document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
+    document.getElementById('STEPS').style.width = "83.3333333333%";
+    document.getElementById('hide').style.width = "0";
 
     /*  Function: getItemData()
     *   Description:  Gets selected item from customer tree in the view
-                      Determines if selected item is a shipment or order
-                      Tracks the hierarchy of the path to the selected item
+    *                 Determines if selected item is a shipment or order
+    *                 Tracks the hierarchy of the path to the selected item.
     */
     vm.getItemData = function() {
       closeAllInfoWindows();
       var customers = vm.customers;
-
       //Selects treee component from the view
       //Predix px-tree api is used to obtain selected items and hierarchy
       var px_tree = document.querySelector('px-tree');
@@ -71,15 +79,15 @@
         if(orderID != undefined){
           //Set the markers for an entire order
           if (!found){
-            pxMapMarkersOrder();
-            pxSteps(false);
+            displayShipmentMapElementsOrder();
+            displayRelativeShipmentLocation(false);
           }
           //Set the markers for one shipment
           else{ 
-            pxMapMarkers();
-            pxSteps(true);
+            displayShipmentMapElements();
+            displayRelativeShipmentLocation(true);
           }
-          
+          console.log("HELP")
           customerInfo();
           shippingDetails();
           packageDetails();
@@ -88,14 +96,16 @@
     }
 
     /*  Function: searchCustomers()
-    *   Description:  
+    *   Description:  Uses a regular expression to search through the sort
+    *                 through the active, inactive, and complete customers
+    *                 lists and display them in the left tree.
     */
     vm.searchCustomers = function() {
       // console.log(vm.searchText)
       var customerListSearch = [];
       if (activeInactiveState === 'Active') {
         if (vm.searchText === "") {
-          pxTreeDisplay(activeCustomerList);
+          displayCustomerTree(activeCustomerList);
           return;
         }
         for (let i = 0; i < activeCustomerList.length; i++) {
@@ -103,10 +113,10 @@
           if (activeCustomerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(activeCustomerList[i]);
         }
-        pxTreeDisplay(customerListSearch);
+        displayCustomerTree(customerListSearch);
       } else if (activeInactiveState === 'Inactive') {
         if (vm.searchText === "") {
-          pxTreeDisplay(inactiveCustomerList);
+          displayCustomerTree(inactiveCustomerList);
           return;
         }
         for (let i = 0; i < inactiveCustomerList.length; i++) {
@@ -114,10 +124,10 @@
           if (inactiveCustomerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(inactiveCustomerList[i]);
         }
-        pxTreeDisplay(customerListSearch);
+        displayCustomerTree(customerListSearch);
       } else {
         if (vm.searchText === "") {
-          pxTreeDisplay(customerList);
+          displayCustomerTree(customerList);
           return;
         }
         for (let i = 0; i < customerList.length; i++) {
@@ -125,13 +135,13 @@
           if (customerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(customerList[i]);
         }
-        pxTreeDisplay(customerListSearch);
+        displayCustomerTree(customerListSearch);
       }
     }
 
     /*  Function: displayActive()
     *   Description: Creates a list of the active cutstomers
-                     Calls function to display list
+    *                Calls function to display list.
     */
     vm.displayActive = function() {
       document.getElementById("myInput").value = "";
@@ -141,12 +151,12 @@
         if (customerList[i].isActive === true)
           activeCustomerList.push(customerList[i]);
       }
-      pxTreeDisplay(activeCustomerList);
+      displayCustomerTree(activeCustomerList);
     }
 
     /*  Function: displayInactive()
     *   Description:  Creates a list of the inactive customers
-                      Calls function to display list
+    *                 Calls function to display list.
     */
     vm.displayInactive = function() {
       document.getElementById("myInput").value = "";
@@ -156,7 +166,7 @@
         if (customerList[i].isActive === false)
           inactiveCustomerList.push(customerList[i]);
       }
-      pxTreeDisplay(inactiveCustomerList);
+      displayCustomerTree(inactiveCustomerList);
     }
 
     /*  Function: displayAll()
@@ -165,11 +175,11 @@
     vm.displayAll = function() {
       document.getElementById("myInput").value = "";
       activeInactiveState = "All";
-      pxTreeDisplay(customerList);
+      displayCustomerTree(customerList);
     }
 
     /*  Function: toggleRightSidebar()
-    *   Description:  Toggles the right sidebar and resizes components on the app
+    *   Description:  Toggles the right sidebar and resizes components on the app.
     */
     vm.toggleRightSideBar = function() {
       var x = document.getElementById('hide');
@@ -196,7 +206,7 @@
 
 
     /*  Function: newAddComment()
-    *   Description:  Adds new comment and formats the time it was made
+    *   Description:  Adds new comment and formats the time it was made.
     */
     vm.newAddComment = function(){
       if(vm.newComment != undefined){
@@ -278,6 +288,9 @@
     var currentInfoWindowList     = [];
     var destinationInfoWindowList = [];
 
+    var inAnimation = false;
+    var currentInfoWindow;
+
     var flightPathList = [];
 
     var displayedGMapsErrorMsg = false;
@@ -293,12 +306,12 @@
     var outVal = 0;
       
 
-    /*  Function: pxTreeDisplay()
+    /*  Function: displayCustomerTree()
     *   Input: List of customers
     *   Description:  Formats list of customers alphabetically
-                      Rewrites px-tree and injects it into Predix component
+    *                 Rewrites px-tree and injects it into Predix component.
     */
-    function pxTreeDisplay(customerListSearch) {
+    function displayCustomerTree(customerListSearch) {
       //Sort customer list alphabetically
       customerListSearch.sort(function (a, b) {
         if (a.name.toUpperCase() < b.name.toUpperCase())
@@ -352,10 +365,11 @@
       treeElement.attributes.items.value = string;
     }
     
-    /*  Function: pxTree()
-    *   Description:  
+    /*  Function: constructCustomerTree()
+    *   Description:  Constructs the tree layout for the quireied customer
+    *                 data.
     */
-    function pxTree() {
+    function constructCustomerTree() {
       var customers = vm.customers;
       //Sort customer list alphabetically
       customers.sort(function (a, b) {
@@ -412,14 +426,14 @@
     
     }
     
-    /*  Function: pxSteps()
+    /*  Function: displayRelativeShipmentLocation()
     *   Input: Boolean -- true is a shipment is currently chosen, false if an order is chosen
     *   Description:  Rewrite html for Predix px-steps component
-                      If an order is chosen no content is shown in the component
-                      If a shipment is chosen the location is shown
-                          --if location of shipment is undefined the longitude and latitude are displayed 
+    *                 If an order is chosen no content is shown in the component
+    *                 If a shipment is chosen the location is shown
+    *                     --if location of shipment is undefined the longitude and latitude are displayed. 
     */
-    function pxSteps(infoNeeded) {
+    function displayRelativeShipmentLocation(infoNeeded) {
       //Set variables for the current customer and order selected
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
@@ -487,10 +501,10 @@
       document.getElementById("STEPS").innerHTML = string;
     }
     
-    /*  Function: pxMapMarkers()
-    *   Description: Places markers and draws lines on map for a specific shipment
+    /*  Function: displayShipmentMapElements()
+    *   Description: Places markers and draws lines on map for a specific shipment.
     */
-    function pxMapMarkers() {
+    function displayShipmentMapElements() {
       //Variables for the currently selected customer, order and shipment
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
@@ -506,10 +520,10 @@
       drawLine(currentShipment.origin, currentShipment.current_location, currentShipment.destination, currentShipment.delivery_state);
     }
     
-    /*  Function: pxMapMarkersOrder()
-    *   Description:  Places markers and draws lines on map for every shipment in an order
+    /*  Function: displayShipmentMapElementsOrder()
+    *   Description:  Places markers and draws lines on map for every shipment in an order.
     */
-    function pxMapMarkersOrder() {
+    function displayShipmentMapElementsOrder() {
       //Variables for the currently selected customer, order
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let currentOrder    = currentCustomer.orders[vm.currentIndices.order];
@@ -555,18 +569,18 @@
     }
     
     /*  Function: customerInfo()
-    *   Description: Injects data from the database into right sidebar
+    *   Description: Injects data from the database into right sidebar.
     */
     function customerInfo() {
       let currentCustomer = vm.customers[vm.currentIndices.customer];
       let customerInfoElement = document.getElementById("CUSTOMER_INFO").children;
       customerInfoElement[1].innerText  = currentCustomer.name;
       customerInfoElement[4].innerText  = currentCustomer.age;
-	    customerInfoElement[7].innerText  = currentCustomer.email;
+      customerInfoElement[7].innerText  = currentCustomer.email;
       customerInfoElement[10].innerText  = currentCustomer.phone;
       customerInfoElement[13].innerText = currentCustomer.address;
-	    customerInfoElement[16].innerText = currentCustomer.registered;
-	    customerInfoElement[19].innerText = currentCustomer.about;
+      customerInfoElement[16].innerText = currentCustomer.registered;
+      customerInfoElement[19].innerText = currentCustomer.about;
     }
     
     /*  Function: shippingDetails()
@@ -582,7 +596,7 @@
         shipmentInfoElement[4].innerText  =  currentShipment.carrier;
         shipmentInfoElement[7].innerText  =  currentShipment.delivery_state;
         shipmentInfoElement[10].innerText  =  currentShipment.late_penalties;
-		    shipmentInfoElement[15].innerText  =  currentShipment.current_location.latitude;
+        shipmentInfoElement[15].innerText  =  currentShipment.current_location.latitude;
         shipmentInfoElement[18].innerText = currentShipment.current_location.longitude;
         shipmentInfoElement[23].innerText = currentShipment.destination.latitude;
         shipmentInfoElement[26].innerText = currentShipment.destination.longitude;
@@ -593,7 +607,7 @@
     }
     
     /*  Function: packageDetails()
-    *   Description: Injects data from the database into right sidebar
+    *   Description: Injects data from the database into right sidebar.
     */
     function packageDetails() {
       let currentCustomer = vm.customers[vm.currentIndices.customer];
@@ -602,12 +616,12 @@
       if (currentShipment !== undefined) {
         let packageInfoElement = document.getElementById("PACKAGE_DETAILS").children;
         packageInfoElement[1].innerText = currentShipment.ship_date;
-		let contents = "";
-		for(let i = 0; i < currentShipment.contents.length; i++){
-			contents += currentShipment.contents[i];
-			contents += ", ";
-		}
-		packageInfoElement[4].innerText = contents.substring(0,contents.length-2);
+        let contents = "";
+        for(let i = 0; i < currentShipment.contents.length; i++){
+          contents += currentShipment.contents[i];
+          contents += ", ";
+        }
+        packageInfoElement[4].innerText = contents.substring(0,contents.length-2);
       }
     }
     
@@ -620,9 +634,9 @@
         if(currentShipment.comments != undefined){
           var string =  "";
           for(let i = 0;i < currentShipment.comments.length; i++){
-			string += '<px-accordion disabled=true style=font-weight:normal header-value="';
-			string += currentShipment.comments[i].comment_date;
-			string += '"></px-accordion><span style=font-weight:normal>'
+      string += '<px-accordion disabled=true style=font-weight:normal header-value="';
+      string += currentShipment.comments[i].comment_date;
+      string += '"></px-accordion><span style=font-weight:normal>'
             string += currentShipment.comments[i].comment + '</span><br />';
           }
           document.getElementById("PACKAGE_COMMENTS").innerHTML = string;
@@ -632,7 +646,7 @@
     
     /*  Function: displayLocation()
     *   Input: latitude, longitude -- location coordinates
-               type -- specifies whether the location is an origin,current or destination position
+    *          type -- specifies whether the location is an origin,current or destination position
     *   Description: Injects data from the database into right sidebar
     */
     function displayLocation(latitude, longitude, type) {
@@ -704,15 +718,15 @@
       request.send();
     }
     
-    
     setInterval(consistantTimer, 50);
     
-    /*  Function: consistantTimer()
-    *   Description:  
+    /*  Function: consistantTimer() 
+    *   Description:  Used to initialize the data throughout
+    *                 the web app and wait for Google Maps to load
     */
     function consistantTimer() {
       if (customerList.length === 0) 
-        pxTree();
+        constructCustomerTree();
 
       if (map === undefined) {
         var GEHeadquarters = { lat: 42.3522898, lng: -71.0495636 };
@@ -735,7 +749,7 @@
     }
     
     /*  Function: addShipmentMarker()
-    *   Description:  
+    *   Description:  Adds a Google Maps marker for a given shipment.
     */
     function addShipmentMarkers(shipment, index, orderSize) {
       displayLocation(shipment.origin.latitude, shipment.origin.longitude, "origin");
@@ -890,7 +904,6 @@
         closeAllInfoWindows();
         originInfoWindowList[index].open(map, originMarkersArray[index]);
         vm.currentIndices.shipment = index;
-        pxSteps(true);
         customerInfo();
         shippingDetails();
         packageDetails();
@@ -900,7 +913,6 @@
         closeAllInfoWindows();
         currentInfoWindowList[index].open(map, currentMarkersArray[index]);
         vm.currentIndices.shipment = index;
-        pxSteps(true);
         customerInfo();
         shippingDetails();
         packageDetails();
@@ -910,7 +922,6 @@
         closeAllInfoWindows();
         destinationInfoWindowList[index].open(map, destinationMarkersArray[index]);
         vm.currentIndices.shipment = index;
-        pxSteps(true);
         customerInfo();
         shippingDetails();
         packageDetails();
@@ -919,14 +930,13 @@
     
       currentMarkersArray[index].setAnimation(google.maps.Animation.BOUNCE);
       setTimeout(function () { currentMarkersArray[index].setAnimation(null);}, 750);
-    
-    
     }
 
-    var inAnimation = false;
-
     /*  Function: setSingleShipmentOnMap()
-    *   Description:  
+    *   Inputs:  map -- The Google Maps opbject
+    *            index -- Index of the current shipment 
+    *   Description:  Draws a line and adds markers for a given shipment 
+    *                 in the current order.
     */
     function setSingleShipmentOnMap(map, index) {
       originMarkersArray[index].setMap(map);
@@ -938,7 +948,8 @@
     }
     
     /*  Function: setMapOnAll()
-    *   Description:  
+    *   Inputs:  map -- The Google Maps opbject
+    *   Description:  Used to set all markers to a given value.
     */
     function setMapOnAll(map) {
       for (let i = 0; i < originMarkersArray.length; i++) {
@@ -953,14 +964,17 @@
     }
     
     /*  Function: clearMarkers()
-    *   Description:  
+    *   Description:  Used to clear all markers from the map.
     */
     function clearMarkers() {
       setMapOnAll(null);
     }
     
     /*  Function: drawLine()
-    *   Description:  
+    *   Inputs:  origin, current, destination -- passed location objects for the current shipment.
+    *            state -- delivery state of the shipment
+    *   Description:  Draws lines between the three passed locations and colors
+    *                 the line depending on the state. 
     */
     function drawLine(origin, current, destination, state) {
       let lineCoordinates = [
@@ -1003,13 +1017,16 @@
     }
     
     /*  Function: removeLine()
-    *   Description:  
+    *   Description:  Removes a line from the map.
     */
     function removeLine() {
       for (let i = 0; i < flightPathList.length; i++)
         flightPathList[i].setMap(null);
     }
-    
+
+    /*  Function: rightSideBarOut()
+    *   Description:  Animates the right sidebar entering the view.
+    */
     function rightSideBarOut(){
       outVal += 0.035;
       let val = (50.0/3.0)*Math.sin(outVal + Math.PI/2.0)+(66+(2.0/3.0));
@@ -1027,6 +1044,9 @@
       }
     }
 
+    /*  Function: rightSideBarIn()
+    *   Description:  Animates the right sidebar leaving the view.
+    */
     function rightSideBarIn(){
       inVal += 0.035;
       let val = (50.0/3.0)*Math.sin(inVal )+(66+(2.0/3.0));
@@ -1044,10 +1064,9 @@
       }
     }
 
-    document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
-    document.getElementById('STEPS').style.width = "83.3333333333%";
-    document.getElementById('hide').style.width = "0";
-
+    /*  Function: closeAllInfoWindows()
+    *   Description:  Closes all marker info windows.
+    */
     function closeAllInfoWindows() {
       if(originInfoWindowList != undefined){
         for (var i=0;i<originInfoWindowList.length;i++) {
