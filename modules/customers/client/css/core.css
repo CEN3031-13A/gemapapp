@@ -1880,9 +1880,6 @@ button.btn {
   color: white;
   font-family: "GE Inspira Sans",sans-serif; }
 
-#myInput {
-  font-family: "GE Inspira Sans",sans-serif; }
-
 #STEPS {
   height: 60px;
   padding-top: 1vh;
@@ -1898,6 +1895,7 @@ button.btn {
   top: 90px; }
 
 .detailedInfo {
+  background: #2c404c;
   border-left: 1px solid black;
   display: block;
   height: calc(100vh - 30px);
@@ -1905,6 +1903,23 @@ button.btn {
   position: fixed;
   right: 0;
   top: 30px; }
+
+.detailedInfo h2 {
+  color: white;
+  height: 30px;
+  background: rgba(136, 154, 165, 0.15);
+  text-align: center;
+  text-decoration: underline;
+  font-family: "GE Inspira Sans",sans-serif; }
+
+.detailedInfo span {
+  color: white;
+  font-family: "GE Inspira Sans",sans-serif; }
+
+.px-accordion-0 .heading--subsection.px-accordion {
+  color: white;
+  font-weight: bold;
+  font-family: "GE Inspira Sans",sans-serif; }
 
 #markerInfo {
   display: block;

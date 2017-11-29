@@ -61,13 +61,34 @@ $inuit-enable-btn--large : true;
 }
 
 .detailedInfo{
+  background: $gray15;
   border-left: 1px solid black;
-  display: none;
+  display: block;
   height: calc(100vh - 30px);
   overflow: auto;
   position: fixed;
   right: 0;
   top: 30px;
+}
+
+.detailedInfo h2{
+  color: white;
+  height: 30px;
+  background: rgba(136,154,165,.15);
+  text-align: center;
+  text-decoration: underline;
+  font-family: "GE Inspira Sans",sans-serif;
+}
+
+.detailedInfo span{
+   color: white;
+  font-family: "GE Inspira Sans",sans-serif;
+}
+
+.px-accordion-0 .heading--subsection.px-accordion{
+  color: white;
+  font-weight:bold;
+  font-family: "GE Inspira Sans",sans-serif;
 }
 
 #markerInfo{
