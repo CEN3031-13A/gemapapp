@@ -18,7 +18,7 @@ var customer;
   /* Unit tests */
 describe('Customer Schema Unit Tests:', function () {
   before(function (done) {
-    mongoose.connect(Customer.db.uri);
+    // mongoose.connect('mongodb://vsriram:vsriram@ds129434.mlab.com:29434/vishnusriram');
     done();
   });
 

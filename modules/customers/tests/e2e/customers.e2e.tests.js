@@ -1,5 +1,6 @@
 'use strict';
 
+/*
 describe('Customers E2E Tests:', function () {
   describe('Test Customers page', function () {
     it('Should report missing credentials', function () {
@@ -8,3 +9,4 @@ describe('Customers E2E Tests:', function () {
     });
   });
 });
+*/
