@@ -52,6 +52,7 @@
     "eslint-config-airbnb": "~6.0.2",
     "express": "^4.15.5",
     "express-hbs": "~1.0.4",
+    "express-init": "^1.1.0",
     "express-session": "^1.15.6",
     "generate-password": "~1.3.0",
     "glob": "~7.1.1",
