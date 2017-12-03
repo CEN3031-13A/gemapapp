@@ -452,7 +452,7 @@
       if(infoNeeded == true){
         //If location is undefined display the longitude and latitude
         if(generalLocationOrigin[vm.currentIndices.shipment] == "")
-          string += currentShipment.origin.latitude + "," + currentShipment.origin.longitude;
+          string += currentShipment.origin.latitude + ", " + currentShipment.origin.longitude;
         //Display location
         else
           string += generalLocationOrigin[vm.currentIndices.shipment];
@@ -465,7 +465,7 @@
       if(infoNeeded == true){
         //If location is undefined display the longitude and latitude
         if(generalLocationCurrent[vm.currentIndices.shipment] == "")
-          string += currentShipment.current_location.latitude + "," + currentShipment.current_location.longitude;
+          string += currentShipment.current_location.latitude + ", " + currentShipment.current_location.longitude;
         //Display location
         else
           string += generalLocationCurrent[vm.currentIndices.shipment];
@@ -478,7 +478,7 @@
       if(infoNeeded == true){
         //If location is undefined display the longitude and latitude
         if(generalLocationDestination[vm.currentIndices.shipment] == "")
-          string += currentShipment.destination.latitude + "," + currentShipment.destination.longitude;
+          string += currentShipment.destination.latitude + ", " + currentShipment.destination.longitude;
         //Display location
         else
           string += generalLocationDestination[vm.currentIndices.shipment];
