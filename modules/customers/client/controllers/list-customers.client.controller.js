@@ -452,7 +452,7 @@
       if(infoNeeded == true){
         //If location is undefined display the longitude and latitude
         if(generalLocationOrigin[vm.currentIndices.shipment] == "")
-          string += currentShipment.origin.latitude + "," + currentShipment.origin.longitude;
+          string += currentShipment.origin.latitude + ", " + currentShipment.origin.longitude;
         //Display location
         else
           string += generalLocationOrigin[vm.currentIndices.shipment];
@@ -465,7 +465,7 @@
       if(infoNeeded == true){
         //If location is undefined display the longitude and latitude
         if(generalLocationCurrent[vm.currentIndices.shipment] == "")
-          string += currentShipment.current_location.latitude + "," + currentShipment.current_location.longitude;
+          string += currentShipment.current_location.latitude + ", " + currentShipment.current_location.longitude;
         //Display location
         else
           string += generalLocationCurrent[vm.currentIndices.shipment];
@@ -478,7 +478,7 @@
       if(infoNeeded == true){
         //If location is undefined display the longitude and latitude
         if(generalLocationDestination[vm.currentIndices.shipment] == "")
-          string += currentShipment.destination.latitude + "," + currentShipment.destination.longitude;
+          string += currentShipment.destination.latitude + ", " + currentShipment.destination.longitude;
         //Display location
         else
           string += generalLocationDestination[vm.currentIndices.shipment];
@@ -653,7 +653,7 @@
       //Initialize HTTP request
       var request = new XMLHttpRequest();
       var method = 'GET';
-      var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
+      var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
       var async = false; //Should be synchronous
 
       request.open(method, url, async);
@@ -858,11 +858,11 @@
       var compiledCurrent = $compile(currentContentString)($scope);
       var compiledDestination = $compile(destinationContentString)($scope);
 
-      let originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
+      let originPinImage = new google.maps.MarkerImage("https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
     
-      let currentPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+(index + 1)+"|"+pinColor);
+      let currentPinImage = new google.maps.MarkerImage("https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+(index + 1)+"|"+pinColor);
     
-      let destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
+      let destinationPinImage = new google.maps.MarkerImage("https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
     
       let originMarker = new google.maps.Marker({
         position: origin,
