@@ -867,18 +867,21 @@
       let originMarker = new google.maps.Marker({
         position: origin,
         map: map,
+        optimized: false,      
         icon: originPinImage
       });
     
       let currentMarker = new google.maps.Marker({
         position: current,
         map: map,
+        optimized: false,
         icon: currentPinImage
       });
     
       let destinationMarker = new google.maps.Marker({
         position: dest,
         map: map,
+        optimized: false,
         icon: destinationPinImage
       });
     
