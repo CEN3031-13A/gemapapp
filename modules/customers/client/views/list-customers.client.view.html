@@ -1,7 +1,3 @@
-<head>
-  <title>GE Shipment Tracker</title>
-</head>
-
 <div class="u-1/1">
   <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
@@ -16,7 +12,6 @@
     <input id="id3" name="btn-group" style="width: 33.33%; height: 100%;" ng-click="vm.displayAll()"  type="radio">
     <label for="id3" style="width: 33.33%; height: 100%;" class="btn">All</label>
   </div>
-  
   <div id="pxtree">
     <px-tree id="TEST11"
     keys='{"id":"id","label":"label","children":"children","Shipments":"shipments"}'
@@ -28,8 +23,8 @@
     }
     ]'
     ng-click="vm.getItemData()" >
-    </px-tree>
-  </div>
+  </px-tree>
+</div>
 </div>
 
 
@@ -50,7 +45,7 @@
   }
   ]'
   completed='[]'>
-  </px-steps>
+</px-steps>
 </div>
 
 <div id="MAP_MARKERS">
@@ -150,6 +145,25 @@ status="" opened>
       <p class="help-block error-text" ng-message="required">Comment cannot be empty!</p>
     </div>
   </div>
+  <div class="form-group">
+    <a  ui-sref="customers.edit({ customerId: vm.customers[vm.currentIndices.customer]._id })"
+    class="list-group-item">
+    <div id="submitbutton" ng-show="vm.newComment">
+      <button type="submit">Add&nbsp;Comment</button>         
+    </div>
+  </a>
+</div>
+<div ng-show="vm.error" class="text-danger">
+  <strong ng-bind="vm.error"></strong>
+</div>
+</fieldset>
+</form> 
+<div id="submitbutton" ng-show="vm.newComment==undefined">
+  <button disabled>Add&nbsp;Comment</button>  
+</div>
+</px-accordion>
+</div>
+
 </div>
 
 <!--Predix Import Links-->
@@ -166,4 +180,3 @@ status="" opened>
 <link rel="import" href="../../../../../lib/google-map/google-map-elements.html" />
 <script src="https://maps.googleapis.com/maps/api/js"></script> 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtX6UVj6lstPls2orNPnfW5GJ0_7eJ6fo"></script>
-
