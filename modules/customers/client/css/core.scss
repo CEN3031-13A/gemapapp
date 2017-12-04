@@ -122,6 +122,10 @@ body::-webkit-scrollbar {
   font-family: "GE Inspira Sans",sans-serif;
 }
 
+.px-accordion-0 .accordion__header[disabled].px-accordion{
+  cursor: default;
+}
+
 ::-webkit-input-placeholder {
  color: $neutral-gray10 !important;
  text-align: center;
