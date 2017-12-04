@@ -895,6 +895,9 @@ select::-ms-expand {
   line-height: inherit;
   color: var(--px-input-text-color--help, #677e8c); }
 
+.input--regular {
+  max-width: 21.2rem; }
+
 /**
  * The Predix Experience layout system uses `box-sizing: border-box;` and
  * `display: flex;` to create an extremely powerful, flexible
@@ -1881,6 +1884,7 @@ button.btn {
   font-family: "GE Inspira Sans",sans-serif; }
 
 #STEPS {
+  border-bottom: none;
   height: 60px;
   padding-top: 1vh;
   position: absolute;
@@ -1906,13 +1910,16 @@ button.btn {
 
 .detailedInfo h2 {
   color: white;
-  height: 30px;
   background: rgba(136, 154, 165, 0.15);
   text-align: center;
   text-decoration: underline;
   font-family: "GE Inspira Sans",sans-serif; }
 
 .detailedInfo span {
+  color: white;
+  font-family: "GE Inspira Sans",sans-serif; }
+
+.detailedInfo text {
   color: white;
   font-family: "GE Inspira Sans",sans-serif; }
 
@@ -1923,11 +1930,21 @@ button.btn {
 
 #markerInfo {
   display: block;
-  margin-left: 47.5%; }
+  margin-left: 47.5%;
+  cursor: pointer;
+  /* Pointer/hand icon */ }
 
-#submitbutton {
+#submitbutton button {
+  background-color: var(--px-btn-background, #d8e0e5);
+  border: 1px solid green;
+  /* Green border */
+  color: var(--px-btn-color, #2c404c);
+  padding: 10px 24px;
+  /* Some padding */
+  cursor: pointer;
+  /* Pointer/hand icon */
   display: block;
-  margin-left: 30%; }
+  margin: 0 auto; }
 
 body::-webkit-scrollbar {
   display: none; }
