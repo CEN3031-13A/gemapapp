@@ -41,7 +41,7 @@ describe('Customer Schema Unit Tests:', function () {
   });
 
   afterEach(function (done) {
-    if (Customer.id) {
+    if (id) {
       Customer.remove({ _id: Customer.id }, function (err) {
         Customer.id = null;
         done();
