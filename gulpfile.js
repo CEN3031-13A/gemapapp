@@ -469,7 +469,7 @@ gulp.task('test:server:watch', function (done) {
 });
 
 gulp.task('test:client', function (done) {
-  runSequence('env:test', 'lint', 'dropdb', 'karma', done);
+  runSequence('env:test', 'karma', done);
 });
 
 gulp.task('test:e2e', function (done) {
