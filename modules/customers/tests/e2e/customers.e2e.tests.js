@@ -4,7 +4,7 @@ describe('Customers E2E Tests:', function () {
 	it('should have a title', function(){
 		browser.get('https://gemapapp.herokuapp.com/map');
 
-		expect(browser.getTitle()).toEqual('GE Map App');
+		expect(browser.getTitle()).toEqual('GE Shipment Tracker');
 	});
 });
 
@@ -21,7 +21,7 @@ describe('should filter tree element by input', function () {
 		searchBar.sendKeys('q');
 		browser.sleep(1000);
 
-		var tree = element(by.id('TEST11'));
+		var tree = element(by.tagName('px-tree'));
 
 		tree.getText().then(function(text) {
 			browser.sleep(1000);
@@ -36,7 +36,7 @@ describe('should filter tree element by input', function () {
 		searchBar.sendKeys('a');
 		browser.sleep(1000);
 
-		var tree = element(by.id('TEST11'));
+		var tree = element(by.tagName('px-tree'));
 
 		tree.getText().then(function(text) {
 			browser.sleep(1000);
@@ -50,7 +50,7 @@ describe('should filter tree element by input', function () {
 		searchBar.sendKeys('g');
 		browser.sleep(1000);
 
-		var tree = element(by.id('TEST11'));
+		var tree = element(by.tagName('px-tree'));
 
 		tree.getText().then(function(text) {
 			browser.sleep(1000);
@@ -113,7 +113,7 @@ describe('Left Side Bar Functionality:', function () {
 		var allButton = element(by.id('id3'));
 
 		//Find px-tree item
-	    var tree = element(by.id('TEST11'));
+	    var tree = element(by.tagName('px-tree'));
 	    
 	    // Find the first (and only) button on the page and click it
 	    browser.actions().mouseMove(activeButton, {x: 50, y: 10}).click().perform();
@@ -314,7 +314,7 @@ describe('Map Functionality:', function () {
 		// expect(element(by.id('MAP_MARKERS')).getCssValue('left')).toEqual(mapStepsPixels + 'px');
 		// expect(element(by.id('STEPS')).getCssValue('left')).toEqual(mapStepsPixels + 'px');
 
-		//expect(rightSidebar.isPresent()).toEqual(true);
+		expect(rightSidebar.isPresent()).toEqual(true);
 
 		infoButton.click();
 		browser.sleep(2000);		

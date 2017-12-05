@@ -45,7 +45,7 @@
           removeLine();
         return;
       }
-    
+   
       let shipmentID = selectedShipment.id;
       let customerID = selectedPath[0];
       let orderID = selectedPath[1];
@@ -79,19 +79,28 @@
         if(orderID != undefined){
           //Set the markers for an entire order
           if (!found){
-            displayShipmentMapElementsOrder();
-            displayRelativeShipmentLocation(false);
+            overlay(function(){
+              displayShipmentMapElementsOrder();
+              displayRelativeShipmentLocation(false);
+              customerInfo();
+              shippingDetails();
+              packageDetails();
+              packageComments();
+
+              overlay(function(){
+                console.log("Turn overlay off");
+              });
+            });
           }
           //Set the markers for one shipment
           else{ 
             displayShipmentMapElements();
             displayRelativeShipmentLocation(true);
-          }
-          console.log("HELP")
-          customerInfo();
-          shippingDetails();
-          packageDetails();
-          packageComments();
+            customerInfo();
+            shippingDetails();
+            packageDetails();
+            packageComments();
+          }         
         }
     }
 
@@ -110,8 +119,10 @@
         }
         for (let i = 0; i < activeCustomerList.length; i++) {
           let regularExpression = new RegExp(vm.searchText, 'i');
-          if (activeCustomerList[i].name.search(regularExpression) !== -1)
+          if (activeCustomerList[i].name.search(regularExpression) !== -1){
             customerListSearch.push(activeCustomerList[i]);
+            console.log(activeCustomerList[i].name.search(regularExpression))
+          }
         }
         displayCustomerTree(customerListSearch);
       } else if (activeInactiveState === 'Inactive') {
@@ -135,8 +146,10 @@
           if (customerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(customerList[i]);
         }
+        console.log(customerListSearch)
         displayCustomerTree(customerListSearch);
       }
+      console.log(activeInactiveState)
     }
 
     /*  Function: displayActive()
@@ -319,7 +332,7 @@
         treeElement.attributes.items.value = "[{\"label\":\"\",\"id\":\"branch-0-3\",\"isSelectable\": false}]";
         return;
       }
-	  
+
       customerListSearch.sort(function (a, b) {
         if (a.name.toUpperCase() < b.name.toUpperCase())
           return -1;
@@ -760,7 +773,7 @@
       displayLocation(shipment.origin.latitude, shipment.origin.longitude, "origin");
       displayLocation(shipment.current_location.latitude, shipment.current_location.longitude, "current");
       displayLocation(shipment.destination.latitude, shipment.destination.longitude, "destination");
-
+      
       let pinColor;
     
       if (shipment.delivery_state === "Ahead of Time")
@@ -1134,6 +1147,20 @@
             destinationInfoWindowList[i].close();
         }
       }
+    }
+
+    function overlay(callback) {
+      console.log("first");
+      var mapOverlay = document.getElementById('overlay');
+      console.log(mapOverlay.style.display);
+      //mapOverlay.style.display = 'block';
+      if(mapOverlay.style.display == 'block') 
+        mapOverlay.style.display = 'none';
+      else if(mapOverlay.style.display == 'none')
+        mapOverlay.style.display = 'block';
+
+      console.log(mapOverlay.style.display);
+      setTimeout(callback, 1);
     }
   }
 }());
