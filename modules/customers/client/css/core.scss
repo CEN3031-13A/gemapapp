@@ -131,8 +131,8 @@ $inuit-enable-btn--large : true;
   position: fixed;
   height: 30px;
   width: inherit;
-   min-width:0;
-   z-index: 3;
+  min-width:0;
+  z-index: 3;
 }
 
 .detailedInfo px-accordion{
@@ -171,6 +171,35 @@ body::-webkit-scrollbar {
  color: $neutral-gray10 !important; 
  text-align: center;
 }
+
+//Spinner
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid $gray15;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
 // Trumps
 @import "../../../../public/lib/px-spacing-responsive-design/_trumps.spacing-responsive.scss";
