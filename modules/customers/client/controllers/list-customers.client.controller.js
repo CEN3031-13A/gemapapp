@@ -19,6 +19,7 @@
 
     // Used to animate the right sidebar.
     document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
+    document.getElementById('overlay').style.width = "83.3333333333%";
     document.getElementById('STEPS').style.width = "83.3333333333%";
     document.getElementById('hide').style.width = "0";
 
@@ -210,6 +211,7 @@
         if(rightSideBarTimerOut == undefined && rightSideBarTimerIn == undefined){
           // x.style.display = 'block';
           document.getElementById('MAP_MARKERS').style.left = "16.6666667%";
+          document.getElementById('overlay').style.left = "16.6666667%";
           document.getElementById('STEPS').style.left = "16.6666667%";
           rightSideBarTimerOut = setInterval(rightSideBarOut, 1);
           rightSideBarIsDisplayed = true;
@@ -1101,6 +1103,7 @@
       if(val <= 61.4){
         outVal =0;
         document.getElementById('MAP_MARKERS').style.width = "62%";
+        document.getElementById('overlay').style.width = "62%";
         document.getElementById('STEPS').style.width = "62%";
         document.getElementById('hide').style.width = "21.333%";
         clearInterval(rightSideBarTimerOut);
@@ -1121,6 +1124,7 @@
       if(val >= 83.1){
         inVal =0;
         document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
+        document.getElementById('overlay').style.width = "83.3333333333%";
         document.getElementById('STEPS').style.width = "83.3333333333%";
         document.getElementById('hide').style.width = "0%";
         clearInterval(rightSideBarTimerIn);
