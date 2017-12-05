@@ -1870,6 +1870,14 @@ button.btn {
 .btn--full {
   width: 100%; }
 
+#STEPS {
+  border-bottom: none;
+  height: 60px;
+  padding-top: 1vh;
+  position: absolute;
+  right: 0;
+  top: 30px; }
+
 #leftMenu {
   background: #2c404c;
   border-right: 1px solid black;
@@ -1883,20 +1891,19 @@ button.btn {
   color: white;
   font-family: "GE Inspira Sans",sans-serif; }
 
-#STEPS {
-  border-bottom: none;
-  height: 60px;
-  padding-top: 1vh;
-  position: absolute;
-  right: 0;
-  top: 30px; }
-
 #MAP_MARKERS {
   border-top: 1px solid black;
   height: calc(100vh - 90px);
   position: absolute;
   right: 0;
-  top: 90px; }
+  top: 90px;
+  z-index: 4; }
+
+#markerInfo {
+  cursor: pointer;
+  /* Pointer/hand icon */
+  display: block;
+  margin-left: 47.5%; }
 
 .detailedInfo {
   background: #2c404c;
@@ -1908,12 +1915,15 @@ button.btn {
   right: 0;
   top: 30px; }
 
+.iron-icon-1 {
+  z-index: 2; }
+
 .detailedInfo h2 {
-  color: white;
   background: rgba(136, 154, 165, 0.15);
+  color: white;
+  font-family: "GE Inspira Sans",sans-serif;
   text-align: center;
-  text-decoration: underline;
-  font-family: "GE Inspira Sans",sans-serif; }
+  text-decoration: underline; }
 
 .detailedInfo span {
   color: white;
@@ -1925,35 +1935,45 @@ button.btn {
 
 .px-accordion-0 .heading--subsection.px-accordion {
   color: white;
-  font-weight: bold;
-  font-family: "GE Inspira Sans",sans-serif; }
-
-#markerInfo {
-  display: block;
-  margin-left: 47.5%;
-  cursor: pointer;
-  /* Pointer/hand icon */ }
+  font-family: "GE Inspira Sans",sans-serif;
+  font-weight: bold; }
 
 #submitbutton button {
   background-color: var(--px-btn-background, #d8e0e5);
-  border: 1px solid green;
+  border: 1px solid black;
   /* Green border */
   color: var(--px-btn-color, #2c404c);
-  padding: 10px 24px;
-  /* Some padding */
   cursor: pointer;
   /* Pointer/hand icon */
   display: block;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding: 10px 24px;
+  /* Some padding */ }
 
-body::-webkit-scrollbar {
-  display: none; }
+.closebutton {
+  background-color: var(--px-btn-background, #d8e0e5);
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  /* Pointer/hand icon */
+  display: block;
+  position: fixed;
+  height: 30px;
+  width: inherit;
+  min-width: 0;
+  z-index: 3; }
 
 .detailedInfo px-accordion {
   font-family: "GE Inspira Sans",sans-serif; }
 
 .px-accordion-0 .accordion__header[disabled].px-accordion {
   cursor: default; }
+
+#closeright {
+  margin: 0 auto; }
+
+body::-webkit-scrollbar {
+  display: none; }
 
 ::-webkit-input-placeholder {
   color: #292929 !important;

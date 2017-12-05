@@ -1,3 +1,7 @@
+<head>
+  <title>GE Shipment Tracker</title>
+</head>
+
 <div class="u-1/1">
   <px-branding-bar application-title="GE Shipment Tracker"></px-branding-bar>
 </div>
@@ -54,7 +58,8 @@
 </div>
 
 <div class="detailedInfo" id="hide">
-  <h2>DETAILED&nbsp;INFORMATION</h2>
+  
+  <h2>DETAILED&nbsp;INFORMATION</h2> 
   <div class="list-group">
     <px-accordion
     icons='{"more":"px-utl:chevron-right","less":"px-utl:chevron","action":"px-utl:edit"}'
@@ -162,8 +167,10 @@ status="" opened>
   <button disabled>Add&nbsp;Comment</button>  
 </div>
 </px-accordion>
+
 </div>
 
+<button class="closebutton" ng-click="vm.toggleRightSideBar()"><i class="material-icons" style="color:red">close</i></button> 
 </div>
 
 <!--Predix Import Links-->
