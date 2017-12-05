@@ -313,6 +313,13 @@
     */
     function displayCustomerTree(customerListSearch) {
       //Sort customer list alphabetically
+	   var treeElement = document.getElementById("TEST11");
+      
+      if(customerListSearch.length === 0){
+        treeElement.attributes.items.value = "[{\"label\":\"\",\"id\":\"branch-0-3\",\"isSelectable\": false}]";
+        return;
+      }
+	  
       customerListSearch.sort(function (a, b) {
         if (a.name.toUpperCase() < b.name.toUpperCase())
           return -1;
@@ -320,8 +327,6 @@
           return 1;
         return 0;
       });
-
-      var treeElement = document.getElementById("TEST11");
 
       //Rewrite string to inject into Predix px-tree component
       let string = "[";
@@ -807,14 +812,42 @@
         formattedLocationDestination = '<p><b>Location:</b></br>' +
                                    generalLocationDestination[index] + '</br>';
       }
-
+	  let statusColor = '';
+	  switch (shipment.delivery_state) {
+        case 'Ahead of Time':
+          statusColor = '#00C300';
+          break;
+        case 'On Time':
+          statusColor = '#00C300';
+          break;
+        case 'Likely to be On Time':
+          statusColor = '#DEE800';
+          break;
+        case 'Likely to be Behind Schedule':
+          statusColor = '#FFBF0C';
+          break;
+        case 'Behind Schedule':
+          statusColor = '#E85E00';
+          break;
+        case 'Late':
+          statusColor = '#FF0000';
+          break;
+        default:
+		  statusColor = '#000000';
+	  }
       let originContentString = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
                 '<h3 id="firstHeading" class="firstHeading">Consignment Origin ' +
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
-                 '</h3>' +
+                '</h3>' +
                 '<div id="bodyContent">' +
+				'<b>Status: ' +
+				'<span style=color:' +
+				statusColor +
+				'>' +
+				shipment.delivery_state +
+				'</span></b>' +
                 formattedLocationOrigin + "</br>" +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
@@ -830,6 +863,12 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
+				'<b>Status: ' +
+				'<span style=color:' +
+				statusColor +
+				'>' +
+				shipment.delivery_state +
+				'</span></b>' +
                 formattedLocationCurrent +
                 "</br>" +
                 '<b>Date: </b></br>' +
@@ -845,11 +884,17 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
+				'<b>Status: ' +
+				'<span style=color:' +
+				statusColor +
+				'>' +
+				shipment.delivery_state +
+				'</span></b>' +
                 formattedLocationDestination +
                 '</br>' +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
-                '</p>' +
+                // '</p>' +
                 '</div>' +
                 '<button id="markerInfo" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
