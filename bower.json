@@ -50,6 +50,7 @@
     "px-forms-design": "^2.0.6",
     "px-button-group-design": "^2.0.5",
     "px-buttons-design": "^2.0.5",
-    "px-starter-kit-design": "^1.0.1"
+    "px-starter-kit-design": "^1.0.1",
+    "px-spinner": "^2.2.0"
   }
 }
