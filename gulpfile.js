@@ -331,7 +331,9 @@ gulp.task('karma', function (done) {
   var KarmaServer = require('karma').Server;
   new KarmaServer({
     configFile: __dirname + '/karma.conf.js'
-  }, done).start();
+  }, function(){
+      done();
+  }).start();
 });
 
 // Run karma with coverage options set and write report
