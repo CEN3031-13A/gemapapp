@@ -36,8 +36,8 @@ module.exports = function (karmaConfig) {
 	// List of files / patterns to load in the browser
 	files: _.union(defaultAssets.client.lib.js,
 		       defaultAssets.client.js,
-		       testAssets.tests.client//,
-		       //defaultAssets.client.views
+		       testAssets.tests.client,
+		       defaultAssets.client.views
 		      ),
 
 	// Test results reporter to use
@@ -71,6 +71,11 @@ module.exports = function (karmaConfig) {
 		base: 'Chrome',
 		flags: ['--no-sandbox']
 	    }
+	},
+
+	browserConsoleLogOptions: {
+	    level: 'log',
+	    terminal: true
 	},
 
 	// If browser does not capture in given timeout [ms], kill it
