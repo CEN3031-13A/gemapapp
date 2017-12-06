@@ -289,8 +289,75 @@
 		expect(document.getElementById("PACKAGE_DETAILS").children[4].innerText).toEqual('occaecat, sint, laboris, labore, officia');
 	    }));
 	    
-	    it('should inject location and map markers', inject(function(CustomersService){
-		
+	    it('should inject relative shipment location', inject(function(CustomersService){
+		var infoNeeded = true;
+		//Set variables for the current customer and order selected
+		let currentCustomer = CustomersListController.customers[0];
+		let currentOrder    = currentCustomer.orders[0];
+		let currentShipment;
+
+		//InfoNeeded indicates that a shipment has been selected and info needs to be displayed
+		//Therefore the currentShipment is defined
+		if(infoNeeded == true)
+		    currentShipment = currentOrder.shipments[0];
+
+		var string = "<px-steps ";
+		string += "items=\'[";
+		string += "{\"id\":\"1\", \"label\":\"(ORIGIN) ";
+
+		//If a shipment is selected display needed information in the component
+		if(infoNeeded == true){
+		    //If location is undefined display the longitude and latitude
+		    if(generalLocationOrigin[0] == "")
+			string += currentShipment.origin.latitude + ", " + currentShipment.origin.longitude;
+		    //Display location
+		    else
+			string += generalLocationOrigin[0];
+		}
+
+		string += "\"},";
+		string += "{\"id\":\"2\", \"label\":\"(CURRENT) ";
+
+		//If a shipment is selected display needed information in the component
+		if(infoNeeded == true){
+		    //If location is undefined display the longitude and latitude
+		    if(generalLocationCurrent[0] == "")
+			string += currentShipment.current_location.latitude + ", " + currentShipment.current_location.longitude;
+		    //Display location
+		    else
+			string += generalLocationCurrent[0];
+		} 
+
+		string += "\"},";
+		string += "{\"id\":\"3\", \"label\":\"(TO) ";
+
+		//If a shipment is selected display needed information in the component
+		if(infoNeeded == true){
+		    //If location is undefined display the longitude and latitude
+		    if(generalLocationDestination[0] == "")
+			string += currentShipment.destination.latitude + ", " + currentShipment.destination.longitude;
+		    //Display location
+		    else
+			string += generalLocationDestination[0];
+		}
+
+		string += "\"}]\' completed=\'[\"1\",\"2\"";
+
+		//If the current location is at the destination then mark the desination location
+		if(infoNeeded){
+		    if(currentShipment.current_location.latitude == currentShipment.destination.latitude){
+			if(currentShipment.current_location.longitude == currentShipment.destination.longitude){
+			    string += ",\"3\"";
+			}
+		    }
+		}
+
+		string += "]\'+</px-steps>";
+
+
+		document.getElementById("STEPS").innerHTML = string;
+		var compare = '<px-steps items="[{&quot;id&quot;:&quot;1&quot;, &quot;label&quot;:&quot;(ORIGIN) undefined&quot;},{&quot;id&quot;:&quot;2&quot;, &quot;label&quot;:&quot;(CURRENT) undefined&quot;},{&quot;id&quot;:&quot;3&quot;, &quot;label&quot;:&quot;(TO) undefined&quot;}]" completed="[&quot;1&quot;,&quot;2&quot;]" +<="" px-steps=""></px-steps>'
+		expect(document.getElementById('STEPS').innerHTML).toEqual(compare);
 	    }));
 
 	    it('should toggle right sidebar', inject(function(CustomersService){
