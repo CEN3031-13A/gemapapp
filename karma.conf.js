@@ -78,6 +78,12 @@ module.exports = function (karmaConfig) {
 	    terminal: true
 	},
 
+	proxies: {
+	    '/': '/base'
+	},
+	
+	urlRoot: '/',
+	
 	// If browser does not capture in given timeout [ms], kill it
 	captureTimeout: 60000,
 
