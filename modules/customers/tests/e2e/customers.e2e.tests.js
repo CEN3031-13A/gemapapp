@@ -8,7 +8,7 @@ describe('Customers E2E Tests:', function () {
 	});
 });
 
-describe('should filter tree element by input', function () {
+describe('Search Bar Functionality:', function () {
 	beforeEach(function() {
 		browser.get('https://gemapapp.herokuapp.com/map');
 
@@ -16,12 +16,12 @@ describe('should filter tree element by input', function () {
 		browser.sleep(1000);
 	});
 
-	it('should show no matching customers when no customers contain the input', function() {
-		var searchBar = element(by.model('vm.searchText'));
-		searchBar.sendKeys('q');
-		browser.sleep(1000);
-
+	it('should display no matching when customers do not contain the input', function() {
 		var tree = element(by.tagName('px-tree'));
+
+		var searchBar = element(by.model('vm.searchText'));
+		searchBar.sendKeys('j');
+		browser.sleep(1000);
 
 		tree.getText().then(function(text) {
 			browser.sleep(1000);
@@ -85,7 +85,7 @@ describe('should filter tree element by input', function () {
 
 		searchBar.clear();
 
-	    searchBar.sendKeys('q');
+	    searchBar.sendKeys('j');
 		browser.sleep(1000);
 
 		tree.getText().then(function(text) {
@@ -97,8 +97,7 @@ describe('should filter tree element by input', function () {
 	});
 });
 
-
-describe('Left Side Bar Functionality:', function () {
+describe('Left Sidebar Functionality:', function () {
 	beforeEach(function() {
 		browser.get('https://gemapapp.herokuapp.com/map');
 
@@ -136,7 +135,7 @@ describe('Left Side Bar Functionality:', function () {
 	    });
 
 	    // Find the first (and only) button on the page and click it
- 		browser.actions().mouseMove(allButton, {x: 150, y: 10}).click().perform();
+ 		browser.actions().mouseMove(allButton, {x: 170, y: 10}).click().perform();
 	    browser.sleep(3000);
 
 		tree.getText().then(function(text) {
@@ -182,15 +181,6 @@ describe('Left Side Bar Functionality:', function () {
 
 	   	tree.getText().then(function(text){	    	
 			// Verify that there are 11 inactive customers -- 92 characters in their names
-			console.log(text.includes('\nPigzart'+
-	     						+'\nOrder #1\nOrder #2\nOrder #3' 
-	     						+ '\nShipment #1\nShipment #2\nShipment #3\nShipment #4\nShipment #5\nShipment #6'
-	     						+ '\nOrder #4\nOrder #5\nOrder #6'));
-	     	// expect(text.includes('\nPigzart'+
-	     	// 					+'\nOrder #1\nOrder #2\nOrder #3' 
-	     	// 					+ '\nShipment #1\nShipment #2\nShipment #3\nShipment #4\nShipment #5\nShipment #6'
-	     	// 					+ '\nOrder #4\nOrder #5\nOrder #6')).toEqual(true);
-
 	     	expect(text).toEqual('Automon\nBoilicon\nFirewax\nGorganic\nMondicil\nPigzart'
 	     						+'\nOrder #1\nOrder #2\nOrder #3' 
 	     						+ '\nShipment #1\nShipment #2\nShipment #3\nShipment #4\nShipment #5\nShipment #6'
@@ -254,7 +244,7 @@ describe('Map Functionality:', function () {
 		browser.sleep(1000);
 	});
 
-	it('should display the correct number of map markers based on the number of markers', function () {
+	it('should display the correct number of map markers', function () {
 		var tree = element(by.tagName('px-tree'));
 		tree.click();
 	    browser.sleep(3000);
@@ -287,8 +277,132 @@ describe('Map Functionality:', function () {
 		browser.sleep(5000);
 	});
 
+	it('should display map markers when shipment is clicked', function () {
+		var tree = element(by.tagName('px-tree'));
+		
+		tree.click();
+		browser.sleep(3000);
+		
+		tree.click();
+		browser.sleep(3000);
+		
+		tree.click();
+		browser.sleep(3000);
+
+	    tree.getText().then(function(text){
+ 	  		var count = (text.match(/Shipment/g) || []).length;
+ 	    	var numMarkers = element.all(by.css('.gmnoprint')).count();
+			expect(numMarkers).toEqual(7 + (3));
+ 	    });
+	});
+
+
+	it('should display three map markers when shipment is clicked', function () {
+		var tree = element(by.tagName('px-tree'));
+
+		browser.actions().mouseMove(tree, {x: 0, y: 20}).click().perform();
+ 	    browser.sleep(3000);
+
+ 	    browser.actions().mouseMove(tree, {x: 50, y: 40}).click().perform();
+ 	    browser.sleep(3000);
+
+	    tree.getText().then(function(text){
+ 	  		var count = (text.match(/Shipment/g) || []).length;
+ 	    	var numMarkers = element.all(by.css('.gmnoprint')).count();
+			expect(numMarkers).toEqual(7 + (3*count));
+ 	    });
+	});
+
 	it('should open right sidebar when map marker is clicked', function () {
 		var tree = element(by.tagName('px-tree'));
+		
+ 	    browser.actions().mouseMove(tree, {x: 0, y: 20}).click().perform();
+ 	    browser.sleep(3000);
+
+ 	    //When a new customer is clicked all map markers should disappear
+ 	    var numMarkers = element.all(by.css('.gmnoprint')).count();
+ 	    expect(numMarkers).toEqual(7);
+
+ 	    browser.actions().mouseMove(tree, {x: 50, y: 40}).click().perform();
+ 	    browser.sleep(3000);
+
+		var mapMarker = element(by.css('.gmnoprint'));
+		mapMarker.click();
+
+		browser.sleep(1000);
+
+		var infoButton = element(by.id('markerInfo'));
+		infoButton.click();
+
+		browser.sleep(5000);
+
+		var rightSidebar = element(by.id('hide'));
+
+		expect(rightSidebar.isPresent()).toEqual(true);
+
+		infoButton.click();
+		browser.sleep(2000);			
+	});
+
+	it('should color lines according to delivery state', function () {
+		var tree = element(by.tagName('px-tree'));
+		
+ 	    browser.actions().mouseMove(tree, {x: 0, y: 20}).click().perform();
+ 	    browser.sleep(3000);
+
+ 	    //When a new customer is clicked all map markers should disappear
+ 	    var numMarkers = element.all(by.css('.gmnoprint')).count();
+ 	    expect(numMarkers).toEqual(7);
+
+ 	    browser.actions().mouseMove(tree, {x: 50, y: 40}).click().perform();
+ 	    browser.sleep(3000);
+
+		var mapMarker = element(by.css('.gmnoprint'));
+		mapMarker.click();
+	});
+
+});
+
+describe('Right Sidebar Functionality:', function () {
+	beforeEach(function() {
+		browser.get('https://gemapapp.herokuapp.com/map');
+
+		browser.waitForAngularEnabled();
+		browser.sleep(1000);
+	});
+	
+	it('should add comment to list of comments when submitted', function () {
+		var tree = element(by.tagName('px-tree'));
+		
+ 	    tree.click();
+ 	    browser.sleep(3000);
+
+ 	    tree.click();
+ 	    browser.sleep(3000);
+
+ 	    tree.getText().then(function(text){
+ 	  		var count = (text.match(/Shipment/g) || []).length;
+ 	    	var numMarkers = element.all(by.css('.gmnoprint')).count();
+			expect(numMarkers).toEqual(7 + (3*count));
+ 	    });
+
+		var mapMarker = element(by.css('.gmnoprint'));
+		mapMarker.click();
+
+		browser.sleep(1000);
+
+		var infoButton = element(by.id('markerInfo'));
+		infoButton.click();
+
+		browser.sleep(5000);
+
+		var commentSection = element(by.id('new_comment'));
+		var textContext = 'This is to test an added comment from protractor';
+		commentSection.sendKeys(textContext);
+
+		element(by.css('.form-group #submitbutton')).click();
+		browser.sleep(5000);
+
 		tree.click();
 	    browser.sleep(3000);
 
@@ -303,57 +417,13 @@ describe('Map Functionality:', function () {
 		var infoButton = element(by.id('markerInfo'));
 		infoButton.click();
 
-		browser.sleep(5000);
-
-		var browserWidth = 1000;
-		var sidebarPixels = 0.166666667 * browserWidth;
-		var mapStepsPixels = 0.21333 * browserWidth;
-
-		var rightSidebar = element(by.id('hide'));
-		// expect(rightSidebar.getCssValue('width')).toBe(sidebarPixels + 'px');
-		// expect(element(by.id('MAP_MARKERS')).getCssValue('left')).toEqual(mapStepsPixels + 'px');
-		// expect(element(by.id('STEPS')).getCssValue('left')).toEqual(mapStepsPixels + 'px');
-
-		expect(rightSidebar.isPresent()).toEqual(true);
-
-		infoButton.click();
-		browser.sleep(2000);		
-
-		expect(rightSidebar.isPresent()).toEqual(false);
-		
-		// expect(rightSidebar.getCssValue('width')).toEqual('0px');
-		// expect(element(by.id('MAP_MARKERS')).getCssValue('right')).toEqual('0px');
-		// expect(element(by.id('STEPS')).getCssValue('right')).toEqual('0px');
+		element.all(by.css('.list-group px-accordion')).then(function(dropdowns){
+			browser.sleep(5000);
+			dropdowns[21].click();
+			expect(true).toEqual(true);
+		});
 	});
-
-	// it('pin colors should be colored according to delivery state', function () {
-	// 	expect(true).toEqual(true);
-	// });
-
-	// it('arrays should have correct marker information', function () {
-	// 	expect(true).toEqual(true);
-	// });
-
-	// it('should clear all markers on the map', function () {
-	// 	expect(true).toEqual(true);
-	// });
-
-	// it('should draw lines on the map', function () {
-	// 	expect(true).toEqual(true);
-	// });
-
-	// it('should close all info window', function () {
-	// 	expect(true).toEqual(true);
-	// });
 });
 
-// describe('Comments Functionality', function () {
-// 	it('should add comment to submit once submitted', function () {
-// 		// Find the element with ng-model="user" and type "jacksparrow" into it
-// 		//element(by.model('vm.searchText')).sendKeys('New comment');
 
-
-// 		expect(true).toEqual(true);
-// 	});
-// });
 
