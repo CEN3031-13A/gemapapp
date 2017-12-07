@@ -1918,6 +1918,9 @@ button.btn {
 .iron-icon-1 {
   z-index: 2; }
 
+.px-icon-1 iron-icon.px-icon {
+  color: white; }
+
 .detailedInfo h2 {
   background: rgba(136, 154, 165, 0.15);
   color: white;
