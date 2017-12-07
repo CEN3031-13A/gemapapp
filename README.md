@@ -12,26 +12,37 @@ This webapp used:
 - <a href="https://www.predix-ui.com/#/home">Predix UI</a>
 
 ### App Features/Description
+1. Displays All Customers On Left Side of Page
+
+<img src="https://github.com/CEN3031-13A/gemapapp/raw/develop/public/images/LandingPage.png" width="40%">
 
 ### Local Setup
 
-1. Clone this repository onto your localhost 
-   - ```
-	 git clone git@github.com:CEN3031-13A/gemapapp.git
-	 ```
-2. Change directory to the repository that you just cloned
-   - ```
-	 cd gemapapp
-	 ```
-3. Install the required node modules
-   - ```
-	 npm install
-	 ```
-4. Run the server
-   - ```
-	 gulp
-	 ```
-5. Go to localhost:3000 in your browser(note firefox is not supported, only chrome)
+Clone this repository onto your localhost 
+
+```
+git clone git@github.com:CEN3031-13A/gemapapp.git
+```
+
+Change directory to the repository that you just cloned
+
+```
+cd gemapapp
+```
+
+Install the required node modules
+
+```
+npm install
+```
+
+Run the server
+
+```
+gulp
+```
+
+Go to localhost:3000 in your browser(note firefox is not supported, only chrome)
 
 ### Update Database
 Currently, our database is pulling data from a file called `generated_shipment_data.json`. The configuration file that handles which file will get pushed into our database is `mongo_resources/JSONtoMongo.js`. Just replace the filepath the line `customers = require('filepath')` into the filepath with your data.
