@@ -12,9 +12,29 @@ This webapp used:
 - <a href="https://www.predix-ui.com/#/home">Predix UI</a>
 
 ### App Features/Description
-1. Displays All Customers On Left Side of Page
+1. Displays all customers on left side of page
 
-<img src="https://github.com/CEN3031-13A/gemapapp/raw/develop/public/images/LandingPage.png" width="40%">
+    <img src="https://github.com/CEN3031-13A/gemapapp/raw/develop/public/images/LandingPage.png" width="70%">
+
+2. Selecting a customer will display available orders for customer. Selecting an order then displays markers on the map.
+
+    <img src="https://github.com/CEN3031-13A/gemapapp/raw/develop/public/images/SelectedOrder.png" width="70%">
+	
+3. Selecting an available shipment in an order will single out the shipment on the map.
+
+    <img src="https://github.com/CEN3031-13A/gemapapp/raw/develop/public/images/SelectedShipment.png" width="70%">
+	
+4. Clicking on any of the markers on the map will bring up a popup with extra information.
+
+    <img src="https://github.com/CEN3031-13A/gemapapp/raw/develop/public/images/SelectedMarker.png" width="70%">
+	
+5. Clicking on the information icon in the popup will bring out the right sidebar with even more information.
+
+    <img src="https://github.com/CEN3031-13A/gemapapp/raw/develop/public/images/RightSidebar.png" width="70%">
+	
+6. Filling in the search bar on the right will return a list of customers that match the search.
+
+    <img src="https://github.com/CEN3031-13A/gemapapp/raw/develop/public/images/Search.png" width="70%">
 
 ### Local Setup
 
