@@ -43,6 +43,10 @@ Clone this repository onto your localhost
 ```
 git clone git@github.com:CEN3031-13A/gemapapp.git
 ```
+or
+```
+git clone https://github.com/CEN3031-13A/gemapapp.git
+```
 
 Change directory to the repository that you just cloned
 
