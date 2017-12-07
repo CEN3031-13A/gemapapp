@@ -53,6 +53,8 @@ cd gemapapp
 Install the required node modules
 
 ```
+npm install -g bower
+npm install -g gulp
 npm install
 ```
 
