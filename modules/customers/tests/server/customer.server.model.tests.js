@@ -5,18 +5,29 @@
  */
 
 var should = require('should'),
-    request = require('supertest'),
-    mongoose = require('mongoose'),
-    express = require('../../../../config/lib/express'), 
-    config = require('../../../../config/config');
-    Customer = require('../../server/models/customers.server.model.js');
+  request = require('supertest'),
+  mongoose = require('mongoose'),
+  config = require('../../../../config/config'),
+  express = require('express'),
+  Customer = require('../../server/models/customer.server.model.js'),
+  Schema = mongoose.Schema;
 
 /* Globals */
-var user, customer;
+var user;
+var customer;
+var id;
+
+var newcustomer = ({
+  _id: 'testCustomer',
+  name: 'Test Customer',
+  index: 11, 
+  isActive: true
+});
 
   /* Unit tests */
-  describe('Customer Schema Unit Tests:', function () {
-    before(function(done) {
+describe('Customer Schema Unit Tests:', function () {
+  
+  before(function(done) {
     mongoose.connect(config.db.uri);
     done();
   });
@@ -29,24 +40,35 @@ var user, customer;
      */
     this.timeout(10000);
 
-  it('throws an error when id not provided', function(done){
+    it('saves properly when _id and name provided', function(done){
       new Customer({
-        isActive: true
-      }).save(function(err){
-        should.exist(err);
-        done();
-      })
-    });
-  });
-
-  afterEach(function(done) {
-    if(id) {
-      Customer.remove({_id: id}, function(err){
-        id = null;
+        name: newcustomer.name, 
+        _id: newcustomer._id
+      }).save(function(err, doc){
+        should.not.exist(err);
+        id = doc._id;
         done();
       });
-    } else {
+    });
+
+    it('throws an error when _id is duplicated', function(done){
+      new Customer(newcustomer).save(function(err, doc){
+        should.exist(err);
+        done();
+      });
+    });
+
+    after(function (done) {
+      Customer.remove({ _id: id }, function (err) {
+        Customer.id = null;
+        done();
+      });
+    });
+
+    after(function(done){
+      mongoose.connection.close();
       done();
-    }
+
+    });
   });
 });

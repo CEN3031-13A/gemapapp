@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
  * Customer Schema
  */
 var CustomerSchema = new Schema({
-  _id: {type: String, required: true, unique:true},
+  _id: { type: String, required: true, unique: true },
   index: Number,
   isActive: Boolean,
   logo: String,
@@ -48,20 +48,20 @@ var CustomerSchema = new Schema({
       },
       ship_date: String,
       expected_date: String,
-      contents: [String],
-    }],
+      contents: [String]
+    }]
   }]
-  
 });
 
 /* 'pre' function that adds the updated_at (and created_at if not already there) property */
-CustomerSchema.pre('save', function(next) {
+CustomerSchema.pre('save', function (next) {
   var currentDate = new Date();
   this.updated_at = currentDate;
-  if (!this.created_at){
+  if (!this.created_at) {
     this.created_at = currentDate;
   }
   next();
 });
 
-mongoose.model('Customer', CustomerSchema);
+// mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.model('Customer', CustomerSchema);

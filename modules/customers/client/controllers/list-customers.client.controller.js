@@ -19,6 +19,7 @@
 
     // Used to animate the right sidebar.
     document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
+    document.getElementById('overlay').style.width = "83.3333333333%";
     document.getElementById('STEPS').style.width = "83.3333333333%";
     document.getElementById('hide').style.width = "0";
 
@@ -45,7 +46,7 @@
           removeLine();
         return;
       }
-    
+   
       let shipmentID = selectedShipment.id;
       let customerID = selectedPath[0];
       let orderID = selectedPath[1];
@@ -79,19 +80,28 @@
         if(orderID != undefined){
           //Set the markers for an entire order
           if (!found){
-            displayShipmentMapElementsOrder();
-            displayRelativeShipmentLocation(false);
+            overlay(function(){
+              displayShipmentMapElementsOrder();
+              displayRelativeShipmentLocation(false);
+              customerInfo();
+              shippingDetails();
+              packageDetails();
+              packageComments();
+
+              overlay(function(){
+                console.log("Turn overlay off");
+              });
+            });
           }
           //Set the markers for one shipment
           else{ 
             displayShipmentMapElements();
             displayRelativeShipmentLocation(true);
-          }
-          console.log("HELP")
-          customerInfo();
-          shippingDetails();
-          packageDetails();
-          packageComments();
+            customerInfo();
+            shippingDetails();
+            packageDetails();
+            packageComments();
+          }         
         }
     }
 
@@ -110,8 +120,10 @@
         }
         for (let i = 0; i < activeCustomerList.length; i++) {
           let regularExpression = new RegExp(vm.searchText, 'i');
-          if (activeCustomerList[i].name.search(regularExpression) !== -1)
+          if (activeCustomerList[i].name.search(regularExpression) !== -1){
             customerListSearch.push(activeCustomerList[i]);
+            console.log(activeCustomerList[i].name.search(regularExpression))
+          }
         }
         displayCustomerTree(customerListSearch);
       } else if (activeInactiveState === 'Inactive') {
@@ -135,8 +147,10 @@
           if (customerList[i].name.search(regularExpression) !== -1)
             customerListSearch.push(customerList[i]);
         }
+        console.log(customerListSearch)
         displayCustomerTree(customerListSearch);
       }
+      console.log(activeInactiveState)
     }
 
     /*  Function: displayActive()
@@ -197,6 +211,7 @@
         if(rightSideBarTimerOut == undefined && rightSideBarTimerIn == undefined){
           // x.style.display = 'block';
           document.getElementById('MAP_MARKERS').style.left = "16.6666667%";
+          document.getElementById('overlay').style.left = "16.6666667%";
           document.getElementById('STEPS').style.left = "16.6666667%";
           rightSideBarTimerOut = setInterval(rightSideBarOut, 1);
           rightSideBarIsDisplayed = true;
@@ -313,6 +328,13 @@
     */
     function displayCustomerTree(customerListSearch) {
       //Sort customer list alphabetically
+	   var treeElement = document.getElementById("TEST11");
+      
+      if(customerListSearch.length === 0){
+        treeElement.attributes.items.value = "[{\"label\":\"\",\"id\":\"branch-0-3\",\"isSelectable\": false}]";
+        return;
+      }
+
       customerListSearch.sort(function (a, b) {
         if (a.name.toUpperCase() < b.name.toUpperCase())
           return -1;
@@ -320,8 +342,6 @@
           return 1;
         return 0;
       });
-
-      var treeElement = document.getElementById("TEST11");
 
       //Rewrite string to inject into Predix px-tree component
       let string = "[";
@@ -452,7 +472,7 @@
       if(infoNeeded == true){
         //If location is undefined display the longitude and latitude
         if(generalLocationOrigin[vm.currentIndices.shipment] == "")
-          string += currentShipment.origin.latitude + "," + currentShipment.origin.longitude;
+          string += currentShipment.origin.latitude + ", " + currentShipment.origin.longitude;
         //Display location
         else
           string += generalLocationOrigin[vm.currentIndices.shipment];
@@ -465,7 +485,7 @@
       if(infoNeeded == true){
         //If location is undefined display the longitude and latitude
         if(generalLocationCurrent[vm.currentIndices.shipment] == "")
-          string += currentShipment.current_location.latitude + "," + currentShipment.current_location.longitude;
+          string += currentShipment.current_location.latitude + ", " + currentShipment.current_location.longitude;
         //Display location
         else
           string += generalLocationCurrent[vm.currentIndices.shipment];
@@ -478,7 +498,7 @@
       if(infoNeeded == true){
         //If location is undefined display the longitude and latitude
         if(generalLocationDestination[vm.currentIndices.shipment] == "")
-          string += currentShipment.destination.latitude + "," + currentShipment.destination.longitude;
+          string += currentShipment.destination.latitude + ", " + currentShipment.destination.longitude;
         //Display location
         else
           string += generalLocationDestination[vm.currentIndices.shipment];
@@ -653,7 +673,7 @@
       //Initialize HTTP request
       var request = new XMLHttpRequest();
       var method = 'GET';
-      var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
+      var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true';
       var async = false; //Should be synchronous
 
       request.open(method, url, async);
@@ -755,7 +775,7 @@
       displayLocation(shipment.origin.latitude, shipment.origin.longitude, "origin");
       displayLocation(shipment.current_location.latitude, shipment.current_location.longitude, "current");
       displayLocation(shipment.destination.latitude, shipment.destination.longitude, "destination");
-
+      
       let pinColor;
     
       if (shipment.delivery_state === "Ahead of Time")
@@ -807,14 +827,42 @@
         formattedLocationDestination = '<p><b>Location:</b></br>' +
                                    generalLocationDestination[index] + '</br>';
       }
-
+	  let statusColor = '';
+	  switch (shipment.delivery_state) {
+        case 'Ahead of Time':
+          statusColor = '#00C300';
+          break;
+        case 'On Time':
+          statusColor = '#00C300';
+          break;
+        case 'Likely to be On Time':
+          statusColor = '#DEE800';
+          break;
+        case 'Likely to be Behind Schedule':
+          statusColor = '#FFBF0C';
+          break;
+        case 'Behind Schedule':
+          statusColor = '#E85E00';
+          break;
+        case 'Late':
+          statusColor = '#FF0000';
+          break;
+        default:
+		  statusColor = '#000000';
+	  }
       let originContentString = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
                 '<h3 id="firstHeading" class="firstHeading">Consignment Origin ' +
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
-                 '</h3>' +
+                '</h3>' +
                 '<div id="bodyContent">' +
+				'<b>Status: ' +
+				'<span style=color:' +
+				statusColor +
+				'>' +
+				shipment.delivery_state +
+				'</span></b>' +
                 formattedLocationOrigin + "</br>" +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
@@ -830,6 +878,12 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
+				'<b>Status: ' +
+				'<span style=color:' +
+				statusColor +
+				'>' +
+				shipment.delivery_state +
+				'</span></b>' +
                 formattedLocationCurrent +
                 "</br>" +
                 '<b>Date: </b></br>' +
@@ -845,11 +899,17 @@
                 '(' + (index + 1) + ' of ' + orderSize + ')' +
                 '</h3>' +
                 '<div id="bodyContent">' +
+				'<b>Status: ' +
+				'<span style=color:' +
+				statusColor +
+				'>' +
+				shipment.delivery_state +
+				'</span></b>' +
                 formattedLocationDestination +
                 '</br>' +
                 '<b>Date: </b></br>' +
                 shipment.ship_date +
-                '</p>' +
+                // '</p>' +
                 '</div>' +
                 '<button id="markerInfo" ng-click="vm.toggleRightSideBar()"><i class="material-icons">info</i></button></div>' +
                 '</div>';
@@ -858,27 +918,30 @@
       var compiledCurrent = $compile(currentContentString)($scope);
       var compiledDestination = $compile(destinationContentString)($scope);
 
-      let originPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
+      let originPinImage = new google.maps.MarkerImage("https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%41|999999");
     
-      let currentPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+(index + 1)+"|"+pinColor);
+      let currentPinImage = new google.maps.MarkerImage("https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+(index + 1)+"|"+pinColor);
     
-      let destinationPinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
+      let destinationPinImage = new google.maps.MarkerImage("https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%42|999999");
     
       let originMarker = new google.maps.Marker({
         position: origin,
         map: map,
+        optimized: false,      
         icon: originPinImage
       });
     
       let currentMarker = new google.maps.Marker({
         position: current,
         map: map,
+        optimized: false,
         icon: currentPinImage
       });
     
       let destinationMarker = new google.maps.Marker({
         position: dest,
         map: map,
+        optimized: false,
         icon: destinationPinImage
       });
     
@@ -1040,6 +1103,7 @@
       if(val <= 61.4){
         outVal =0;
         document.getElementById('MAP_MARKERS').style.width = "62%";
+        document.getElementById('overlay').style.width = "62%";
         document.getElementById('STEPS').style.width = "62%";
         document.getElementById('hide').style.width = "21.333%";
         clearInterval(rightSideBarTimerOut);
@@ -1060,6 +1124,7 @@
       if(val >= 83.1){
         inVal =0;
         document.getElementById('MAP_MARKERS').style.width = "83.3333333333%";
+        document.getElementById('overlay').style.width = "83.3333333333%";
         document.getElementById('STEPS').style.width = "83.3333333333%";
         document.getElementById('hide').style.width = "0%";
         clearInterval(rightSideBarTimerIn);
@@ -1086,6 +1151,20 @@
             destinationInfoWindowList[i].close();
         }
       }
+    }
+
+    function overlay(callback) {
+      console.log("first");
+      var mapOverlay = document.getElementById('overlay');
+      console.log(mapOverlay.style.display);
+      //mapOverlay.style.display = 'block';
+      if(mapOverlay.style.display == 'block') 
+        mapOverlay.style.display = 'none';
+      else if(mapOverlay.style.display == 'none')
+        mapOverlay.style.display = 'block';
+
+      console.log(mapOverlay.style.display);
+      setTimeout(callback, 1);
     }
   }
 }());

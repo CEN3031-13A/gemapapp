@@ -84,13 +84,15 @@ exports.delete = function(req, res) {
  */
 exports.list = function(req, res) {
   
-
+  console.log(req.url);
+  
   Customer.find().sort('-created').populate('user', 'displayName').exec(function(err, customers) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      console.log(res.status);
       res.jsonp(customers);
     }
   });
