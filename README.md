@@ -38,12 +38,12 @@ This webapp used:
 
 ### Local Setup
 
-Clone this repository onto your localhost 
-
+Clone this repository onto your localhost: 
+Using SSH
 ```
 git clone git@github.com:CEN3031-13A/gemapapp.git
 ```
-or
+Using HTTPS
 ```
 git clone https://github.com/CEN3031-13A/gemapapp.git
 ```
