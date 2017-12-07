@@ -191,7 +191,7 @@ describe('Left Sidebar Functionality:', function () {
 	    browser.sleep(1000); 
 	});
 
-	it('should only allow one order open at a time', function(){
+	it('should only allow one customer open at a time', function(){
 		//Find px-tree item
 	    var tree = element(by.tagName('px-tree'));
 	    
@@ -244,7 +244,7 @@ describe('Map Functionality:', function () {
 		browser.sleep(1000);
 	});
 
-	it('should display the correct number of map markers', function () {
+	it('should display the correct number of map markers when order is clicked', function () {
 		var tree = element(by.tagName('px-tree'));
 		tree.click();
 	    browser.sleep(3000);
@@ -277,7 +277,7 @@ describe('Map Functionality:', function () {
 		browser.sleep(5000);
 	});
 
-	it('should display map markers when shipment is clicked', function () {
+	it('should display three map markers when shipment is clicked', function () {
 		var tree = element(by.tagName('px-tree'));
 		
 		tree.click();
@@ -343,24 +343,6 @@ describe('Map Functionality:', function () {
 		infoButton.click();
 		browser.sleep(2000);			
 	});
-
-	it('should color lines according to delivery state', function () {
-		var tree = element(by.tagName('px-tree'));
-		
- 	    browser.actions().mouseMove(tree, {x: 0, y: 20}).click().perform();
- 	    browser.sleep(3000);
-
- 	    //When a new customer is clicked all map markers should disappear
- 	    var numMarkers = element.all(by.css('.gmnoprint')).count();
- 	    expect(numMarkers).toEqual(7);
-
- 	    browser.actions().mouseMove(tree, {x: 50, y: 40}).click().perform();
- 	    browser.sleep(3000);
-
-		var mapMarker = element(by.css('.gmnoprint'));
-		mapMarker.click();
-	});
-
 });
 
 describe('Right Sidebar Functionality:', function () {
@@ -400,28 +382,12 @@ describe('Right Sidebar Functionality:', function () {
 		var textContext = 'This is to test an added comment from protractor';
 		commentSection.sendKeys(textContext);
 
-		element(by.css('.form-group #submitbutton')).click();
+		var submitButton = element(by.css('.form-group #submitbutton'));
+		expect(submitButton.isPresent()).toEqual(true);
+
+		submitButton.click();
 		browser.sleep(5000);
 
-		tree.click();
-	    browser.sleep(3000);
-
-	    tree.click();
-	    browser.sleep(3000);
-
-		var mapMarker = element(by.css('.gmnoprint'));
-		mapMarker.click();
-
-		browser.sleep(1000);
-
-		var infoButton = element(by.id('markerInfo'));
-		infoButton.click();
-
-		element.all(by.css('.list-group px-accordion')).then(function(dropdowns){
-			browser.sleep(5000);
-			dropdowns[21].click();
-			expect(true).toEqual(true);
-		});
 	});
 });
 
