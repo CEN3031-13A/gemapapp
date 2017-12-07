@@ -11,8 +11,8 @@
     "url": "https://github.com/meanjs/mean.git"
   },
   "engines": {
-    "node": ">=6.10.0",
-    "npm": ">=3.10.8"
+    "node": "6.10.0",
+    "npm": "3.10.8"
   },
   "scripts": {
     "update": "npm update && npm prune && npm run bower",
@@ -52,6 +52,7 @@
     "eslint-config-airbnb": "~6.0.2",
     "express": "^4.15.5",
     "express-hbs": "~1.0.4",
+    "express-init": "^1.1.0",
     "express-session": "^1.15.6",
     "generate-password": "~1.3.0",
     "glob": "~7.1.1",
@@ -110,8 +111,9 @@
     "karma-jasmine": "~1.1.0",
     "karma-mocha-reporter": "^2.2.4",
     "karma-ng-html2js-preprocessor": "~1.0.0",
+    "mocha": "^4.0.1",
     "semver": "~5.4.1",
-    "should": "~11.2.1",
+    "should": "^11.2.1",
     "supertest": "~3.0.0"
   }
 }
